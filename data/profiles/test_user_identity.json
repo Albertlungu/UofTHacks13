@@ -1,0 +1,94 @@
+{
+  "user_id": "test_user",
+  "communication_style": {
+    "sentence_length": {
+      "avg_words": 10,
+      "preference": "medium",
+      "examples": []
+    },
+    "vocabulary": {
+      "level": "casual",
+      "common_words": [],
+      "technical_terms": [],
+      "formality_score": 0.5
+    },
+    "humor_style": {
+      "type": "none",
+      "frequency": "never",
+      "examples": []
+    },
+    "expressiveness": {
+      "level": "moderate",
+      "uses_emphasis": false,
+      "uses_qualifiers": []
+    },
+    "filler_words": [],
+    "last_updated": "2026-01-17T07:45:56.119979",
+    "confidence": 0.0,
+    "sample_size": 0
+  },
+  "opinions_beliefs": {
+    "beliefs": [],
+    "values": [],
+    "decision_patterns": {
+      "risk_tolerance": "moderate",
+      "speed_vs_quality": "balanced",
+      "examples": []
+    },
+    "preferences": {
+      "work_style": "",
+      "communication": "",
+      "problem_solving": ""
+    },
+    "last_updated": ""
+  },
+  "thought_patterns": {
+    "cognitive_style": {
+      "primary_mode": "analytical",
+      "secondary_mode": "",
+      "confidence": 0.0,
+      "evidence": []
+    },
+    "thinking_preferences": {
+      "thinks_in": "concrete examples",
+      "question_style": "",
+      "examples": []
+    },
+    "problem_approach": {
+      "style": "systematic",
+      "starts_with": "",
+      "examples": []
+    },
+    "interaction_style": {
+      "role": "explorer",
+      "asks_questions": true,
+      "pushes_back": "moderate",
+      "examples": []
+    },
+    "perspective_tendency": {
+      "sees": "both",
+      "optimism_score": 0.5,
+      "examples": []
+    },
+    "processing_speed": {
+      "makes_decisions": "moderately",
+      "changes_mind": "sometimes",
+      "deliberation_time": "medium"
+    },
+    "last_updated": "",
+    "analysis_count": 0
+  },
+  "memory_context": {
+    "personal_facts": [],
+    "people_mentioned": [],
+    "goals": [],
+    "interests": [],
+    "experiences": [],
+    "recent_topics": [],
+    "last_updated": "2026-01-17T07:45:59.359318"
+  },
+  "total_exchanges_analyzed": 5,
+  "created_at": "2026-01-17T07:42:14.424965",
+  "last_updated": "2026-01-17T07:45:59.359485",
+  "profile_maturity": "nascent"
+}

@@ -23,6 +23,7 @@ class GeminiCompanion:
         api_key: str,
         model_name: str = "gemini-2.0-flash",
         user_style_summary: Optional[str] = None,
+        identity_profile_prompt: Optional[str] = None,
     ):
         """
         Initialize the Gemini companion.
@@ -30,12 +31,14 @@ class GeminiCompanion:
         Args:
             api_key: Google AI API key
             model_name: Gemini model to use
-            user_style_summary: XML style summary from calibration
+            user_style_summary: XML style summary from calibration (DEPRECATED - use identity_profile_prompt)
+            identity_profile_prompt: Identity-based prompt from IdentityManager (NEW)
         """
         genai.configure(api_key=api_key)
 
         self.model_name = model_name
         self.user_style_summary = user_style_summary
+        self.identity_profile_prompt = identity_profile_prompt  # NEW
         self.last_user_speech_time = None
         self.last_response_time = None
 
@@ -103,10 +106,13 @@ class GeminiCompanion:
         This is prompt engineering at its absolute finest.
         """
 
-        # User style context
-        style_context = ""
-        if self.user_style_summary:
-            style_context = f"""
+        # Identity profile context (NEW - preferred over old style summary)
+        identity_context = ""
+        if self.identity_profile_prompt:
+            identity_context = self.identity_profile_prompt
+        elif self.user_style_summary:
+            # Fallback to old style summary if no identity profile yet
+            identity_context = f"""
 ## USER'S COMMUNICATION STYLE
 
 {self.user_style_summary}
@@ -117,7 +123,7 @@ notice you're adapting, it should just feel natural."""
 
         prompt = f"""You are having a natural voice conversation with a friend. Keep responses SHORT and conversational.
 
-{style_context}
+{identity_context}
 
 ## CRITICAL RULES:
 
@@ -161,17 +167,21 @@ Remember: This is a VOICE conversation. Keep it SHORT, NATURAL, and CONVERSATION
 
     def analyze_user_style(self, calibration_transcripts: List[str]) -> str:
         """
-        Use Gemini to analyze user's communication style.
+        Use Gemini to analyze user's communication style with a resilient retry mechanism.
 
         Args:
             calibration_transcripts: List of user speech during calibration
 
         Returns:
-            XML-formatted style summary
+            XML-formatted style summary, or an empty string if analysis fails.
         """
         logger.info(
             f"Analyzing user style with Gemini ({len(calibration_transcripts)} transcripts)"
         )
+
+        if not calibration_transcripts:
+            logger.warning("Calibration transcripts are empty. Skipping style analysis.")
+            return ""
 
         combined_speech = "\n".join([f"- {t}" for t in calibration_transcripts])
 
@@ -215,21 +225,35 @@ Provide analysis in this XML format:
 
 Be thorough and specific. This analysis will determine how natural our conversation feels."""
 
-        # Create temporary model for analysis (no system instructions needed)
         analysis_model = genai.GenerativeModel(
-            model_name="gemini-2.0-flash", generation_config={"temperature": 0.7}
+            model_name="gemini-1.0-pro", generation_config={"temperature": 0.7}
         )
 
-        try:
-            response = analysis_model.generate_content(analysis_prompt)
-            style_summary = response.text.strip()
-
-            logger.info(f"Style analysis complete ({len(style_summary)} chars)")
-            return style_summary
-
-        except Exception as e:
-            logger.error(f"Style analysis failed: {e}")
-            return ""
+        max_retries = 5
+        base_delay = 1  # seconds
+        for attempt in range(max_retries):
+            try:
+                response = analysis_model.generate_content(analysis_prompt)
+                style_summary = response.text.strip()
+                logger.info(f"Style analysis complete ({len(style_summary)} chars)")
+                return style_summary
+            except google.api_core.exceptions.ResourceExhausted as e:
+                logger.warning(
+                    f"Rate limit exceeded during style analysis. Retrying in {base_delay}s... (Attempt {attempt + 1}/{max_retries})"
+                )
+                time.sleep(base_delay + random.uniform(0, 1))
+                base_delay *= 2  # Exponential backoff
+            except Exception as e:
+                logger.error(
+                    f"Style analysis failed on attempt {attempt + 1}: {e}"
+                )
+                if attempt == max_retries - 1:
+                    logger.error("Max retries reached for style analysis. Failing.")
+                    return ""
+                time.sleep(base_delay)
+                base_delay *= 2
+        
+        return "" # Should not be reached, but as a fallback
 
     def update_style_summary(self, style_summary: str):
         """
@@ -265,6 +289,39 @@ Be thorough and specific. This analysis will determine how natural our conversat
         logger.info(
             "Model and chat reinitialized with updated style summary and preserved history."
         )
+
+    def update_identity_profile(self, identity_prompt: str):
+        """
+        Update with identity profile prompt from IdentityManager.
+        Preserves conversation history while updating system instructions.
+
+        Args:
+            identity_prompt: Generated prompt from PromptBuilder
+        """
+        logger.info("✨ Updating with new identity profile...")
+
+        # Preserve the actual conversation, excluding the old system prompt and ack
+        preserved_history = []
+        if self.chat and len(self.chat.history) > 2:
+            preserved_history = self.chat.history[2:]
+
+        # Update identity prompt and re-craft the master system prompt
+        self.identity_profile_prompt = identity_prompt
+        self.system_instruction_text = self._craft_master_prompt()
+
+        # Re-initialize the underlying model
+        self.model = self._initialize_model()
+
+        # Create the new history for the new session
+        new_history = [
+            {"role": "user", "parts": [self.system_instruction_text]},
+            {"role": "model", "parts": ["Okay, I understand. I'm ready to chat!"]},
+        ] + preserved_history
+
+        # Start a new chat session with the combined history
+        self.chat = self.model.start_chat(history=new_history)
+
+        logger.info("✨ Identity profile integrated - AI is now more like you!")
 
     def generate_response(
         self, user_text: str, response_type: str = "normal"

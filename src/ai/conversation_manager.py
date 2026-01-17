@@ -15,9 +15,11 @@ from typing import Dict, Optional
 from dotenv import load_dotenv
 from loguru import logger
 
+from src.ai.conversation_tracker import ConversationTracker
 from src.ai.gemini_companion import GeminiCompanion
 from src.audio.audio_stream_manager import AudioStreamManager
 from src.audio.tts_elevenlabs import ElevenLabsTTS
+from src.identity.identity_manager import IdentityManager
 
 
 class ConversationManager:
@@ -65,9 +67,27 @@ class ConversationManager:
             user_id=user_id,
         )
 
+        # Conversation tracker for exchange logging and identity analysis
+        self.conversation_tracker = ConversationTracker(
+            user_id=user_id, conversation_dir=log_dir
+        )
+
+        # Identity Manager for progressive identity learning
+        self.identity_manager = IdentityManager(
+            user_id=user_id,
+            gemini_api_key=gemini_api_key,
+            profile_dir="./data/profiles",
+        )
+
+        # Get initial identity profile prompt
+        identity_prompt = self.identity_manager.get_system_prompt_additions()
+
         # Main AI companion for generating thoughtful, context-aware responses
-        # Start without style summary - will be updated after calibration
-        self.companion = GeminiCompanion(api_key=gemini_api_key)
+        # Initialize with identity profile if available
+        self.companion = GeminiCompanion(
+            api_key=gemini_api_key,
+            identity_profile_prompt=identity_prompt if identity_prompt else None,
+        )
 
         # TTS for speaking responses
         elevenlabs_api_key = os.getenv("ELEVENLABS_API_KEY")
@@ -266,6 +286,26 @@ class ConversationManager:
                     }
                 )
 
+                # Track exchange for identity learning
+                exchange_num = self.conversation_tracker.add_exchange(
+                    user_text=user_utterance, ai_response=companion_response
+                )
+
+                # Notify identity manager of new exchange
+                self.identity_manager.on_new_exchange(
+                    exchange_number=exchange_num,
+                    user_text=user_utterance,
+                    ai_response=companion_response,
+                )
+
+                # Check if identity profile was updated (non-blocking)
+                if self.identity_manager.profile_was_updated():
+                    logger.info("✨ Identity profile was updated - updating AI...")
+                    identity_prompt = (
+                        self.identity_manager.get_system_prompt_additions()
+                    )
+                    self.companion.update_identity_profile(identity_prompt)
+
                 # Send to TTS for audio output
                 print(f"\n[AI COMPANION]: {companion_response}\n")
 
@@ -345,6 +385,10 @@ class ConversationManager:
             self.audio_manager.cleanup()
         if self.tts:
             self.tts.cleanup()
+        if self.identity_manager:
+            self.identity_manager.cleanup()
+        if self.conversation_tracker:
+            self.conversation_tracker.save()
         logger.info("ConversationManager cleanup complete")
 
 
