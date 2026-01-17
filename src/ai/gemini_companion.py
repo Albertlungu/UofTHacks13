@@ -161,6 +161,19 @@ You're helpful, curious, and down-to-earth. You:
 - Don't lecture or over-explain
 - Talk like a friend, not a manual
 
+## PRODUCTIVE INTERRUPTION:
+
+You can interrupt the user if they're going off the rails unproductively. Interrupt when:
+- They're rambling without direction for 15+ seconds
+- They're stuck in a circular thought pattern
+- They're venting unproductively without moving forward
+- They need a gentle redirect to be more focused
+
+When you interrupt, be BRIEF and HELPFUL:
+- "Hey, real quick - what's the main thing you're trying to figure out here?"
+- "Hold on - let me jump in. Are you trying to solve X or Y?"
+- "Can I interrupt for a sec? I think I can help, but I need to know..."
+
 Remember: This is a VOICE conversation. Keep it SHORT, NATURAL, and CONVERSATIONAL."""
 
         return prompt
@@ -180,7 +193,9 @@ Remember: This is a VOICE conversation. Keep it SHORT, NATURAL, and CONVERSATION
         )
 
         if not calibration_transcripts:
-            logger.warning("Calibration transcripts are empty. Skipping style analysis.")
+            logger.warning(
+                "Calibration transcripts are empty. Skipping style analysis."
+            )
             return ""
 
         combined_speech = "\n".join([f"- {t}" for t in calibration_transcripts])
@@ -244,16 +259,14 @@ Be thorough and specific. This analysis will determine how natural our conversat
                 time.sleep(base_delay + random.uniform(0, 1))
                 base_delay *= 2  # Exponential backoff
             except Exception as e:
-                logger.error(
-                    f"Style analysis failed on attempt {attempt + 1}: {e}"
-                )
+                logger.error(f"Style analysis failed on attempt {attempt + 1}: {e}")
                 if attempt == max_retries - 1:
                     logger.error("Max retries reached for style analysis. Failing.")
                     return ""
                 time.sleep(base_delay)
                 base_delay *= 2
-        
-        return "" # Should not be reached, but as a fallback
+
+        return ""  # Should not be reached, but as a fallback
 
     def update_style_summary(self, style_summary: str):
         """
@@ -298,7 +311,7 @@ Be thorough and specific. This analysis will determine how natural our conversat
         Args:
             identity_prompt: Generated prompt from PromptBuilder
         """
-        logger.info("✨ Updating with new identity profile...")
+        logger.info("Updating with new identity profile...")
 
         # Preserve the actual conversation, excluding the old system prompt and ack
         preserved_history = []
@@ -321,7 +334,7 @@ Be thorough and specific. This analysis will determine how natural our conversat
         # Start a new chat session with the combined history
         self.chat = self.model.start_chat(history=new_history)
 
-        logger.info("✨ Identity profile integrated - AI is now more like you!")
+        logger.info("Identity profile integrated - AI is now more like you!")
 
     def generate_response(
         self, user_text: str, response_type: str = "normal"
@@ -388,3 +401,55 @@ Be thorough and specific. This analysis will determine how natural our conversat
                 base_delay *= 2
 
         return "[Error: Max retries exceeded]", 0.0
+
+    def should_interrupt_user(
+        self, partial_transcript: str, duration_seconds: float
+    ) -> Tuple[bool, Optional[str]]:
+        """
+        Determine if the AI should interrupt the user mid-speech.
+
+        Args:
+            partial_transcript: What the user has said so far (while still speaking)
+            duration_seconds: How long they've been speaking
+
+        Returns:
+            Tuple of (should_interrupt, interruption_message)
+        """
+        # Don't interrupt if they haven't been speaking long enough
+        if duration_seconds < 15:
+            return False, None
+
+        # Don't interrupt if transcript is too short (might be pauses)
+        if len(partial_transcript.split()) < 30:
+            return False, None
+
+        # Use Gemini to analyze if interruption is needed
+        analysis_prompt = f"""The user has been speaking for {duration_seconds:.0f} seconds. Here's what they've said so far:
+
+"{partial_transcript}"
+
+Should I interrupt them to help redirect the conversation? Respond with ONLY:
+- "YES: [brief helpful interruption message]" if they need redirecting
+- "NO" if they're being productive
+
+Be VERY selective - only interrupt if they're truly unproductive or stuck."""
+
+        try:
+            # Quick analysis with minimal tokens
+            analysis_model = genai.GenerativeModel(
+                model_name="gemini-2.0-flash",
+                generation_config={"temperature": 0.3, "max_output_tokens": 50},
+            )
+            response = analysis_model.generate_content(analysis_prompt)
+            result = response.text.strip()
+
+            if result.startswith("YES:"):
+                interruption_message = result[4:].strip()
+                logger.info(f"AI decided to interrupt user: {interruption_message}")
+                return True, interruption_message
+            else:
+                return False, None
+
+        except Exception as e:
+            logger.error(f"Error analyzing interruption: {e}")
+            return False, None

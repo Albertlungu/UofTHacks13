@@ -1,0 +1,152 @@
+[
+    {
+        "timestamp": "2026-01-17T11:21:27.404697",
+        "user": "iPhone. Shit, that's not my phone."
+    },
+    {
+        "timestamp": "2026-01-17T11:21:28.266432",
+        "companion": "Haha, whoops! Whose is it?",
+        "thinking_time": 0.6158840656280518,
+        "total_time": 0.61604905128479
+    },
+    {
+        "timestamp": "2026-01-17T11:21:30.981436",
+        "user": "Thanks a lot."
+    },
+    {
+        "timestamp": "2026-01-17T11:21:31.788163",
+        "companion": "No problem! What for?",
+        "thinking_time": 0.6078629493713379,
+        "total_time": 0.6084840297698975
+    },
+    {
+        "timestamp": "2026-01-17T11:21:38.058064",
+        "user": "Well, not mine, that's my friend's."
+    },
+    {
+        "timestamp": "2026-01-17T11:21:38.726610",
+        "companion": "Ah, gotcha. You gonna give it back?",
+        "thinking_time": 0.49766111373901367,
+        "total_time": 0.4984261989593506
+    },
+    {
+        "timestamp": "2026-01-17T11:21:48.119046",
+        "user": "that's my friend's phone. That might be a good idea, yeah."
+    },
+    {
+        "timestamp": "2026-01-17T11:21:48.799899",
+        "companion": "Yeah, probably a good move, haha.",
+        "thinking_time": 0.5017447471618652,
+        "total_time": 0.502434253692627
+    },
+    {
+        "timestamp": "2026-01-17T11:21:57.929500",
+        "user": "Anyways, how's your day been?"
+    },
+    {
+        "timestamp": "2026-01-17T11:21:59.047651",
+        "companion": "Pretty good! Just chillin'. How about yours?",
+        "thinking_time": 0.6718108654022217,
+        "total_time": 0.672468900680542
+    },
+    {
+        "timestamp": "2026-01-17T11:22:11.567285",
+        "user": "Uh, busy, sleepless, tired."
+    },
+    {
+        "timestamp": "2026-01-17T11:22:12.522678",
+        "companion": "Oof, rough day, huh? What's been keeping you so busy?",
+        "thinking_time": 0.5508360862731934,
+        "total_time": 0.5515830516815186
+    },
+    {
+        "timestamp": "2026-01-17T11:22:17.634713",
+        "user": "You know, I'm kind of at a hackathon right now, I haven't slept a wink, so."
+    },
+    {
+        "timestamp": "2026-01-17T11:22:18.569285",
+        "companion": "A hackathon? No sleep makes sense then. What are you building?",
+        "thinking_time": 0.5491089820861816,
+        "total_time": 0.5496540069580078
+    },
+    {
+        "timestamp": "2026-01-17T11:22:23.470472",
+        "user": "Well, the hackathon is going to keep on being busy."
+    },
+    {
+        "timestamp": "2026-01-17T11:22:24.095556",
+        "companion": "Yeah, hackathons tend to do that! What part are you stuck on right now?",
+        "thinking_time": 0.5304577350616455,
+        "total_time": 0.5310277938842773
+    },
+    {
+        "timestamp": "2026-01-17T11:22:30.807234",
+        "user": "an AI app."
+    },
+    {
+        "timestamp": "2026-01-17T11:22:31.608279",
+        "companion": "Nice! What kind of AI app? Something specific?",
+        "thinking_time": 0.4812297821044922,
+        "total_time": 0.4818739891052246
+    },
+    {
+        "timestamp": "2026-01-17T11:22:35.612140",
+        "user": "interesting that because it tries to copy whatever the hell I do."
+    },
+    {
+        "timestamp": "2026-01-17T11:22:36.342180",
+        "companion": "Haha, sounds like it's working *too* well! What's it supposed to do?",
+        "thinking_time": 0.6827731132507324,
+        "total_time": 0.6832666397094727
+    },
+    {
+        "timestamp": "2026-01-17T11:22:44.004584",
+        "user": "Yeah, hopefully, how do I, how do I just score?"
+    },
+    {
+        "timestamp": "2026-01-17T11:22:45.029152",
+        "companion": "Score as in...win the hackathon? What are the judges looking for?",
+        "thinking_time": 0.5419168472290039,
+        "total_time": 0.542504072189331
+    },
+    {
+        "timestamp": "2026-01-17T11:23:39.184685",
+        "user": "What's my phone? Hmm? Bro, I have it. You don't? No, I went downstairs thinking it was mine because I saw this and I was like"
+    },
+    {
+        "timestamp": "2026-01-17T11:23:41.627905",
+        "companion": "Hey, real quick - what's the main thing you're trying to figure out right now about the AI app? Is it how to make it stand out to the judges?",
+        "thinking_time": 0.7550890445709229,
+        "total_time": 0.7554402351379395
+    },
+    {
+        "timestamp": "2026-01-17T11:23:42.195843",
+        "user": "We have the same phone."
+    },
+    {
+        "timestamp": "2026-01-17T11:23:43.440733",
+        "companion": "Ah, the phones. Got it. Anyway, back to the AI app... what makes yours special?",
+        "thinking_time": 1.052117109298706,
+        "total_time": 1.0524101257324219
+    },
+    {
+        "timestamp": "2026-01-17T11:23:45.358617",
+        "user": "and not play my bad game."
+    },
+    {
+        "timestamp": "2026-01-17T11:23:46.057873",
+        "companion": "Gotcha. So you want it to be unique and not just copy you? What's the core idea behind the app? What problem does it solve?",
+        "thinking_time": 0.6334600448608398,
+        "total_time": 0.6339168548583984
+    },
+    {
+        "timestamp": "2026-01-17T11:23:48.652669",
+        "user": "Oh"
+    },
+    {
+        "timestamp": "2026-01-17T11:23:50.553833",
+        "companion": "Haha, \"oh\" as in you just had a realization? Spill the beans!",
+        "thinking_time": 0.6055247783660889,
+        "total_time": 0.606224775314331
+    }
+]

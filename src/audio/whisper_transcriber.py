@@ -14,19 +14,28 @@ from src.audio.audio_config import SAMPLE_RATE, WHISPER_LANGUAGE, WHISPER_MODEL
 class WhisperTranscriber:
     """Handles local Whisper transcription using faster-whisper."""
 
-    def __init__(self, model_size: str = WHISPER_MODEL, device: str = "cpu"):
+    def __init__(
+        self,
+        model_size: str = WHISPER_MODEL,
+        device: str = "cpu",
+        custom_vocabulary: Optional[str] = None,
+    ):
         """
         Initialize the Whisper transcriber.
 
         Args:
             model_size: Whisper model size (tiny, base, small, medium, large)
             device: Device to run on ('cpu', 'cuda', or 'auto')
+            custom_vocabulary: Optional custom vocabulary/slang to help Whisper recognize specific words
         """
         self.model_size = model_size
         self.device = device
+        self.custom_vocabulary = custom_vocabulary
         self.model: Optional[WhisperModel] = None
 
         logger.info(f"Initializing Whisper model: {model_size} on {device}")
+        if custom_vocabulary:
+            logger.info(f"Custom vocabulary: {custom_vocabulary}")
         self._load_model()
 
     def _load_model(self):
@@ -82,18 +91,24 @@ class WhisperTranscriber:
             )
 
             # Transcribe
-            segments, info = self.model.transcribe(
-                audio_data,
-                language=WHISPER_LANGUAGE,
-                task="transcribe",
-                vad_filter=True,  # Additional VAD filtering
-                vad_parameters={
+            transcribe_params = {
+                "audio": audio_data,
+                "language": WHISPER_LANGUAGE,
+                "task": "transcribe",
+                "vad_filter": True,  # Additional VAD filtering
+                "vad_parameters": {
                     "threshold": 0.5,
                     "min_speech_duration_ms": 250,
                     "max_speech_duration_s": 30,
                     "min_silence_duration_ms": 500,
                 },
-            )
+            }
+
+            # Add custom vocabulary if provided
+            if self.custom_vocabulary:
+                transcribe_params["initial_prompt"] = self.custom_vocabulary
+
+            segments, info = self.model.transcribe(**transcribe_params)
 
             # Collect all segments
             segment_list = []
@@ -156,6 +171,19 @@ class WhisperTranscriber:
         except Exception as e:
             logger.error(f"Failed to process audio bytes: {e}")
             return None
+
+    def update_custom_vocabulary(self, vocabulary: Optional[str]):
+        """
+        Update the custom vocabulary for transcription.
+
+        Args:
+            vocabulary: New custom vocabulary string, or None to disable
+        """
+        self.custom_vocabulary = vocabulary
+        if vocabulary:
+            logger.info(f"Updated custom vocabulary: {vocabulary}")
+        else:
+            logger.info("Custom vocabulary disabled")
 
     def is_model_loaded(self) -> bool:
         """Check if the model is loaded and ready."""

@@ -1,0 +1,43 @@
+{
+  "user_id": "default_user",
+  "exchange_count": 6,
+  "last_analysis_at": 0,
+  "exchanges": [
+    {
+      "timestamp": "2026-01-17T11:01:12.619938",
+      "user_text": "Yo, it's good. I'm currently working on this hackathon project for UTH hacks.",
+      "ai_response": "Oh cool, UTH hacks! What's the project about?",
+      "exchange_number": 1
+    },
+    {
+      "timestamp": "2026-01-17T11:01:38.276632",
+      "user_text": "Not UTHU of T as in University of Toronto.",
+      "ai_response": "Ah, my bad! Still, what's the hackathon project?",
+      "exchange_number": 2
+    },
+    {
+      "timestamp": "2026-01-17T11:02:12.928752",
+      "user_text": "Hello.",
+      "ai_response": "Hey there! What's up?",
+      "exchange_number": 3
+    },
+    {
+      "timestamp": "2026-01-17T11:02:19.610089",
+      "user_text": "Did you see what I said?",
+      "ai_response": "Yeah, I saw. You're working on a hackathon project for U of T, right? You wanna tell me more about it?",
+      "exchange_number": 4
+    },
+    {
+      "timestamp": "2026-01-17T11:02:29.049920",
+      "user_text": "I am, I am, I am, I am, I am, I am, I am.",
+      "ai_response": "Okay, cool. What's the project *actually* doing?",
+      "exchange_number": 5
+    },
+    {
+      "timestamp": "2026-01-17T11:02:34.092459",
+      "user_text": "what I was going to say is",
+      "ai_response": "Go for it, I'm listening.",
+      "exchange_number": 6
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+[
+    {
+        "timestamp": "2026-01-17T11:44:47.082445",
+        "user": "Oh my God, I'm falling."
+    },
+    {
+        "timestamp": "2026-01-17T11:44:47.980455",
+        "companion": "Woah! You okay? What happened?",
+        "thinking_time": 0.5922801494598389,
+        "total_time": 0.593034029006958
+    },
+    {
+        "timestamp": "2026-01-17T11:44:56.673163",
+        "user": "Yeah. That's a good one. Yeah. That's a good one. OK. OK. OK. OK. OK."
+    },
+    {
+        "timestamp": "2026-01-17T11:44:57.479736",
+        "companion": "Haha, you good? You seem a little out of it. Still at the hackathon?",
+        "thinking_time": 0.5280659198760986,
+        "total_time": 0.5285818576812744
+    },
+    {
+        "timestamp": "2026-01-17T11:45:01.134933",
+        "user": "What do you remember about my hackathon project?"
+    },
+    {
+        "timestamp": "2026-01-17T11:45:02.225962",
+        "companion": "You're building an AI app with a 3D model as a virtual assistant, right? How's that going, especially since you haven't slept?",
+        "thinking_time": 0.7419917583465576,
+        "total_time": 0.7425541877746582
+    },
+    {
+        "timestamp": "2026-01-17T11:45:24.438313",
+        "user": "It's going pretty well. I low key, low key, low key, low key. Like, I don't know what to say, I'm just saying low key because you should probably learn to say it."
+    },
+    {
+        "timestamp": "2026-01-17T11:45:25.297727",
+        "companion": "Haha, alright, I'll try to work \"low key\" into the convo. So, what's going well with the project?",
+        "thinking_time": 0.6449532508850098,
+        "total_time": 0.6458988189697266
+    },
+    {
+        "timestamp": "2026-01-17T11:45:46.362603",
+        "user": "going well I'd say you because you're the project right as I said before what I'm talking to right now is the project so I would say you're going pretty well for now"
+    },
+    {
+        "timestamp": "2026-01-17T11:45:50.532843",
+        "companion": "Oh, I'm part of the project now? Cool! What's my role? Am I giving good virtual assistant vibes?",
+        "thinking_time": 2.7052559852600098,
+        "total_time": 2.70609188079834
+    },
+    {
+        "timestamp": "2026-01-17T11:46:26.864521",
+        "user": "know you are the project like you're the virtual assistant that's going to be talking to you so basically we're making something that's like an extension of human thoughts so instead of talking to yourself you're going to talk to something like you a virtual assistant that's going to learn and learn how to behave the a virtual copy of me"
+    },
+    {
+        "timestamp": "2026-01-17T11:46:28.983698",
+        "companion": "Got it. A virtual copy of you. So, what's the biggest hurdle right now in making that happen?",
+        "thinking_time": 0.5416378974914551,
+        "total_time": 0.5423481464385986
+    },
+    {
+        "timestamp": "2026-01-17T11:46:47.770082",
+        "user": "Honestly, just trying to get this to work."
+    },
+    {
+        "timestamp": "2026-01-17T11:46:48.663392",
+        "companion": "Yeah, I can imagine. What part is giving you the most trouble? Is it the 3D model, the AI, or something else?",
+        "thinking_time": 0.5768787860870361,
+        "total_time": 0.5776901245117188
+    },
+    {
+        "timestamp": "2026-01-17T11:47:00.273442",
+        "user": "I would say just trying to put it all together."
+    },
+    {
+        "timestamp": "2026-01-17T11:47:01.337990",
+        "companion": "Yeah, the integration is always tricky. What tech stack are you using? Maybe I can suggest something that might help.",
+        "thinking_time": 0.6610898971557617,
+        "total_time": 0.6618251800537109
+    },
+    {
+        "timestamp": "2026-01-17T11:47:32.667048",
+        "user": "Sure, so we're using a stack for the back end. We're using basically just normal Python, but then we're also using the Gemini API key, the Gemini Evenlabs API."
+    },
+    {
+        "timestamp": "2026-01-17T11:47:33.599720",
+        "companion": "Okay, Gemini and ElevenLabs. So, you're using Gemini for the AI and ElevenLabs for the voice? What's the 3D model built with?",
+        "thinking_time": 0.6597168445587158,
+        "total_time": 0.6605112552642822
+    }
+]

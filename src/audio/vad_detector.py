@@ -119,11 +119,23 @@ class VADDetector:
         if len(frame) != self.frame_size * 2:  # *2 because int16 is 2 bytes
             return None, None
 
-        try:
-            is_speech = self.vad.is_speech(frame, self.sample_rate)
-        except Exception as e:
-            logger.warning(f"VAD error: {e}")
-            return None, None
+        # Calculate audio energy to filter out distant/quiet sounds
+        audio_array = np.frombuffer(frame, dtype=np.int16)
+        energy = np.abs(audio_array).mean()
+
+        # Energy threshold - distant voices typically have lower energy
+        # Adjust this value: higher = more sensitive (requires louder speech)
+        ENERGY_THRESHOLD = 100  # Typical close-mic speech is 500-3000
+
+        if energy < ENERGY_THRESHOLD:
+            # Too quiet, likely background noise or distant voice
+            is_speech = False
+        else:
+            try:
+                is_speech = self.vad.is_speech(frame, self.sample_rate)
+            except Exception as e:
+                logger.warning(f"VAD error: {e}")
+                return None, None
 
         # Add to ring buffer for smoothing
         self.ring_buffer.append(is_speech)

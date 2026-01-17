@@ -49,6 +49,14 @@ class ElevenLabsTTS:
         self.playback_thread: Optional[threading.Thread] = None
         self.is_running = False
 
+        # Interruption control
+        self.interrupt_flag = threading.Event()
+        self.current_stream: Optional[pyaudio.Stream] = None
+        self.stream_lock = threading.Lock()
+
+        # Callback to notify when speaking starts/stops
+        self.on_speaking_changed: Optional[callable] = None
+
         logger.info(f"ElevenLabsTTS initialized with George {voice_name}")
 
     def start(self):
@@ -89,6 +97,36 @@ class ElevenLabsTTS:
             # Wait for queue to empty
             self.playback_queue.join()
 
+    def interrupt(self):
+        """
+        Interrupt current speech playback immediately.
+        Call this when user starts speaking to stop the AI.
+        """
+        logger.info("TTS interrupted by user speech")
+
+        # Set interrupt flag
+        self.interrupt_flag.set()
+
+        # Stop current stream if playing
+        with self.stream_lock:
+            if self.current_stream:
+                try:
+                    self.current_stream.stop_stream()
+                    self.current_stream.close()
+                    self.current_stream = None
+                except Exception as e:
+                    logger.error(f"Error stopping stream: {e}")
+
+        # Clear playback queue (discard pending speech)
+        while not self.playback_queue.empty():
+            try:
+                self.playback_queue.get_nowait()
+                self.playback_queue.task_done()
+            except queue.Empty:
+                break
+
+        logger.info("TTS playback interrupted and queue cleared")
+
     def _playback_loop(self):
         """Background thread that plays TTS audio."""
         logger.info("TTS playback loop started")
@@ -98,10 +136,20 @@ class ElevenLabsTTS:
                 # Get next text to speak
                 text = self.playback_queue.get(timeout=1.0)
 
+                # Clear interrupt flag at the start of new speech
+                self.interrupt_flag.clear()
+                logger.debug("Interrupt flag cleared for new speech")
+
                 # Generate audio from ElevenLabs
                 logger.debug("Generating speech with ElevenLabs...")
 
                 try:
+                    # Check if interrupted before generating
+                    if self.interrupt_flag.is_set():
+                        logger.info("Skipping speech generation (interrupted)")
+                        self.playback_queue.task_done()
+                        continue
+
                     # Generate speech
                     audio_data = generate(
                         text=text,
@@ -111,7 +159,13 @@ class ElevenLabsTTS:
 
                     logger.info(f"Generated audio for TTS ({len(text)} chars)")
 
-                    # Play audio
+                    # Check again before playing
+                    if self.interrupt_flag.is_set():
+                        logger.info("Skipping audio playback (interrupted)")
+                        self.playback_queue.task_done()
+                        continue
+
+                    # Play audio (can be interrupted mid-playback)
                     self._play_audio(audio_data)
 
                 except Exception as e:
@@ -128,16 +182,18 @@ class ElevenLabsTTS:
 
     def _play_audio(self, audio_data: bytes):
         """
-        Play audio through PyAudio.
+        Play audio through PyAudio with interruption support.
 
         Args:
             audio_data: MP3 or PCM audio data
         """
         try:
+            # Notify that AI is starting to speak
+            if self.on_speaking_changed:
+                self.on_speaking_changed(True)
+
             # ElevenLabs returns MP3, need to decode it
-            # For now, we'll use a simple approach with pydub
             from pydub import AudioSegment
-            from pydub.playback import play as pydub_play
 
             # Load audio
             audio = AudioSegment.from_mp3(io.BytesIO(audio_data))
@@ -149,27 +205,44 @@ class ElevenLabsTTS:
             sample_rate = audio.frame_rate
 
             # Play through PyAudio
-            stream = self.audio.open(
-                format=self.audio.get_format_from_width(sample_width),
-                channels=channels,
-                rate=sample_rate,
-                output=True,
-                output_device_index=self.output_device_index,
-            )
+            with self.stream_lock:
+                self.current_stream = self.audio.open(
+                    format=self.audio.get_format_from_width(sample_width),
+                    channels=channels,
+                    rate=sample_rate,
+                    output=True,
+                    output_device_index=self.output_device_index,
+                )
 
-            # Write audio data
+            # Write audio data in chunks, checking for interruption
             chunk_size = 1024
             for i in range(0, len(raw_data), chunk_size):
+                # Check if interrupted
+                if self.interrupt_flag.is_set():
+                    logger.info("Audio playback interrupted mid-stream")
+                    break
+
                 chunk = raw_data[i : i + chunk_size]
-                stream.write(chunk)
+                with self.stream_lock:
+                    if self.current_stream:
+                        self.current_stream.write(chunk)
 
-            stream.stop_stream()
-            stream.close()
+            # Clean up stream
+            with self.stream_lock:
+                if self.current_stream:
+                    self.current_stream.stop_stream()
+                    self.current_stream.close()
+                    self.current_stream = None
 
-            logger.info("Audio playback complete")
+            if not self.interrupt_flag.is_set():
+                logger.info("Audio playback complete")
 
         except Exception as e:
             logger.error(f"Audio playback failed: {e}")
+        finally:
+            # Notify that AI has stopped speaking
+            if self.on_speaking_changed:
+                self.on_speaking_changed(False)
 
     def cleanup(self):
         """Clean up resources."""

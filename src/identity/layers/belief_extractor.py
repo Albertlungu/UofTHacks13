@@ -50,7 +50,16 @@ class BeliefExtractor:
 
             # Attempt to parse JSON
             try:
-                result = json.loads(response.text)
+                response_text = response.text.strip()
+                if response_text.startswith("```json"):
+                    response_text = response_text[7:]
+                if response_text.startswith("```"):
+                    response_text = response_text[3:]
+                if response_text.endswith("```"):
+                    response_text = response_text[:-3]
+                response_text = response_text.strip()
+
+                result = json.loads(response_text)
             except json.JSONDecodeError as e:
                 logger.error(
                     f"JSON decoding error in belief extraction: {e}. Raw response: '{response.text}'"

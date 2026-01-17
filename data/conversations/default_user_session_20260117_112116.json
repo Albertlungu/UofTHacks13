@@ -1,0 +1,97 @@
+{
+  "user_id": "default_user",
+  "exchange_count": 15,
+  "last_analysis_at": 0,
+  "exchanges": [
+    {
+      "timestamp": "2026-01-17T11:21:28.266733",
+      "user_text": "iPhone. Shit, that's not my phone.",
+      "ai_response": "Haha, whoops! Whose is it?",
+      "exchange_number": 1
+    },
+    {
+      "timestamp": "2026-01-17T11:21:31.788922",
+      "user_text": "Thanks a lot.",
+      "ai_response": "No problem! What for?",
+      "exchange_number": 2
+    },
+    {
+      "timestamp": "2026-01-17T11:21:38.727421",
+      "user_text": "Well, not mine, that's my friend's.",
+      "ai_response": "Ah, gotcha. You gonna give it back?",
+      "exchange_number": 3
+    },
+    {
+      "timestamp": "2026-01-17T11:21:48.800856",
+      "user_text": "that's my friend's phone. That might be a good idea, yeah.",
+      "ai_response": "Yeah, probably a good move, haha.",
+      "exchange_number": 4
+    },
+    {
+      "timestamp": "2026-01-17T11:21:59.048646",
+      "user_text": "Anyways, how's your day been?",
+      "ai_response": "Pretty good! Just chillin'. How about yours?",
+      "exchange_number": 5
+    },
+    {
+      "timestamp": "2026-01-17T11:22:12.523709",
+      "user_text": "Uh, busy, sleepless, tired.",
+      "ai_response": "Oof, rough day, huh? What's been keeping you so busy?",
+      "exchange_number": 6
+    },
+    {
+      "timestamp": "2026-01-17T11:22:18.570128",
+      "user_text": "You know, I'm kind of at a hackathon right now, I haven't slept a wink, so.",
+      "ai_response": "A hackathon? No sleep makes sense then. What are you building?",
+      "exchange_number": 7
+    },
+    {
+      "timestamp": "2026-01-17T11:22:24.097017",
+      "user_text": "Well, the hackathon is going to keep on being busy.",
+      "ai_response": "Yeah, hackathons tend to do that! What part are you stuck on right now?",
+      "exchange_number": 8
+    },
+    {
+      "timestamp": "2026-01-17T11:22:31.609445",
+      "user_text": "an AI app.",
+      "ai_response": "Nice! What kind of AI app? Something specific?",
+      "exchange_number": 9
+    },
+    {
+      "timestamp": "2026-01-17T11:22:36.343342",
+      "user_text": "interesting that because it tries to copy whatever the hell I do.",
+      "ai_response": "Haha, sounds like it's working *too* well! What's it supposed to do?",
+      "exchange_number": 10
+    },
+    {
+      "timestamp": "2026-01-17T11:22:45.030031",
+      "user_text": "Yeah, hopefully, how do I, how do I just score?",
+      "ai_response": "Score as in...win the hackathon? What are the judges looking for?",
+      "exchange_number": 11
+    },
+    {
+      "timestamp": "2026-01-17T11:23:41.628535",
+      "user_text": "What's my phone? Hmm? Bro, I have it. You don't? No, I went downstairs thinking it was mine because I saw this and I was like",
+      "ai_response": "Hey, real quick - what's the main thing you're trying to figure out right now about the AI app? Is it how to make it stand out to the judges?",
+      "exchange_number": 12
+    },
+    {
+      "timestamp": "2026-01-17T11:23:43.441208",
+      "user_text": "We have the same phone.",
+      "ai_response": "Ah, the phones. Got it. Anyway, back to the AI app... what makes yours special?",
+      "exchange_number": 13
+    },
+    {
+      "timestamp": "2026-01-17T11:23:46.058885",
+      "user_text": "and not play my bad game.",
+      "ai_response": "Gotcha. So you want it to be unique and not just copy you? What's the core idea behind the app? What problem does it solve?",
+      "exchange_number": 14
+    },
+    {
+      "timestamp": "2026-01-17T11:23:50.555072",
+      "user_text": "Oh",
+      "ai_response": "Haha, \"oh\" as in you just had a realization? Spill the beans!",
+      "exchange_number": 15
+    }
+  ]
+}

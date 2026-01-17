@@ -7,6 +7,7 @@ Coordinates analysis triggers, background workers, and profile updates.
 
 import json
 import os
+from datetime import datetime
 from typing import Any, Dict, Optional
 
 from loguru import logger
@@ -124,7 +125,9 @@ class IdentityManager:
             return
 
         self.identity_profile.communication_style = CommunicationStyle(**result)
-        self.identity_profile.update_timestamp()
+        self.identity_profile.update_timestamp(
+            "communication_style", datetime.now().isoformat()
+        )
         self._save_profile()
         self._profile_updated = True
         logger.info(
@@ -157,7 +160,9 @@ class IdentityManager:
         merged = self.belief_extractor.merge_beliefs(existing_dict, result)
 
         self.identity_profile.opinions_beliefs = OpinionsBeliefs(**merged)
-        self.identity_profile.update_timestamp()
+        self.identity_profile.update_timestamp(
+            "opinions_beliefs", datetime.now().isoformat()
+        )
         self._save_profile()
         self._profile_updated = True
         logger.info(f"Beliefs updated ({len(result.get('beliefs', []))} new beliefs)")
@@ -184,7 +189,9 @@ class IdentityManager:
             return
 
         self.identity_profile.thought_patterns = ThoughtPatterns(**result)
-        self.identity_profile.update_timestamp()
+        self.identity_profile.update_timestamp(
+            "thought_patterns", datetime.now().isoformat()
+        )
         self._save_profile()
         self._profile_updated = True
         logger.info("Thought patterns updated")
@@ -215,7 +222,9 @@ class IdentityManager:
         merged = self.memory_extractor.merge_memory(existing_dict, result)
 
         self.identity_profile.memory_context = MemoryContext(**merged)
-        self.identity_profile.update_timestamp()
+        self.identity_profile.update_timestamp(
+            "memory_context", datetime.now().isoformat()
+        )
         self._save_profile()
         self._profile_updated = True
         logger.info(
