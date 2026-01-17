@@ -13,3 +13,4 @@
 - This means that when the user offers an idea, based on their personality, Gemini will either support, reject, or offer counter-ideas.
 - The camera analyzes the user's face, determining their expression, sending it to Gemini, which will then act accordingly.
 - The companion's projection will be displayed on a MacBook
+- The cameras are on a sort of plate that has a large radius to replicate "rails" to be able to follow the users in a straight line (and not in a circle)
