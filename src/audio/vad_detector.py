@@ -36,8 +36,9 @@ class VADDetector:
         self.frame_duration_ms = VAD_FRAME_DURATION_MS
         self.frame_size = int(self.sample_rate * self.frame_duration_ms / 1000)
 
-        # User profile for adaptive behavior
-        self.user_profile = user_profile
+        # CALIBRATION CODE - COMMENTED OUT
+        # # User profile for adaptive behavior
+        # self.user_profile = user_profile
 
         # State tracking
         self.is_speaking = False
@@ -47,46 +48,47 @@ class VADDetector:
         self.total_silence_duration = 0.0
         self.last_speech_end_time = 0.0
 
-        # Adaptive thresholds (will be overridden by profile if calibrated)
+        # Use fixed thresholds (no adaptive behavior)
         self.current_silence_threshold = INITIAL_SILENCE_THRESHOLD
         self.current_thinking_threshold = THINKING_PAUSE_THRESHOLD
         self.current_max_silence = MAX_SILENCE_BEFORE_INTERRUPT
 
-        # Load thresholds from profile if calibrated
-        if user_profile and user_profile.is_calibrated:
-            self.current_silence_threshold = user_profile.silence_threshold
-            self.current_thinking_threshold = user_profile.thinking_pause_threshold
-            self.current_max_silence = user_profile.max_silence_before_interrupt
-            logger.info(
-                f"Loaded calibrated thresholds: "
-                f"silence={self.current_silence_threshold:.2f}s, "
-                f"thinking={self.current_thinking_threshold:.2f}s"
-            )
+        # CALIBRATION CODE - COMMENTED OUT
+        # # Load thresholds from profile if calibrated
+        # if user_profile and user_profile.is_calibrated:
+        #     self.current_silence_threshold = user_profile.silence_threshold
+        #     self.current_thinking_threshold = user_profile.thinking_pause_threshold
+        #     self.current_max_silence = user_profile.max_silence_before_interrupt
+        #     logger.info(
+        #         f"Loaded calibrated thresholds: "
+        #         f"silence={self.current_silence_threshold:.2f}s, "
+        #         f"thinking={self.current_thinking_threshold:.2f}s"
+        #     )
 
-        # Calibration state
-        self.is_calibrating = user_profile and not user_profile.is_calibrated
-        self.calibration_start_time = time.time() if self.is_calibrating else None
+        # # Calibration state
+        # self.is_calibrating = user_profile and not user_profile.is_calibrated
+        # self.calibration_start_time = time.time() if self.is_calibrating else None
 
-        # During calibration, add buffer time
-        if self.is_calibrating:
-            self.current_silence_threshold += CALIBRATION_SILENCE_BUFFER
-            self.current_thinking_threshold += CALIBRATION_SILENCE_BUFFER
-            logger.info(f"Calibration mode active - using lenient thresholds")
+        # # During calibration, add buffer time
+        # if self.is_calibrating:
+        #     self.current_silence_threshold += CALIBRATION_SILENCE_BUFFER
+        #     self.current_thinking_threshold += CALIBRATION_SILENCE_BUFFER
+        #     logger.info(f"Calibration mode active - using lenient thresholds")
 
         # Thinking mode
         self.in_thinking_mode = False
 
-        # Pause tracking for learning
-        self.current_pause_start = None
-        self.pause_location = "unknown"
-        self.resumed_after_pause = False
+        # CALIBRATION CODE - COMMENTED OUT
+        # # Pause tracking for learning
+        # self.current_pause_start = None
+        # self.pause_location = "unknown"
+        # self.resumed_after_pause = False
 
         # Ring buffer for smoothing
         self.ring_buffer = collections.deque(maxlen=10)
 
         logger.info(
-            f"VAD initialized (mode: {VAD_MODE}, frame: {VAD_FRAME_DURATION_MS}ms, "
-            f"calibrating: {self.is_calibrating})"
+            f"VAD initialized (mode: {VAD_MODE}, frame: {VAD_FRAME_DURATION_MS}ms)"
         )
 
     def process_frame(self, frame: bytes) -> Optional[Tuple[str, Optional[dict]]]:
@@ -101,16 +103,17 @@ class VADDetector:
             - state: 'speech_start', 'speech_continue', 'silence', 'speech_end', or None
             - pause_info: Dict with pause details if a pause was detected, None otherwise
         """
-        # Check if calibration should end
-        if self.is_calibrating and self.calibration_start_time:
-            elapsed = time.time() - self.calibration_start_time
-            if elapsed >= CALIBRATION_DURATION:
-                if self.user_profile.total_words_spoken >= MIN_CALIBRATION_WORDS:
-                    self._end_calibration()
-                else:
-                    logger.info(
-                        f"Extending calibration (only {self.user_profile.total_words_spoken} words)"
-                    )
+        # CALIBRATION CODE - COMMENTED OUT
+        # # Check if calibration should end
+        # if self.is_calibrating and self.calibration_start_time:
+        #     elapsed = time.time() - self.calibration_start_time
+        #     if elapsed >= CALIBRATION_DURATION:
+        #         if self.user_profile.total_words_spoken >= MIN_CALIBRATION_WORDS:
+        #             self._end_calibration()
+        #         else:
+        #             logger.info(
+        #                 f"Extending calibration (only {self.user_profile.total_words_spoken} words)"
+        #             )
 
         # Ensure frame is correct size
         if len(frame) != self.frame_size * 2:  # *2 because int16 is 2 bytes
@@ -143,24 +146,25 @@ class VADDetector:
                 self.is_speaking = True
                 self.in_thinking_mode = False
 
-                # Check if this is resuming after a pause
-                if self.current_pause_start is not None:
-                    pause_duration = time.time() - self.current_pause_start
-                    self.resumed_after_pause = True
+                # CALIBRATION CODE - COMMENTED OUT
+                # # Check if this is resuming after a pause
+                # if self.current_pause_start is not None:
+                #     pause_duration = time.time() - self.current_pause_start
+                #     self.resumed_after_pause = True
 
-                    # This was a thinking pause!
-                    pause_info = {
-                        "duration": pause_duration,
-                        "location": self.pause_location,
-                        "was_thinking_pause": True,
-                    }
-                    logger.debug(
-                        f"User resumed after {pause_duration:.2f}s pause - marked as thinking"
-                    )
-                    self.current_pause_start = None
+                #     # This was a thinking pause!
+                #     pause_info = {
+                #         "duration": pause_duration,
+                #         "location": self.pause_location,
+                #         "was_thinking_pause": True,
+                #     }
+                #     logger.debug(
+                #         f"User resumed after {pause_duration:.2f}s pause - marked as thinking"
+                #     )
+                #     self.current_pause_start = None
 
                 logger.debug("Speech detected - START")
-                return "speech_start", pause_info
+                return "speech_start", None  # No pause_info
             else:
                 return "speech_continue", None
         else:
@@ -170,14 +174,15 @@ class VADDetector:
             self.total_silence_duration += frame_duration
 
             if self.is_speaking:
-                # Mark pause start if not already marked
-                if self.current_pause_start is None:
-                    self.current_pause_start = time.time()
-                    # Determine pause location based on speech duration
-                    if self.total_speech_duration < 3.0:
-                        self.pause_location = "within_sentence"
-                    else:
-                        self.pause_location = "between_sentences"
+                # CALIBRATION CODE - COMMENTED OUT
+                # # Mark pause start if not already marked
+                # if self.current_pause_start is None:
+                #     self.current_pause_start = time.time()
+                #     # Determine pause location based on speech duration
+                #     if self.total_speech_duration < 3.0:
+                #         self.pause_location = "within_sentence"
+                #     else:
+                #         self.pause_location = "between_sentences"
 
                 # Determine what kind of silence this is
                 silence_duration = self.silence_frames * frame_duration
@@ -186,8 +191,7 @@ class VADDetector:
                     # User explicitly asked to wait
                     if silence_duration > self.current_max_silence:
                         logger.info("Thinking pause exceeded max duration")
-                        pause_info = self._create_pause_info(silence_duration, False)
-                        return self._end_speech(), pause_info
+                        return self._end_speech(), None  # No pause_info
                     return "silence", None
 
                 elif silence_duration > self.current_thinking_threshold:
@@ -196,8 +200,7 @@ class VADDetector:
                         # Too short to be meaningful
                         return "silence", None
                     logger.debug(f"Long pause detected: {silence_duration:.2f}s")
-                    pause_info = self._create_pause_info(silence_duration, False)
-                    return self._end_speech(), pause_info
+                    return self._end_speech(), None  # No pause_info
 
                 elif silence_duration > self.current_silence_threshold:
                     # Standard silence threshold reached
@@ -205,8 +208,7 @@ class VADDetector:
                         logger.debug(
                             f"Silence threshold reached: {silence_duration:.2f}s"
                         )
-                        pause_info = self._create_pause_info(silence_duration, False)
-                        return self._end_speech(), pause_info
+                        return self._end_speech(), None  # No pause_info
                     else:
                         logger.debug("Speech too short, waiting for more")
                         return "silence", None
@@ -215,13 +217,14 @@ class VADDetector:
 
             return None, None
 
-    def _create_pause_info(self, duration: float, was_thinking: bool) -> dict:
-        """Create pause info dictionary."""
-        return {
-            "duration": duration,
-            "location": self.pause_location,
-            "was_thinking_pause": was_thinking,
-        }
+    # CALIBRATION CODE - COMMENTED OUT
+    # def _create_pause_info(self, duration: float, was_thinking: bool) -> dict:
+    #     """Create pause info dictionary."""
+    #     return {
+    #         "duration": duration,
+    #         "location": self.pause_location,
+    #         "was_thinking_pause": was_thinking,
+    #     }
 
     def _end_speech(self) -> str:
         """Handle speech ending."""
@@ -230,21 +233,22 @@ class VADDetector:
         logger.info(f"Speech ended (duration: {self.total_speech_duration:.2f}s)")
         return "speech_end"
 
-    def _end_calibration(self):
-        """End calibration phase and apply learned thresholds."""
-        self.is_calibrating = False
+    # CALIBRATION CODE - COMMENTED OUT
+    # def _end_calibration(self):
+    #     """End calibration phase and apply learned thresholds."""
+    #     self.is_calibrating = False
 
-        # Remove calibration buffer
-        self.current_silence_threshold = self.user_profile.silence_threshold
-        self.current_thinking_threshold = self.user_profile.thinking_pause_threshold
-        self.current_max_silence = self.user_profile.max_silence_before_interrupt
+    #     # Remove calibration buffer
+    #     self.current_silence_threshold = self.user_profile.silence_threshold
+    #     self.current_thinking_threshold = self.user_profile.thinking_pause_threshold
+    #     self.current_max_silence = self.user_profile.max_silence_before_interrupt
 
-        logger.info(
-            f"Calibration complete! Applied thresholds: "
-            f"silence={self.current_silence_threshold:.2f}s, "
-            f"thinking={self.current_thinking_threshold:.2f}s, "
-            f"max={self.current_max_silence:.2f}s"
-        )
+    #     logger.info(
+    #         f"Calibration complete! Applied thresholds: "
+    #         f"silence={self.current_silence_threshold:.2f}s, "
+    #         f"thinking={self.current_thinking_threshold:.2f}s, "
+    #         f"max={self.current_max_silence:.2f}s"
+    #     )
 
     def enter_thinking_mode(self):
         """Enter thinking mode - more tolerant of silence."""
@@ -275,8 +279,9 @@ class VADDetector:
         self.total_silence_duration = 0.0
         self.ring_buffer.clear()
         self.in_thinking_mode = False
-        self.current_pause_start = None
-        self.resumed_after_pause = False
+        # CALIBRATION CODE - COMMENTED OUT
+        # self.current_pause_start = None
+        # self.resumed_after_pause = False
         logger.debug("VAD state reset")
 
     def get_speech_duration(self) -> float:

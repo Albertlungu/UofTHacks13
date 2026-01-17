@@ -155,10 +155,11 @@ class AudioStreamManager:
             )
             self.transcription_thread.start()
 
-            if self.vad.is_calibrating:
-                logger.info("Audio stream started - CALIBRATION MODE (first 45-60s)")
-            else:
-                logger.info("Audio stream started - now listening")
+            # CALIBRATION CODE - COMMENTED OUT
+            # if self.vad.is_calibrating:
+            #     logger.info("Audio stream started - CALIBRATION MODE (first 45-60s)")
+            # else:
+            logger.info("Audio stream started - now listening")
 
         except Exception as e:
             logger.error(f"Failed to start audio stream: {e}")
@@ -170,9 +171,10 @@ class AudioStreamManager:
         logger.info("Stopping audio stream...")
         self.is_running = False
 
-        # Save profile before stopping
-        if self.user_profile:
-            self.profile_manager.save_profile(self.user_profile)
+        # CALIBRATION CODE - COMMENTED OUT
+        # # Save profile before stopping
+        # if self.user_profile:
+        #     self.profile_manager.save_profile(self.user_profile)
 
         # Wait for threads to finish
         if self.capture_thread:
@@ -209,19 +211,21 @@ class AudioStreamManager:
                     # Process with VAD (returns tuple now)
                     vad_result, pause_info = self.vad.process_frame(frame)
 
-                    # Handle pause information
-                    if pause_info:
-                        pause = PausePattern(
-                            duration=pause_info["duration"],
-                            location=pause_info["location"],
-                            was_thinking_pause=pause_info["was_thinking_pause"],
-                        )
-                        self.profile_manager.add_pause(self.user_profile, pause)
+                    # CALIBRATION CODE - COMMENTED OUT
+                    # # Handle pause information
+                    # if pause_info:
+                    #     pause = PausePattern(
+                    #         duration=pause_info["duration"],
+                    #         location=pause_info["location"],
+                    #         was_thinking_pause=pause_info["was_thinking_pause"],
+                    #     )
+                    #     self.profile_manager.add_pause(self.user_profile, pause)
 
                     if vad_result == "speech_start":
                         self.is_listening = True
                         self.audio_buffer = [frame]
-                        self.speaking_rate_calc.start_speech_segment()
+                        # CALIBRATION CODE - COMMENTED OUT
+                        # self.speaking_rate_calc.start_speech_segment()
                         logger.debug("Started recording")
 
                     elif vad_result == "speech_continue":
@@ -290,71 +294,73 @@ class AudioStreamManager:
                     text = result["text"].strip()
                     logger.info(f'Transcribed: "{text}"')
 
-                    # Update speaking rate
-                    wpm = self.speaking_rate_calc.end_speech_segment(text)
-                    if wpm:
-                        learning_rate = (
-                            CALIBRATION_LEARNING_RATE
-                            if self.vad.is_calibrating
-                            else POST_CALIBRATION_LEARNING_RATE
-                        )
-                        self.profile_manager.update_speaking_rate(
-                            self.user_profile, wpm, learning_rate
-                        )
+                    # CALIBRATION CODE - COMMENTED OUT
+                    # # Update speaking rate
+                    # wpm = self.speaking_rate_calc.end_speech_segment(text)
+                    # if wpm:
+                    #     learning_rate = (
+                    #         CALIBRATION_LEARNING_RATE
+                    #         if self.vad.is_calibrating
+                    #         else POST_CALIBRATION_LEARNING_RATE
+                    #     )
+                    #     self.profile_manager.update_speaking_rate(
+                    #         self.user_profile, wpm, learning_rate
+                    #     )
 
-                    # Update pause statistics
-                    learning_rate = (
-                        CALIBRATION_LEARNING_RATE
-                        if self.vad.is_calibrating
-                        else POST_CALIBRATION_LEARNING_RATE
-                    )
-                    self.profile_manager.update_statistics(
-                        self.user_profile, learning_rate
-                    )
+                    # # Update pause statistics
+                    # learning_rate = (
+                    #     CALIBRATION_LEARNING_RATE
+                    #     if self.vad.is_calibrating
+                    #     else POST_CALIBRATION_LEARNING_RATE
+                    # )
+                    # self.profile_manager.update_statistics(
+                    #     self.user_profile, learning_rate
+                    # )
 
-                    # Update word count for calibration
-                    if self.vad.is_calibrating:
-                        word_count = len(text.split())
-                        self.user_profile.total_words_spoken += word_count
-                        self.user_profile.calibration_time = (
-                            time.time() - self.vad.calibration_start_time
-                        )
+                    # # Update word count for calibration
+                    # if self.vad.is_calibrating:
+                    #     word_count = len(text.split())
+                    #     self.user_profile.total_words_spoken += word_count
+                    #     self.user_profile.calibration_time = (
+                    #         time.time() - self.vad.calibration_start_time
+                    #     )
 
-                        # Collect transcripts for style analysis
-                        self.calibration_manager.add_calibration_transcript(text)
+                    #     # Collect transcripts for style analysis
+                    #     self.calibration_manager.add_calibration_transcript(text)
 
-                    # Check if calibration just completed
-                    if (
-                        not self.vad.is_calibrating
-                        and not self.user_profile.is_calibrated
-                    ):
-                        self.profile_manager.complete_calibration(self.user_profile)
+                    # # Check if calibration just completed
+                    # if (
+                    #     not self.vad.is_calibrating
+                    #     and not self.user_profile.is_calibrated
+                    # ):
+                    #     self.profile_manager.complete_calibration(self.user_profile)
 
-                    # Start style analysis if calibration is done and we haven't started yet
-                    if (
-                        not self.vad.is_calibrating
-                        and self.user_profile.is_calibrated
-                        and not self.style_analysis_started
-                        and len(self.calibration_manager.calibration_transcripts) > 0
-                    ):
-                        self.style_analysis_started = True
-                        logger.info(
-                            "Starting background style analysis with HelpingAI..."
-                        )
-                        self.calibration_manager.start_style_analysis(
-                            callback=self._on_style_analysis_complete
-                        )
+                    # # Start style analysis if calibration is done and we haven't started yet
+                    # if (
+                    #     not self.vad.is_calibrating
+                    #     and self.user_profile.is_calibrated
+                    #     and not self.style_analysis_started
+                    #     and len(self.calibration_manager.calibration_transcripts) > 0
+                    # ):
+                    #     self.style_analysis_started = True
+                    #     logger.info(
+                    #         "Starting background style analysis with HelpingAI..."
+                    #     )
+                    #     self.calibration_manager.start_style_analysis(
+                    #         callback=self._on_style_analysis_complete
+                    #     )
 
                     # Check for special commands
                     text_lower = text.lower()
 
-                    if any(cmd in text_lower for cmd in RECALIBRATE_COMMANDS):
-                        logger.info("User requested recalibration")
-                        self.profile_manager.reset_calibration(self.user_profile)
-                        self.vad = VADDetector(user_profile=self.user_profile)
-                        self.speaking_rate_calc.reset()
+                    # CALIBRATION CODE - COMMENTED OUT
+                    # if any(cmd in text_lower for cmd in RECALIBRATE_COMMANDS):
+                    #     logger.info("User requested recalibration")
+                    #     self.profile_manager.reset_calibration(self.user_profile)
+                    #     self.vad = VADDetector(user_profile=self.user_profile)
+                    #     self.speaking_rate_calc.reset()
 
-                    elif any(cmd in text_lower for cmd in NEED_MORE_TIME_COMMANDS):
+                    if any(cmd in text_lower for cmd in NEED_MORE_TIME_COMMANDS):
                         logger.info("User needs more time")
                         self.vad.adjust_for_more_time()
 
@@ -381,29 +387,31 @@ class AudioStreamManager:
 
         logger.info("Transcription loop ended")
 
-    def _on_style_analysis_complete(self, style_summary: str):
-        """
-        Called when style analysis completes in background.
+    # CALIBRATION CODE - COMMENTED OUT
+    # def _on_style_analysis_complete(self, style_summary: str):
+    #     """
+    #     Called when style analysis completes in background.
+    #
+    #     Args:
+    #         style_summary: The generated style summary
+    #     """
+    #     logger.info("Style analysis complete! Summary available for Gemini.")
+    #     logger.debug(f"Style summary preview: {style_summary[:200]}...")
 
-        Args:
-            style_summary: The generated style summary
-        """
-        logger.info("Style analysis complete! Summary available for Gemini.")
-        logger.debug(f"Style summary preview: {style_summary[:200]}...")
-
-    def get_style_summary_for_gemini(self) -> Optional[str]:
-        """
-        Get the formatted style summary for Gemini.
-
-        Returns:
-            Formatted style summary, or None if not available yet
-        """
-        return self.calibration_manager.get_style_summary_for_gemini()
+    # def get_style_summary_for_gemini(self) -> Optional[str]:
+    #     """
+    #     Get the formatted style summary for Gemini.
+    #
+    #     Returns:
+    #         Formatted style summary, or None if not available yet
+    #     """
+    #     return self.calibration_manager.get_style_summary_for_gemini()
 
     def cleanup(self):
         """Clean up all resources."""
         self.stop()
-        self.calibration_manager.cleanup()
+        # CALIBRATION CODE - COMMENTED OUT
+        # self.calibration_manager.cleanup()
         self.device_manager.cleanup()
         self.audio.terminate()
         logger.info("AudioStreamManager cleaned up")
