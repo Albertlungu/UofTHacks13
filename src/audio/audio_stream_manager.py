@@ -27,6 +27,7 @@ from src.audio.audio_config import (
     VAD_FRAME_DURATION_MS,
 )
 from src.audio.audio_device_manager import AudioDeviceManager
+from src.audio.calibration_manager import CalibrationManager
 from src.audio.speaking_rate import SpeakingRateCalculator
 from src.audio.user_profile import PausePattern, UserProfileManager
 from src.audio.vad_detector import VADDetector
@@ -60,6 +61,11 @@ class AudioStreamManager:
         self.transcriber = WhisperTranscriber()
         self.speaking_rate_calc = SpeakingRateCalculator()
 
+        # Calibration manager for style analysis
+        self.calibration_manager = CalibrationManager(
+            self.profile_manager, self.user_profile
+        )
+
         self.on_transcription = on_transcription
 
         # Audio stream
@@ -77,6 +83,9 @@ class AudioStreamManager:
         self.capture_thread: Optional[threading.Thread] = None
         self.transcription_queue = queue.Queue()
         self.transcription_thread: Optional[threading.Thread] = None
+
+        # Track if we've triggered style analysis for this session
+        self.style_analysis_started = False
 
         logger.info(
             f"AudioStreamManager initialized for user '{user_id}' "
@@ -308,12 +317,30 @@ class AudioStreamManager:
                             time.time() - self.vad.calibration_start_time
                         )
 
+                        # Collect transcripts for style analysis
+                        self.calibration_manager.add_calibration_transcript(text)
+
                     # Check if calibration just completed
                     if (
                         not self.vad.is_calibrating
                         and not self.user_profile.is_calibrated
                     ):
                         self.profile_manager.complete_calibration(self.user_profile)
+
+                    # Start style analysis if calibration is done and we haven't started yet
+                    if (
+                        not self.vad.is_calibrating
+                        and self.user_profile.is_calibrated
+                        and not self.style_analysis_started
+                        and len(self.calibration_manager.calibration_transcripts) > 0
+                    ):
+                        self.style_analysis_started = True
+                        logger.info(
+                            "Starting background style analysis with HelpingAI..."
+                        )
+                        self.calibration_manager.start_style_analysis(
+                            callback=self._on_style_analysis_complete
+                        )
 
                     # Check for special commands
                     text_lower = text.lower()
@@ -351,9 +378,29 @@ class AudioStreamManager:
 
         logger.info("Transcription loop ended")
 
+    def _on_style_analysis_complete(self, style_summary: str):
+        """
+        Called when style analysis completes in background.
+
+        Args:
+            style_summary: The generated style summary
+        """
+        logger.info("Style analysis complete! Summary available for Gemini.")
+        logger.debug(f"Style summary preview: {style_summary[:200]}...")
+
+    def get_style_summary_for_gemini(self) -> Optional[str]:
+        """
+        Get the formatted style summary for Gemini.
+
+        Returns:
+            Formatted style summary, or None if not available yet
+        """
+        return self.calibration_manager.get_style_summary_for_gemini()
+
     def cleanup(self):
         """Clean up all resources."""
         self.stop()
+        self.calibration_manager.cleanup()
         self.device_manager.cleanup()
         self.audio.terminate()
         logger.info("AudioStreamManager cleaned up")

@@ -1,0 +1,12 @@
+[
+    {
+        "timestamp": "2026-01-17T06:11:54.309520",
+        "user": "on CPU now, I don't know why it's running on CPU. It's a brand CPU on GPU. You can also see how it goes from there."
+    },
+    {
+        "timestamp": "2026-01-17T06:11:55.312098",
+        "companion": "Ugh, that's annoying. What have you tried so far to force it to the GPU?",
+        "thinking_time": 0.5925440788269043,
+        "total_time": 0.592998743057251
+    }
+]

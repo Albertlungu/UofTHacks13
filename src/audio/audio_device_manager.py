@@ -1,23 +1,27 @@
 """
+./src/audio/audio_device_manager.py
+
 Audio device manager for detecting and connecting to AirPods.
 """
 
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Union
 
 import pyaudio
 from loguru import logger
 
 
 class AudioDeviceManager:
-    """Manages audio input/output devices, specifically for AirPods."""
+    """Manages audio I/O devices, specifically for AirPods."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.audio = pyaudio.PyAudio()
         self.input_device_index: Optional[int] = None
         self.output_device_index: Optional[int] = None
 
     def list_all_devices(self) -> List[Dict]:
-        """List all available audio devices."""
+        """
+        List all available audio devices.
+        """
         devices = []
         for i in range(self.audio.get_device_count()):
             try:
@@ -77,7 +81,7 @@ class AudioDeviceManager:
 
         return None
 
-    def get_default_input_device(self) -> int:
+    def get_default_input_device(self) -> Union[str, int, float]:
         """Get the default input device index."""
         try:
             device_info = self.audio.get_default_input_device_info()

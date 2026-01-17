@@ -13,13 +13,15 @@ VAD_MODE = 2  # WebRTC VAD aggressiveness (0-3, where 3 is most aggressive)
 VAD_FRAME_DURATION_MS = 30  # Must be 10, 20, or 30ms
 
 # Silence detection settings
-INITIAL_SILENCE_THRESHOLD = 1.5  # Seconds of silence before transcription
-THINKING_PAUSE_THRESHOLD = 3.0  # Seconds before considering it a "thinking pause"
-MAX_SILENCE_BEFORE_INTERRUPT = 5.0  # Seconds before companion can interrupt
+INITIAL_SILENCE_THRESHOLD = (
+    0.5  # Seconds of silence before transcription (MAXIMUM SPEED)
+)
+THINKING_PAUSE_THRESHOLD = 2.0  # Seconds before considering it a "thinking pause"
+MAX_SILENCE_BEFORE_INTERRUPT = 4.0  # Seconds before companion can interrupt
 MIN_SPEECH_DURATION = 0.5  # Minimum seconds of speech to process
 
 # Audio buffering
-MAX_RECORDING_DURATION = 30  # Maximum seconds per recording chunk
+MAX_RECORDING_DURATION = 120  # Maximum seconds per recording chunk (2 minutes)
 BUFFER_PADDING_MS = 300  # Padding before/after speech for context
 
 # Whisper settings

@@ -1,23 +1,27 @@
-<<<<<<< HEAD
-opencv-python==4.8.1.78
-flask==3.0.0
-flask-cors==4.0.0
-numpy<2.0.0
-=======
 # Core dependencies
 python-dotenv==1.0.0
 
-# AI and ML (for later integration)
-google-generativeai==0.3.2
+# AI and ML
+google-genai>=0.5.0
 elevenlabs==0.2.27
+torch>=2.0.0
+transformers>=4.35.0
+accelerate>=0.25.0
 
-# Audio Pipeline - REQUIRED
-faster-whisper>=1.0.3  # Let pip find compatible version
+# Audio Pipeline
+faster-whisper>=1.0.3
 pyaudio==0.2.14
 numpy==1.26.3
 webrtcvad==2.0.10
 
-# Utilities - REQUIRED
+# Computer Vision (for camera tracking)
+opencv-python==4.9.0.80
+
+# Web (for UI)
+flask==3.0.0
+flask-cors==4.0.0
+
+# Utilities
 loguru==0.7.2
 colorama==0.4.6
 
