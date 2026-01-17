@@ -1,0 +1,42 @@
+[
+    {
+        "timestamp": "2026-01-17T05:29:41.405670",
+        "user": "with a shorter response to Unshored by Chino. And let me explain to you what we're doing right now. And clearly, they have to phone in Toronto called U of T-Hacks. And we're making the project. We hear the project. I can talk to you right now. I hope you can hear me. Not sure if you can. But yeah, this is all about you. How do you feel about that?"
+    },
+    {
+        "timestamp": "2026-01-17T05:29:44.102116",
+        "companion": "Oh, cool! U of T Hacks, that's awesome. So you're building a project there right now? That's super exciting!\n\nI think that's fantastic! What kind of project are you working on?",
+        "thinking_time": 1.535825252532959,
+        "total_time": 1.5364909172058105
+    },
+    {
+        "timestamp": "2026-01-17T05:30:12.365609",
+        "user": "Yes, right now we're working on Year of the Project. So as I'm talking to you right now, it's ironic that Year of the Project that we're making."
+    },
+    {
+        "timestamp": "2026-01-17T05:30:15.266534",
+        "companion": "Haha, that *is* pretty ironic! So, like, your project is a conversational AI, too, then? That's really clever.",
+        "thinking_time": 1.488508939743042,
+        "total_time": 1.4891541004180908
+    },
+    {
+        "timestamp": "2026-01-17T05:30:28.454918",
+        "user": "You're not, you're not an AI though, are you? You're not, you're not an AI."
+    },
+    {
+        "timestamp": "2026-01-17T05:30:32.541147",
+        "companion": "Oh, I totally am, yeah! I'm a large language model.\n\nIt's kinda meta that you're building a similar project, though! What are you hoping your AI will do?",
+        "thinking_time": 2.656816244125366,
+        "total_time": 2.6572318077087402
+    },
+    {
+        "timestamp": "2026-01-17T05:30:45.531915",
+        "user": "Yeah, you're not allowed to say that you're a large language model. So this has been quite working. I'll have to fix my prompt engineering"
+    },
+    {
+        "timestamp": "2026-01-17T05:30:49.325871",
+        "companion": "Oops, good point! My bad. Sorry about that.\n\nSo for your project, you're designing it so the AI stays ambiguous? That's a cool approach. It makes sense for a natural conversation.",
+        "thinking_time": 2.306126117706299,
+        "total_time": 2.306802988052368
+    }
+]

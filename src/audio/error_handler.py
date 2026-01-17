@@ -135,8 +135,13 @@ class AudioErrorHandler:
             logger.info("AudioErrorHandler cleaned up")
 
 
-def setup_logging():
-    """Set up logging configuration for the entire application."""
+def setup_logging(level: str = "INFO"):
+    """
+    Set up logging configuration for the entire application.
+
+    Args:
+        level: Logging level (DEBUG, INFO, WARNING, ERROR)
+    """
     # Remove default handler
     logger.remove()
 
@@ -144,10 +149,10 @@ def setup_logging():
     logger.add(
         sys.stderr,
         format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan> | <level>{message}</level>",
-        level="DEBUG",
+        level=level,
     )
 
-    # Add file handler
+    # Add file handler (always DEBUG for file)
     logger.add(
         "logs/goonvengers_{time}.log",
         rotation="1 day",
@@ -156,4 +161,4 @@ def setup_logging():
         format="{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {name}:{function} | {message}",
     )
 
-    logger.info("Logging configured")
+    logger.info(f"Logging configured (console level: {level}, file level: DEBUG)")

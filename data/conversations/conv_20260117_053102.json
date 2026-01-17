@@ -1,0 +1,22 @@
+[
+    {
+        "timestamp": "2026-01-17T05:31:40.284518",
+        "user": "I'm not nine. I am trying this again with a batch 10 out of 0.5 second. Hopefully you can respond quicker. This might the need to be a problem of now the Gemini API keep you really slow."
+    },
+    {
+        "timestamp": "2026-01-17T05:31:45.952282",
+        "companion": "Gotcha. Sounds like you're really dialing in those API calls for speed. Is it the Gemini API that's giving you grief on its end?",
+        "thinking_time": 4.806295156478882,
+        "total_time": 4.806757926940918
+    },
+    {
+        "timestamp": "2026-01-17T05:32:27.589366",
+        "user": "Yeah, yeah, yeah, it's a generate API key. I mean, it's working now. You're actually working, but before what was happening is that I was trying to send so like, because I'm speaking to you right now, is this transcription, you know this from Whisperflow? I'm just speaking to you right now. So it was sending like hundreds of requests per second, which was absolutely destroying my API key."
+    },
+    {
+        "timestamp": "2026-01-17T05:32:29.145690",
+        "companion": "Ah, I see! So it was like, *way* too many rapid-fire requests hitting it. Glad it's working out better now. Must have been a pain trying to figure that out.",
+        "thinking_time": 0.6641831398010254,
+        "total_time": 0.664618968963623
+    }
+]

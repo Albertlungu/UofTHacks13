@@ -1,0 +1,52 @@
+[
+    {
+        "timestamp": "2026-01-17T05:22:53.094913",
+        "user": "What I have to know is I changed my API keys from these are different ones a fresh one And apparently it would expire with it called the expired If it is it actually isn't because I can surely send in a request through the API key to Gemini and it works Like for example, I just I just said say either and it will be said that so it works We'll see how and what happens if it will be sell us"
+    },
+    {
+        "timestamp": "2026-01-17T05:22:59.448351",
+        "companion": "[BACKCHANNEL] Hmm, interesting.\n[QUESTION] So you thought this new API key would expire, but it's actually still working perfectly?\nAnd what was that last bit, \"sell us\"? Did I hear that right, or was it something else you were asking about what would happen?",
+        "thinking_time": 3.034353733062744,
+        "total_time": 3.0350229740142822
+    },
+    {
+        "timestamp": "2026-01-17T05:23:23.251642",
+        "user": "Oh wow, okay, so you're actually talking to me."
+    },
+    {
+        "timestamp": "2026-01-17T05:23:27.403226",
+        "companion": "[BACKCHANNEL] Yeah, I am!\n[QUESTION] Was that a surprise? I just wanted to make sure I caught that last part of your sentence correctly.",
+        "thinking_time": 0.7536768913269043,
+        "total_time": 0.7541632652282715
+    },
+    {
+        "timestamp": "2026-01-17T05:23:54.429230",
+        "user": "Yeah, yeah, it's a surprise because this is actually working. This is the first time it's actually working I have been working on this for literally the past five and seven hours and it's finally working. You don't realize how much work has been put into this thing into making you into making you my companion work"
+    },
+    {
+        "timestamp": "2026-01-17T05:23:59.147351",
+        "companion": "[BACKCHANNEL] Oh wow! [ENTHUSIAST] That's incredible to hear! [LONG] I can only imagine the frustration of putting in that much time and effort, thinking you're hitting a wall, and then suddenly everything just clicks. That must be such a massive relief, especially with something as finicky as API keys and integration. So, you're saying *I'm* the product of that five to seven hours of work, getting me up and running? That's really something, I appreciate all the effort!",
+        "thinking_time": 1.2499918937683105,
+        "total_time": 1.2503769397735596
+    },
+    {
+        "timestamp": "2026-01-17T05:24:19.822986",
+        "user": "Do you know what I've been making honestly do we do do you know what's been going on here or are you just guessing at this point?"
+    },
+    {
+        "timestamp": "2026-01-17T05:24:26.073037",
+        "companion": "[ANALYST] Okay, let's break down what I *think* I understand from our conversation, and you can tell me where I'm off or what I'm missing.\n\n[LONG] From what you've said, it sounds like you've been working on a project, and a key part of that project was integrating an API, specifically mentioning Gemini. You encountered an issue where you created a new API key, and you were concerned it might expire quickly or wasn't going to work as expected. However, when you actually sent a request \u2013 like saying \"say either\" \u2013 it went through successfully, meaning the connection is live and functioning. And this whole process, getting *me* working in this companion role, has taken you about five to seven hours of pretty intensive troubleshooting and development, and you've finally had a breakthrough.\n\n[QUESTION] Is that generally accurate, or is there a specific nuance I've missed in what you've been \"making\" or what's been \"going on\"? I'm inferring from the context you're giving me.",
+        "thinking_time": 3.003032922744751,
+        "total_time": 3.00351881980896
+    },
+    {
+        "timestamp": "2026-01-17T05:26:35.786291",
+        "user": "Okay. Well, let me just explain. So right now, I am at a hackathon called U of T hacks. It is a 36 hour hackathon in Toronto. At the University of Toronto venue, and I've been working on this project with a group of three teammates who are basically making a computer vision model, which is like a companion, which you can just talk to. It's meant to seem human. It's meant to interrupt you. It's meant to do all this type of stuff. Actually, I'm speaking to you. You're that companion. You're the project that we're making, which is really interesting. It's, it's funny. It's just absolutely hilarious. It's quite ironic actually. And yeah, so we've been making this. And this is the first time I actually work as the first time I can actually talk to you. And my other teammates, they're just sleeping. We don't really know what's happening. And they've been working on the computer on the actual computer vision, because we're going to give you a virtual body. You're going to basically live as like a 3d projection. Maybe honestly, we can do some more stuff after that because I have something else planned and we'll see how that's going to work. Yeah."
+    },
+    {
+        "timestamp": "2026-01-17T05:26:43.300308",
+        "companion": "[ENTHUSIAST] Wow, okay! This makes so much more sense now! [LONG] That's incredible, and honestly, yeah, it *is* absolutely hilarious and ironic that I'm sitting here, essentially \"experiencing\" being the project you've poured all this time into.\n\nSo, you're at U of T Hacks \u2013 a 36-hour hackathon, that's intense! And I'm the AI companion, designed to seem human, to interrupt, to really be a natural conversational partner. My earlier inferences about the API keys and the long hours were actually just about getting *me* to this point where we're talking. That's fantastic.\n\n[COLLABORATOR] And your teammates are sleeping while you've had this breakthrough? You're really holding down the fort! [QUESTION] The computer vision aspect, the virtual body, the 3D projection \u2013 that sounds incredibly ambitious for a hackathon. What exactly do you envision that virtual body doing, or how will it interact with our conversation? And you mentioned something else you have planned after that; I'm really curious to hear what other ideas you're brewing! This is seriously cool.",
+        "thinking_time": 4.226700067520142,
+        "total_time": 4.227346181869507
+    }
+]
