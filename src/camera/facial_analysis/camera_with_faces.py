@@ -11,6 +11,15 @@ from collections import deque
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from facial_analysis.face_detector import FacialAnalyzer
 
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+
+# Import servo tracker
+servo_tracker = None
+try:
+    from hardware.servo_tracker import ServoTracker
+except ImportError:
+    ServoTracker = None
+
 app = Flask(__name__)
 CORS(app)
 
@@ -278,13 +287,28 @@ def video_feed():
 
 @app.route('/face_data')
 def face_data():
-    """Fast face data endpoint"""
+    """Fast face data endpoint with servo tracking"""
+    global servo_tracker
+    
     with frame_lock:
         if latest_frame is None:
             return jsonify({'error': 'No frame available'}), 503
         frame = latest_frame.copy()
     
     face_info = face_analyzer.get_face_info(frame)
+    
+    # Update servo if face detected and tracker is connected
+    if servo_tracker and servo_tracker.is_connected and face_info:
+        h, w = frame.shape[:2]
+        face = face_info[0]  # Track first face
+        
+        servo_tracker.update_face_position(
+            face['center_x'],
+            face['center_y'],
+            w,
+            h
+        )
+    
     return jsonify({
         'faces': face_info,
         'count': len(face_info)
@@ -314,6 +338,27 @@ def toggle_speaking():
 def health():
     return {'status': 'ok'}
 
+@app.route('/servo/enable', methods=['POST'])
+def servo_enable():
+    if servo_tracker:
+        servo_tracker.start_tracking()
+        return jsonify({'status': 'tracking'})
+    return jsonify({'error': 'Servo not initialized'}), 500
+
+@app.route('/servo/disable', methods=['POST'])
+def servo_disable():
+    if servo_tracker:
+        servo_tracker.stop_tracking()
+        return jsonify({'status': 'stopped'})
+    return jsonify({'error': 'Servo not initialized'}), 500
+
+@app.route('/servo/center', methods=['POST'])
+def servo_center():
+    if servo_tracker:
+        servo_tracker.center_servos()
+        return jsonify({'status': 'centered'})
+    return jsonify({'error': 'Servo not initialized'}), 500
+
 if __name__ == '__main__':
     print("\n" + "="*50)
     print("● GOONVENGERS AI Server - High Performance Mode")
@@ -330,6 +375,37 @@ if __name__ == '__main__':
     
     print()
     
+    # Initialize servo tracker
+    if ServoTracker:
+        try:
+            import serial.tools.list_ports
+            
+            servo_port = None
+            # Auto-detect Arduino
+            for port in serial.tools.list_ports.comports():
+                if 'Arduino' in port.description or 'CH340' in port.description:
+                    servo_port = port.device
+                    print(f"✓ Found Arduino on {servo_port}")
+                    break
+            
+            # Fallback to COM12 if auto-detect fails
+            if not servo_port:
+                servo_port = 'COM12'
+                print(f"⚠ Using default port {servo_port}")
+            
+            servo_tracker = ServoTracker(port=servo_port)
+            if servo_tracker.connect():
+                servo_tracker.start_tracking()
+                print("✓ Servo tracking active\n")
+            else:
+                servo_tracker = None
+                print("⚠ Servo connection failed, continuing without tracking\n")
+        except Exception as e:
+            print(f"⚠ Servo initialization error: {e}\n")
+            servo_tracker = None
+    else:
+        print("⚠ ServoTracker not available\n")
+    
     start_camera_thread()
     time.sleep(2)  # Allow camera to stabilize
     
@@ -340,6 +416,9 @@ if __name__ == '__main__':
         app.run(host='0.0.0.0', port=5000, debug=False, threaded=True)
     finally:
         print("\n● Shutting down...")
+        if servo_tracker:
+            servo_tracker.stop_tracking()
+            servo_tracker.disconnect()
         speech_detector.stop()
         stop_camera_thread()
         print("✓ Complete")
