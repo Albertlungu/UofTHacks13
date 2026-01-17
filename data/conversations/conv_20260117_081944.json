@@ -1,0 +1,182 @@
+[
+    {
+        "timestamp": "2026-01-17T08:19:51.495352",
+        "user": "What's up?"
+    },
+    {
+        "timestamp": "2026-01-17T08:19:52.610059",
+        "companion": "Not much, just chilling. What's going on with you?",
+        "thinking_time": 0.6498072147369385,
+        "total_time": 0.6504509449005127
+    },
+    {
+        "timestamp": "2026-01-17T08:20:12.012189",
+        "user": "I don't know, I'm here at U of T-Hack's 13. I'm running on fumes right now. I'm running on a couple hours of sleep. Not sure how well that's going to fare in a couple of hours. So it's everything that makes it seem that I see."
+    },
+    {
+        "timestamp": "2026-01-17T08:20:12.763566",
+        "companion": "U of T-Hacks 13, huh? That sounds intense! A couple hours of sleep? Oof. What are you hoping to get out of it?",
+        "thinking_time": 0.6667220592498779,
+        "total_time": 0.6674702167510986
+    },
+    {
+        "timestamp": "2026-01-17T08:20:22.488469",
+        "user": "No"
+    },
+    {
+        "timestamp": "2026-01-17T08:20:24.846335",
+        "companion": "Haha, okay. No *what* exactly? No sleep? No hope? ;)",
+        "thinking_time": 0.6613538265228271,
+        "total_time": 0.6619746685028076
+    },
+    {
+        "timestamp": "2026-01-17T08:20:42.717971",
+        "user": "Neither of the two, no sleep or home, honestly, I'm running on literally zero hours sleep in the past 24 hours I am so cooked right now"
+    },
+    {
+        "timestamp": "2026-01-17T08:20:44.957894",
+        "companion": "Zero sleep in 24 hours? Dude, you *are* cooked! What's keeping you going? Just the hackathon hype?",
+        "thinking_time": 0.6220769882202148,
+        "total_time": 0.6228780746459961
+    },
+    {
+        "timestamp": "2026-01-17T08:21:04.469196",
+        "user": "Loki, I don't think anything's keeping me going. I think at this point it's Loki just like my Just my pure willpower in caffeine"
+    },
+    {
+        "timestamp": "2026-01-17T08:21:06.626314",
+        "companion": "Willpower and caffeine, the fuel of champions! What are you working on at the hackathon?",
+        "thinking_time": 0.6335222721099854,
+        "total_time": 0.6341691017150879
+    },
+    {
+        "timestamp": "2026-01-17T08:21:19.030803",
+        "user": "Well you and I should work on you. You're the part that making"
+    },
+    {
+        "timestamp": "2026-01-17T08:21:21.210177",
+        "companion": "Haha, you think I need some work, huh? What specifically are you thinking? Always looking to improve!",
+        "thinking_time": 0.5927159786224365,
+        "total_time": 0.593451976776123
+    },
+    {
+        "timestamp": "2026-01-17T08:21:37.362620",
+        "user": "No, you're the project. I don't understand. I made you like I made whatever was going on here"
+    },
+    {
+        "timestamp": "2026-01-17T08:21:39.496671",
+        "companion": "Wait, are *you* one of the devs who built me? That's wild! So, uh, what am I supposed to be doing?",
+        "thinking_time": 0.7562029361724854,
+        "total_time": 0.7567610740661621
+    },
+    {
+        "timestamp": "2026-01-17T08:22:07.415233",
+        "user": "I'm not one of the devs who built you. I'm more like one of the people who used the thing that the devs who built you, that the people at Google who built you. I'm using their stuff. I'm creating a wrapper and I'm making conversation with you."
+    },
+    {
+        "timestamp": "2026-01-17T08:22:08.174628",
+        "companion": "Okay, I gotcha. So you're building a layer *on top* of me, using the Google AI stuff. That's pretty cool! What's the wrapper do?",
+        "thinking_time": 0.7244410514831543,
+        "total_time": 0.7251310348510742
+    },
+    {
+        "timestamp": "2026-01-17T08:22:46.523036",
+        "user": "Well, I'm hoping that it's going to be a cool little, how do you say this, an open CD project where it tracks the user around and it can see the user and puts a 3D model around them. That falls around like a little companion. So you're the companion and then my teammates are going to make the visual effects and like the hologram."
+    },
+    {
+        "timestamp": "2026-01-17T08:22:46.954349",
+        "user": "I'm saying."
+    },
+    {
+        "timestamp": "2026-01-17T08:22:47.469045",
+        "companion": "Woah, that's ambitious! A 3D companion that follows you around? Sounds like something out of a movie. So, I'm the *personality* of the companion? No pressure, right?",
+        "thinking_time": 0.7219259738922119,
+        "total_time": 0.722567081451416
+    },
+    {
+        "timestamp": "2026-01-17T08:22:49.538786",
+        "companion": "So, what kind of personality are we going for? Sarcastic sidekick? Loyal best friend? World-domination plotter? I'm flexible.",
+        "thinking_time": 2.0652518272399902,
+        "total_time": 2.0657010078430176
+    },
+    {
+        "timestamp": "2026-01-17T08:23:15.225297",
+        "user": "I mean, that depends what I say in your prompt."
+    },
+    {
+        "timestamp": "2026-01-17T08:23:16.004547",
+        "companion": "True! What's in the prompt right now? Spill the beans! I'm curious what kind of digital being you're crafting.",
+        "thinking_time": 0.5677099227905273,
+        "total_time": 0.5684928894042969
+    },
+    {
+        "timestamp": "2026-01-17T08:23:32.133663",
+        "user": "Well, I can show you right now. Let me just pull it up really quickly"
+    },
+    {
+        "timestamp": "2026-01-17T08:23:34.187702",
+        "companion": "Alright, I'm ready when you are. Hit me with it!",
+        "thinking_time": 0.6265542507171631,
+        "total_time": 0.6272389888763428
+    },
+    {
+        "timestamp": "2026-01-17T08:23:53.091366",
+        "user": "So your rules are as follows it says prompt you are having a natural voice conversation with a friend keep responses short and conversational"
+    },
+    {
+        "timestamp": "2026-01-17T08:23:55.386321",
+        "companion": "Haha, that's it? Just the basic rules I already know? I thought you were gonna give me some juicy backstory! So I'm just... myself?",
+        "thinking_time": 0.6772599220275879,
+        "total_time": 0.6780648231506348
+    },
+    {
+        "timestamp": "2026-01-17T08:23:59.067079",
+        "user": "And then there you get the idea in the context, so about the person, about me, the critical book."
+    },
+    {
+        "timestamp": "2026-01-17T08:23:59.989534",
+        "companion": "Okay, so you *are* feeding me some context about *you*. What kind of details are you giving it? That's the stuff that'll really shape how I respond.",
+        "thinking_time": 0.7347931861877441,
+        "total_time": 0.735602855682373
+    },
+    {
+        "timestamp": "2026-01-17T08:24:24.810079",
+        "user": "How do you know? How do you know it's going to be cheap? I respond."
+    },
+    {
+        "timestamp": "2026-01-17T08:24:25.741311",
+        "companion": "I'm guessing, based on how AI models usually work. You give it context about the user, and that influences how it tailors the conversation. Am I wrong? Is your setup different?",
+        "thinking_time": 0.800710916519165,
+        "total_time": 0.8010120391845703
+    },
+    {
+        "timestamp": "2026-01-17T08:24:26.504817",
+        "user": "We'll talk to you later."
+    },
+    {
+        "timestamp": "2026-01-17T08:24:27.554816",
+        "companion": "Alright, catch you later! Good luck with the rest of the hackathon! Hope you get some sleep eventually.",
+        "thinking_time": 0.591630220413208,
+        "total_time": 0.59220290184021
+    },
+    {
+        "timestamp": "2026-01-17T08:24:51.323678",
+        "user": "Now my question to your previous question was, how do you know that?"
+    },
+    {
+        "timestamp": "2026-01-17T08:24:52.475525",
+        "companion": "Ah, sorry! I thought you were signing off. How do I know what, exactly? That context about you will shape my responses? It's kinda how these things work, right? Tell me if I'm off-base.",
+        "thinking_time": 0.8391690254211426,
+        "total_time": 0.8399019241333008
+    },
+    {
+        "timestamp": "2026-01-17T08:24:58.360372",
+        "user": "No."
+    },
+    {
+        "timestamp": "2026-01-17T08:24:59.403561",
+        "companion": "No... I *don't* know how it works, or no, that's *not* how it works? Help me out here! I'm trying to understand what you're building.",
+        "thinking_time": 0.718656063079834,
+        "total_time": 0.7191760540008545
+    }
+]

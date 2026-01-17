@@ -103,3 +103,16 @@ class IdentityProfile:
     def create_empty(cls, user_id: str) -> "IdentityProfile":
         """Create a new, empty identity profile for a user."""
         return cls(user_id=user_id)
+
+    def update_timestamp(self, layer_name: str, timestamp: str):
+        """Updates the last_updated timestamp for a specific identity layer."""
+        if hasattr(self, layer_name):
+            layer = getattr(self, layer_name)
+            if hasattr(layer, 'last_updated'):
+                layer.last_updated = timestamp
+        else:
+            # Handle cases where the layer_name might not directly map to an attribute
+            # For example, if layer_name is 'communication_style_analysis'
+            # but the attribute is 'communication_style'
+            # For now, we'll assume direct mapping.
+            pass

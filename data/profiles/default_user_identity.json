@@ -23,7 +23,7 @@
       "uses_qualifiers": []
     },
     "filler_words": [],
-    "last_updated": "2026-01-17T08:12:09.010377",
+    "last_updated": "2026-01-17T08:54:34.459150",
     "confidence": 0.0,
     "sample_size": 0
   },
@@ -40,7 +40,7 @@
       "communication": "",
       "problem_solving": ""
     },
-    "last_updated": "2026-01-17T08:12:11.649998"
+    "last_updated": "2026-01-17T08:22:57.629309"
   },
   "thought_patterns": {
     "cognitive_style": {
@@ -85,7 +85,7 @@
     "interests": [],
     "experiences": [],
     "recent_topics": [],
-    "last_updated": "2026-01-17T08:12:09.948827"
+    "last_updated": "2026-01-17T08:54:35.853262"
   },
-  "total_exchanges_analyzed": 13
+  "total_exchanges_analyzed": 9
 }

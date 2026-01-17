@@ -1,0 +1,31 @@
+{
+  "user_id": "default_user",
+  "exchange_count": 4,
+  "last_analysis_at": 0,
+  "exchanges": [
+    {
+      "timestamp": "2026-01-17T08:15:47.134662",
+      "user_text": "Anything?",
+      "ai_response": "Nope, what's up?",
+      "exchange_number": 1
+    },
+    {
+      "timestamp": "2026-01-17T08:15:53.635284",
+      "user_text": "What's up? The ceiling.",
+      "ai_response": "Haha, good one! Anything *actually* up?",
+      "exchange_number": 2
+    },
+    {
+      "timestamp": "2026-01-17T08:16:06.058998",
+      "user_text": "Oh, good one. Anything asterisk actually asterisk. Oh, that's sick. I'll take a conference. Oh, that's awesome, dude. And then you're just gonna put that up",
+      "ai_response": "Uh... are you alright? Sounds like you're having a stroke. Conference for what?",
+      "exchange_number": 3
+    },
+    {
+      "timestamp": "2026-01-17T08:16:09.912939",
+      "user_text": "Are you all right?",
+      "ai_response": "Yeah, I'm good. Just making sure you are! You kinda trailed off there.",
+      "exchange_number": 4
+    }
+  ]
+}

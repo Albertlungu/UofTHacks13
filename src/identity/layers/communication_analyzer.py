@@ -41,7 +41,21 @@ class CommunicationAnalyzer:
 
         try:
             response = self.model.generate_content(prompt)
-            result = json.loads(response.text)
+            # Check if response or response.text is empty
+            if not response or not response.text.strip():
+                logger.warning(
+                    "Gemini API returned an empty or whitespace-only response for communication analysis."
+                )
+                return self._get_default_style()
+
+            # Attempt to parse JSON
+            try:
+                result = json.loads(response.text)
+            except json.JSONDecodeError as e:
+                logger.error(
+                    f"JSON decoding error in communication analysis: {e}. Raw response: '{response.text}'"
+                )
+                return self._get_default_style()
 
             # Add metadata
             result["last_updated"] = datetime.now().isoformat()
@@ -63,6 +77,31 @@ class CommunicationAnalyzer:
         """Build Gemini prompt for communication analysis"""
         utterances_text = "\n".join([f"- {u}" for u in utterances])
 
+        communication_json = {
+            "sentence_length": {
+                "avg_words": "number",
+                "preference": "short|medium|long",
+                "examples": ["example1", "example2"],
+            },
+            "vocabulary": {
+                "level": "casual|formal|technical|mixed",
+                "common_words": ["word1", "word2", "word3"],
+                "technical_terms": ["term1", "term2"],
+                "formality_score": "0 to 10",
+            },
+            "humor_style": {
+                "type": "none|dry|playful|sarcastic|witty",
+                "frequency": "never|rare|moderate|frequent",
+                "examples": ["example if present"],
+            },
+            "expressiveness": {
+                "level": "reserved|moderate|enthusiastic",
+                "uses_emphasis": "true|false",
+                "uses_qualifiers": ["qualifier1", "qualifier2"],
+            },
+            "filler_words": ["um", "like", "you know"],
+        }
+
         return f"""Analyze this user's communication style from their speech:
 
 USER'S RECENT UTTERANCES:
@@ -70,30 +109,7 @@ USER'S RECENT UTTERANCES:
 
 Extract detailed communication patterns and return ONLY valid JSON:
 
-{{
-  "sentence_length": {{
-    "avg_words": <number>,
-    "preference": "short|medium|long",
-    "examples": ["example1", "example2"]
-  }},
-  "vocabulary": {{
-    "level": "casual|formal|technical|mixed",
-    "common_words": ["word1", "word2", "word3"],
-    "technical_terms": ["term1", "term2"],
-    "formality_score": <0-1>
-  }},
-  "humor_style": {{
-    "type": "none|dry|playful|sarcastic|witty",
-    "frequency": "never|rare|moderate|frequent",
-    "examples": ["example if present"]
-  }},
-  "expressiveness": {{
-    "level": "reserved|moderate|enthusiastic",
-    "uses_emphasis": true|false,
-    "uses_qualifiers": ["qualifier1", "qualifier2"]
-  }},
-  "filler_words": ["um", "like", "you know"]
-}}
+{json.dumps(communication_json, indent=4)}
 
 Be specific and evidence-based. Only include patterns you can clearly see."""
 

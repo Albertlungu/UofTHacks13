@@ -41,7 +41,21 @@ class BeliefExtractor:
 
         try:
             response = self.model.generate_content(prompt)
-            result = json.loads(response.text)
+            # Check if response or response.text is empty
+            if not response or not response.text.strip():
+                logger.warning(
+                    "Gemini API returned an empty or whitespace-only response for belief extraction."
+                )
+                return self._get_empty_beliefs()
+
+            # Attempt to parse JSON
+            try:
+                result = json.loads(response.text)
+            except json.JSONDecodeError as e:
+                logger.error(
+                    f"JSON decoding error in belief extraction: {e}. Raw response: '{response.text}'"
+                )
+                return self._get_empty_beliefs()
 
             # Add metadata
             result["last_updated"] = datetime.now().isoformat()
@@ -75,6 +89,35 @@ class BeliefExtractor:
             conversation_text += f"User: {ex.get('user_text', '')}\n"
             conversation_text += f"AI: {ex.get('ai_response', '')}\n\n"
 
+        belief_json = {
+            "beliefs": [
+                {
+                    "category": "technology|work|life|philosophy|etc",
+                    "topic": "specific topic",
+                    "stance": "what they believe",
+                    "confidence": "0 to 10",
+                    "supporting_quotes": ["quote from conversation"],
+                }
+            ],
+            "values": [
+                {
+                    "value": "core value name",
+                    "evidence": ["supporting quote"],
+                    "strength": "0 to 10",
+                }
+            ],
+            "decision_patterns": {
+                "risk_tolerance": "low|moderate|high",
+                "speed_vs_quality": "speed|balanced|quality",
+                "examples": ["example"],
+            },
+            "preferences": {
+                "work_style": "description",
+                "communication": "description",
+                "problem_solving": "description",
+            },
+        }
+
         return f"""Extract the user's opinions, beliefs, and values from this conversation:
 
 CONVERSATION:
@@ -82,34 +125,7 @@ CONVERSATION:
 
 Identify and return ONLY valid JSON:
 
-{{
-  "beliefs": [
-    {{
-      "category": "technology|work|life|philosophy|etc",
-      "topic": "specific topic",
-      "stance": "what they believe",
-      "confidence": <0-1>,
-      "supporting_quotes": ["quote from conversation"]
-    }}
-  ],
-  "values": [
-    {{
-      "value": "core value name",
-      "evidence": ["supporting quote"],
-      "strength": <0-1>
-    }}
-  ],
-  "decision_patterns": {{
-    "risk_tolerance": "low|moderate|high",
-    "speed_vs_quality": "speed|balanced|quality",
-    "examples": ["example"]
-  }},
-  "preferences": {{
-    "work_style": "description",
-    "communication": "description",
-    "problem_solving": "description"
-  }}
-}}
+{json.dumps(belief_json, indent=4)}
 
 Only include beliefs that are clearly expressed. Don't infer too much."""
 

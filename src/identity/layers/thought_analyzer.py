@@ -60,6 +60,41 @@ class ThoughtAnalyzer:
             conversation_text += f"User: {ex.get('user_text', '')}\n"
             conversation_text += f"AI: {ex.get('ai_response', '')}\n\n"
 
+        analysis_json = {
+            "cognitive_style": {
+                "primary_mode": "analytical|intuitive|creative|practical",
+                "secondary_mode": "...",
+                "confidence": "0 to 10",
+                "evidence": ["specific example"],
+            },
+            "thinking_preferences": {
+                "thinks_in": "concrete examples|abstract concepts|visual patterns|logical steps",
+                "question_style": "asks how|asks why|asks what if",
+                "examples": ["example question they asked"],
+            },
+            "problem_approach": {
+                "style": "top-down|bottom-up|lateral|systematic",
+                "starts_with": "description",
+                "examples": ["example"],
+            },
+            "interaction_style": {
+                "role": "challenger|supporter|explorer|analyzer",
+                "asks_questions": true | false,
+                "pushes_back": "never|rarely|moderate|often",
+                "examples": ["example"],
+            },
+            "perspective_tendency": {
+                "sees": "opportunities|problems|both",
+                "optimism_score": "0 to 10",
+                "examples": ["example"],
+            },
+            "processing_speed": {
+                "makes_decisions": "quickly|moderately|deliberately",
+                "changes_mind": "easily|sometimes|rarely",
+                "deliberation_time": "short|medium|long",
+            },
+        }
+
         return f"""DEEP COGNITIVE ANALYSIS: How does this user THINK?
 
 Analyze their thought patterns, cognitive style, and reasoning approach:
@@ -69,40 +104,7 @@ CONVERSATION:
 
 Return ONLY valid JSON:
 
-{{
-  "cognitive_style": {{
-    "primary_mode": "analytical|intuitive|creative|practical",
-    "secondary_mode": "...",
-    "confidence": <0-1>,
-    "evidence": ["specific example"]
-  }},
-  "thinking_preferences": {{
-    "thinks_in": "concrete examples|abstract concepts|visual patterns|logical steps",
-    "question_style": "asks how|asks why|asks what if",
-    "examples": ["example question they asked"]
-  }},
-  "problem_approach": {{
-    "style": "top-down|bottom-up|lateral|systematic",
-    "starts_with": "description",
-    "examples": ["example"]
-  }},
-  "interaction_style": {{
-    "role": "challenger|supporter|explorer|analyzer",
-    "asks_questions": true|false,
-    "pushes_back": "never|rarely|moderate|often",
-    "examples": ["example"]
-  }},
-  "perspective_tendency": {{
-    "sees": "opportunities|problems|both",
-    "optimism_score": <0-1>,
-    "examples": ["example"]
-  }},
-  "processing_speed": {{
-    "makes_decisions": "quickly|moderately|deliberately",
-    "changes_mind": "easily|sometimes|rarely",
-    "deliberation_time": "short|medium|long"
-  }}
-}}
+{json.dumps(analysis_json, indent=4)}
 
 Look for PATTERNS across multiple exchanges. Be specific and evidence-based."""
 

@@ -41,7 +41,21 @@ class MemoryExtractor:
 
         try:
             response = self.model.generate_content(prompt)
-            result = json.loads(response.text)
+            # Check if response or response.text is empty
+            if not response or not response.text.strip():
+                logger.warning(
+                    "Gemini API returned an empty or whitespace-only response for memory extraction."
+                )
+                return self._get_empty_memory()
+
+            # Attempt to parse JSON
+            try:
+                result = json.loads(response.text)
+            except json.JSONDecodeError as e:
+                logger.error(
+                    f"JSON decoding error in memory extraction: {e}. Raw response: '{response.text}'"
+                )
+                return self._get_empty_memory()
 
             result["last_updated"] = datetime.now().isoformat()
 
@@ -76,6 +90,41 @@ class MemoryExtractor:
         for ex in exchanges:
             conversation_text += f"User: {ex.get('user_text', '')}\n\n"
 
+        memory_json = {
+            "personal_facts": [
+                {
+                    "category": "project|work|life|interest|skill",
+                    "fact": "clear factual statement",
+                    "source_quote": "exact quote",
+                    "relevance_score": "0 to 10",
+                }
+            ],
+            "people_mentioned": [
+                {
+                    "name": "person's name",
+                    "relationship": "relationship to user",
+                    "context": "context of mention",
+                }
+            ],
+            "goals": [
+                {
+                    "goal": "what they want to achieve",
+                    "status": "planning|in_progress|blocked|completed",
+                    "priority": "low|medium|high",
+                }
+            ],
+            "interests": [
+                {
+                    "topic": "topic name",
+                    "strength": "0 to 10",
+                    "evidence": "why you think this",
+                }
+            ],
+            "experiences": [
+                {"type": "success|challenge|learning", "description": "what happened"}
+            ],
+        }
+
         return f"""Extract FACTUAL INFORMATION about the user from these recent utterances:
 
 USER SAID:
@@ -83,43 +132,7 @@ USER SAID:
 
 What new facts did you learn? Return ONLY valid JSON:
 
-{{
-  "personal_facts": [
-    {{
-      "category": "project|work|life|interest|skill",
-      "fact": "clear factual statement",
-      "source_quote": "exact quote",
-      "relevance_score": <0-1>
-    }}
-  ],
-  "people_mentioned": [
-    {{
-      "name": "person's name",
-      "relationship": "relationship to user",
-      "context": "context of mention"
-    }}
-  ],
-  "goals": [
-    {{
-      "goal": "what they want to achieve",
-      "status": "planning|in_progress|blocked|completed",
-      "priority": "low|medium|high"
-    }}
-  ],
-  "interests": [
-    {{
-      "topic": "topic name",
-      "strength": <0-1>,
-      "evidence": "why you think this"
-    }}
-  ],
-  "experiences": [
-    {{
-      "type": "success|challenge|learning",
-      "description": "what happened"
-    }}
-  ]
-}}
+{json.dumps(memory_json, indent=4)}
 
 Only extract facts that are clearly stated. Don't invent or over-infer."""
 
