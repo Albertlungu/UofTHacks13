@@ -1,0 +1,62 @@
+[
+    {
+        "timestamp": "2026-01-17T11:01:11.581422",
+        "user": "Yo, it's good. I'm currently working on this hackathon project for UTH hacks."
+    },
+    {
+        "timestamp": "2026-01-17T11:01:12.619323",
+        "companion": "Oh cool, UTH hacks! What's the project about?",
+        "thinking_time": 0.6410379409790039,
+        "total_time": 0.641674280166626
+    },
+    {
+        "timestamp": "2026-01-17T11:01:37.636337",
+        "user": "Not UTHU of T as in University of Toronto."
+    },
+    {
+        "timestamp": "2026-01-17T11:01:38.275964",
+        "companion": "Ah, my bad! Still, what's the hackathon project?",
+        "thinking_time": 0.5943899154663086,
+        "total_time": 0.5950860977172852
+    },
+    {
+        "timestamp": "2026-01-17T11:02:12.211642",
+        "user": "Hello."
+    },
+    {
+        "timestamp": "2026-01-17T11:02:12.927926",
+        "companion": "Hey there! What's up?",
+        "thinking_time": 0.5050828456878662,
+        "total_time": 0.5057752132415771
+    },
+    {
+        "timestamp": "2026-01-17T11:02:18.717435",
+        "user": "Did you see what I said?"
+    },
+    {
+        "timestamp": "2026-01-17T11:02:19.609330",
+        "companion": "Yeah, I saw. You're working on a hackathon project for U of T, right? You wanna tell me more about it?",
+        "thinking_time": 0.6326401233673096,
+        "total_time": 0.6331660747528076
+    },
+    {
+        "timestamp": "2026-01-17T11:02:28.375388",
+        "user": "I am, I am, I am, I am, I am, I am, I am."
+    },
+    {
+        "timestamp": "2026-01-17T11:02:29.049262",
+        "companion": "Okay, cool. What's the project *actually* doing?",
+        "thinking_time": 0.5035929679870605,
+        "total_time": 0.5042891502380371
+    },
+    {
+        "timestamp": "2026-01-17T11:02:31.927262",
+        "user": "what I was going to say is"
+    },
+    {
+        "timestamp": "2026-01-17T11:02:34.091446",
+        "companion": "Go for it, I'm listening.",
+        "thinking_time": 0.4989480972290039,
+        "total_time": 0.4994649887084961
+    }
+]

@@ -37,21 +37,29 @@ class AudioStreamManager:
     def __init__(
         self,
         on_transcription: Optional[Callable[[str], None]] = None,
+        on_user_started_speaking: Optional[Callable[[], None]] = None,
+        on_partial_transcript: Optional[Callable[[str, float], None]] = None,
         user_id: str = DEFAULT_USER_ID,
+        custom_vocabulary: Optional[str] = None,
     ):
         """
         Initialize the audio stream manager.
 
         Args:
             on_transcription: Callback function called with transcribed text
+            on_user_started_speaking: Callback when user starts speaking (for interruption)
+            on_partial_transcript: Callback with (partial_text, duration_seconds) while user is speaking
             user_id: User identifier for profile management
+            custom_vocabulary: Optional custom vocabulary for Whisper transcription
         """
         # Initialize components (without user profile)
         self.device_manager = AudioDeviceManager()
         self.vad = VADDetector()  # No user profile
-        self.transcriber = WhisperTranscriber()
+        self.transcriber = WhisperTranscriber(custom_vocabulary=custom_vocabulary)
 
         self.on_transcription = on_transcription
+        self.on_user_started_speaking = on_user_started_speaking
+        self.on_partial_transcript = on_partial_transcript
 
         # Audio stream
         self.audio = pyaudio.PyAudio()
@@ -63,6 +71,11 @@ class AudioStreamManager:
         self.is_listening = False
         self.audio_buffer = []
         self.frame_size = int(SAMPLE_RATE * VAD_FRAME_DURATION_MS / 1000)
+        self.speech_start_time = None  # Track when user started speaking
+        self.last_partial_check_time = 0  # Track last time we sent partial transcript
+        self.ai_is_speaking = (
+            False  # Flag to prevent detecting AI's own voice as user speech
+        )
 
         # Threading
         self.capture_thread: Optional[threading.Thread] = None
@@ -198,15 +211,38 @@ class AudioStreamManager:
                     #     self.profile_manager.add_pause(self.user_profile, pause)
 
                     if vad_result == "speech_start":
+                        # ALWAYS start recording and trigger interruption
                         self.is_listening = True
                         self.audio_buffer = [frame]
-                        # CALIBRATION CODE - COMMENTED OUT
-                        # self.speaking_rate_calc.start_speech_segment()
+                        self.speech_start_time = time.time()
+                        self.last_partial_check_time = time.time()
                         logger.debug("Started recording")
+
+                        # If AI is speaking, KILL IT IMMEDIATELY
+                        if self.ai_is_speaking:
+                            logger.info("USER INTERRUPTED AI - KILLING TTS")
+                            if self.on_user_started_speaking:
+                                try:
+                                    self.on_user_started_speaking()
+                                except Exception as e:
+                                    logger.error(f"Error interrupting AI: {e}")
 
                     elif vad_result == "speech_continue":
                         if self.is_listening:
                             self.audio_buffer.append(frame)
+
+                            # Check if we should send partial transcript for interruption analysis
+                            if self.on_partial_transcript and self.speech_start_time:
+                                current_time = time.time()
+                                speech_duration = current_time - self.speech_start_time
+                                time_since_last_check = (
+                                    current_time - self.last_partial_check_time
+                                )
+
+                                # Check every 5 seconds after initial 15 seconds
+                                if speech_duration >= 15 and time_since_last_check >= 5:
+                                    self._send_partial_transcript(speech_duration)
+                                    self.last_partial_check_time = current_time
 
                             # Safety check: prevent buffer overflow
                             buffer_duration = (
@@ -232,6 +268,49 @@ class AudioStreamManager:
 
         logger.info("Capture loop ended")
 
+    def _send_partial_transcript(self, duration_seconds: float):
+        """Send partial transcript while user is still speaking."""
+        if not self.audio_buffer:
+            return
+
+        try:
+            # Create a copy of current buffer for partial transcription
+            audio_bytes = b"".join(self.audio_buffer)
+            logger.debug(
+                f"Generating partial transcript ({duration_seconds:.1f}s of speech)"
+            )
+
+            # Quick transcription of what we have so far
+            result = self.transcriber.transcribe_bytes(audio_bytes)
+
+            if result and result.get("text"):
+                partial_text = result["text"].strip()
+                logger.debug(f"Partial transcript: {partial_text[:100]}...")
+
+                # Send to callback for interruption analysis
+                if self.on_partial_transcript:
+                    self.on_partial_transcript(partial_text, duration_seconds)
+        except Exception as e:
+            logger.error(f"Error generating partial transcript: {e}")
+
+    def set_ai_speaking(self, is_speaking: bool):
+        """Set whether AI is currently speaking (used to detect interruptions)."""
+        self.ai_is_speaking = is_speaking
+        if is_speaking:
+            logger.debug("AI started speaking")
+        else:
+            logger.debug("AI stopped speaking")
+
+    def interrupt_user_recording(self):
+        """Interrupt the current user recording (called when AI wants to interrupt)."""
+        logger.info("Interrupting user recording")
+
+        # Discard current buffer and stop listening
+        self.audio_buffer = []
+        self.is_listening = False
+        self.speech_start_time = None
+        self.vad.reset()
+
     def _finalize_recording(self):
         """Finalize the current recording and queue for transcription."""
         if not self.audio_buffer:
@@ -248,6 +327,7 @@ class AudioStreamManager:
         # Reset state
         self.audio_buffer = []
         self.is_listening = False
+        self.speech_start_time = None
         self.vad.reset()
 
     def _transcription_loop(self):

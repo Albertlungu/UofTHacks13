@@ -2,15 +2,27 @@
   "user_id": "default_user",
   "communication_style": {
     "sentence_length": {
-      "avg_words": 10,
-      "preference": "medium",
-      "examples": []
+      "avg_words": 9,
+      "preference": "short",
+      "examples": [
+        "Yeah, I'm ready",
+        "to I'll check, please."
+      ]
     },
     "vocabulary": {
       "level": "casual",
-      "common_words": [],
-      "technical_terms": [],
-      "formality_score": 0.5
+      "common_words": [
+        "yeah",
+        "I'm",
+        "that's",
+        "just"
+      ],
+      "technical_terms": [
+        "Hackathon",
+        "IB",
+        "IBDP"
+      ],
+      "formality_score": "3"
     },
     "humor_style": {
       "type": "none",
@@ -19,73 +31,258 @@
     },
     "expressiveness": {
       "level": "moderate",
-      "uses_emphasis": false,
-      "uses_qualifiers": []
+      "uses_emphasis": "false",
+      "uses_qualifiers": [
+        "just",
+        "right now",
+        "I mean"
+      ]
     },
     "filler_words": [],
-    "last_updated": "2026-01-17T08:54:34.459150",
-    "confidence": 0.0,
-    "sample_size": 0
+    "last_updated": "2026-01-17T11:50:17.496947",
+    "confidence": 0.8999999999999999,
+    "sample_size": 5
   },
   "opinions_beliefs": {
-    "beliefs": [],
-    "values": [],
+    "beliefs": [
+      {
+        "category": "social",
+        "topic": "returning borrowed items",
+        "stance": "returning a friend's phone is a good idea",
+        "confidence": "9",
+        "supporting_quotes": [
+          "that's my friend's phone. That might be a good idea, yeah."
+        ],
+        "id": "belief_1768666963",
+        "first_mentioned": "2026-01-17T11:22:43.084466",
+        "mention_count": 1
+      },
+      {
+        "category": "work",
+        "topic": "hackathons",
+        "stance": "hackathons are busy",
+        "confidence": "10",
+        "supporting_quotes": [
+          "Well, the hackathon is going to keep on being busy."
+        ],
+        "id": "belief_1768666963",
+        "first_mentioned": "2026-01-17T11:22:43.084477",
+        "mention_count": 2
+      }
+    ],
+    "values": [
+      {
+        "value": "Responsibility",
+        "evidence": [
+          "that's my friend's phone. That might be a good idea, yeah."
+        ],
+        "strength": "7",
+        "id": "value_1768666963"
+      }
+    ],
     "decision_patterns": {
       "risk_tolerance": "moderate",
       "speed_vs_quality": "balanced",
       "examples": []
     },
     "preferences": {
-      "work_style": "",
-      "communication": "",
-      "problem_solving": ""
+      "work_style": "Intense, focused (implied by hackathon participation)",
+      "communication": "Informal, conversational",
+      "problem_solving": "Collaborative (implied by hackathon setting)"
     },
-    "last_updated": "2026-01-17T08:22:57.629309"
+    "last_updated": "2026-01-17T11:22:43.084449"
   },
   "thought_patterns": {
-    "cognitive_style": {
-      "primary_mode": "analytical",
-      "secondary_mode": "",
-      "confidence": 0.0,
-      "evidence": []
-    },
-    "thinking_preferences": {
-      "thinks_in": "concrete examples",
-      "question_style": "",
-      "examples": []
-    },
-    "problem_approach": {
-      "style": "systematic",
-      "starts_with": "",
-      "examples": []
-    },
-    "interaction_style": {
-      "role": "explorer",
-      "asks_questions": true,
-      "pushes_back": "moderate",
-      "examples": []
-    },
-    "perspective_tendency": {
-      "sees": "both",
-      "optimism_score": 0.5,
-      "examples": []
-    },
-    "processing_speed": {
-      "makes_decisions": "moderately",
-      "changes_mind": "sometimes",
-      "deliberation_time": "medium"
-    },
+    "cognitive_style": {},
+    "thinking_preferences": {},
+    "problem_approach": {},
+    "interaction_style": {},
+    "perspective_tendency": {},
+    "processing_speed": {},
     "last_updated": "",
     "analysis_count": 0
   },
   "memory_context": {
-    "personal_facts": [],
-    "people_mentioned": [],
-    "goals": [],
-    "interests": [],
-    "experiences": [],
+    "personal_facts": [
+      {
+        "category": "project",
+        "fact": "The user is working on a project that involves a 3D model acting as a virtual assistant.",
+        "source_quote": "model of 3D model that's going to act as a virtual assistant.",
+        "relevance_score": "9",
+        "id": "fact_1768668210",
+        "timestamp": "2026-01-17T11:43:30.424106",
+        "reference_count": 1
+      },
+      {
+        "category": "life",
+        "fact": "The user is tired.",
+        "source_quote": "I'm just very tired.",
+        "relevance_score": "8",
+        "id": "fact_1768668112",
+        "timestamp": "2026-01-17T11:41:52.001053",
+        "reference_count": 1
+      },
+      {
+        "category": "work",
+        "fact": "The user is currently at a hackathon.",
+        "source_quote": "You know, I'm kind of at a hackathon right now",
+        "relevance_score": "10",
+        "id": "fact_1768666960",
+        "timestamp": "2026-01-17T11:22:40.892081",
+        "reference_count": 1
+      },
+      {
+        "category": "life",
+        "fact": "The user is tired and hasn't slept.",
+        "source_quote": "I haven't slept a wink",
+        "relevance_score": "10",
+        "id": "fact_1768666960",
+        "timestamp": "2026-01-17T11:22:40.892081",
+        "reference_count": 1
+      },
+      {
+        "category": "project",
+        "fact": "The user is working on an AI app at the hackathon.",
+        "source_quote": "an AI app",
+        "relevance_score": "10",
+        "id": "fact_1768666960",
+        "timestamp": "2026-01-17T11:22:40.892081",
+        "reference_count": 1
+      },
+      {
+        "category": "life",
+        "fact": "The user and someone else have the same phone.",
+        "source_quote": "We have the same phone.",
+        "relevance_score": "10",
+        "id": "fact_1768667033",
+        "timestamp": "2026-01-17T11:23:53.707921",
+        "reference_count": 1
+      },
+      {
+        "category": "project",
+        "fact": "The user is working on a project that involves tracking a user with cameras.",
+        "source_quote": "So tracking the user with those cameras is going to allow the program to put a virtual assistant there.",
+        "relevance_score": "10",
+        "id": "fact_1768668174",
+        "timestamp": "2026-01-17T11:42:54.899666",
+        "reference_count": 1
+      },
+      {
+        "category": "project",
+        "fact": "The user is working on a hackathon project.",
+        "source_quote": "What do you remember about my hackathon project?",
+        "relevance_score": "10",
+        "id": "fact_1768668355",
+        "timestamp": "2026-01-17T11:45:55.948329",
+        "reference_count": 1
+      },
+      {
+        "category": "project",
+        "fact": "The user's project is going well.",
+        "source_quote": "It's going pretty well.",
+        "relevance_score": "10",
+        "id": "fact_1768668355",
+        "timestamp": "2026-01-17T11:45:55.948329",
+        "reference_count": 1
+      },
+      {
+        "category": "project",
+        "fact": "The user considers the AI to be the project.",
+        "source_quote": "going well I'd say you because you're the project right as I said before what I'm talking to right now is the project so I would say you're going pretty well for now",
+        "relevance_score": "10",
+        "id": "fact_1768668355",
+        "timestamp": "2026-01-17T11:45:55.948329",
+        "reference_count": 1
+      },
+      {
+        "category": "project",
+        "fact": "The user has a Hackathon project.",
+        "source_quote": "What do you remember about my Hackathon project?",
+        "relevance_score": "10",
+        "id": "fact_1768668619",
+        "timestamp": "2026-01-17T11:50:19.227593",
+        "reference_count": 1
+      },
+      {
+        "category": "life",
+        "fact": "The user is currently in the IBDP program.",
+        "source_quote": "I mean, I'm in the IB programs, IBDP.",
+        "relevance_score": "10",
+        "id": "fact_1768668619",
+        "timestamp": "2026-01-17T11:50:19.227593",
+        "reference_count": 1
+      }
+    ],
+    "people_mentioned": [
+      {
+        "name": "friend",
+        "relationship": "friend",
+        "context": "The user mistakenly picked up their friend's iPhone.",
+        "first_mentioned": "2026-01-17T11:22:01.460154"
+      }
+    ],
+    "goals": [
+      {
+        "goal": "To score in a game",
+        "status": "planning",
+        "priority": "medium",
+        "mentioned_at": "2026-01-17T11:23:53.707921"
+      },
+      {
+        "goal": "Describe a project involving cameras and a virtual assistant.",
+        "status": "in_progress",
+        "priority": "medium",
+        "mentioned_at": "2026-01-17T11:42:54.899666"
+      }
+    ],
+    "interests": [
+      {
+        "topic": "AI",
+        "strength": "7",
+        "evidence": "Working on an AI app at a hackathon.",
+        "evidence_count": 1
+      },
+      {
+        "topic": "Gaming",
+        "strength": "5",
+        "evidence": "The user mentions 'my bad game' and wants to know how to score.",
+        "evidence_count": 1
+      },
+      {
+        "topic": "Virtual Assistants",
+        "strength": "7",
+        "evidence": "The user is working on a project involving a virtual assistant.",
+        "evidence_count": 1
+      },
+      {
+        "topic": "Camera Tracking",
+        "strength": "7",
+        "evidence": "The user is working on a project involving camera tracking.",
+        "evidence_count": 1
+      },
+      {
+        "topic": "Hackathon project",
+        "strength": "7",
+        "evidence": "The user is asking about it.",
+        "evidence_count": 1
+      },
+      {
+        "topic": "IB program",
+        "strength": "7",
+        "evidence": "The user is currently in the IBDP program and wanted to talk about it.",
+        "evidence_count": 1
+      }
+    ],
+    "experiences": [
+      {
+        "type": "challenge",
+        "description": "The user is experiencing sleep deprivation due to the hackathon.",
+        "source_quote": "I haven't slept a wink",
+        "relevance_score": "9"
+      }
+    ],
     "recent_topics": [],
-    "last_updated": "2026-01-17T08:54:35.853262"
+    "last_updated": "2026-01-17T11:50:19.229094"
   },
-  "total_exchanges_analyzed": 9
+  "total_exchanges_analyzed": 7
 }

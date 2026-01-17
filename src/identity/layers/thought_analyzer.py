@@ -41,7 +41,16 @@ class ThoughtAnalyzer:
 
         try:
             response = self.model.generate_content(prompt)
-            result = json.loads(response.text)
+            response_text = response.text.strip()
+            if response_text.startswith("```json"):
+                response_text = response_text[7:]
+            if response_text.startswith("```"):
+                response_text = response_text[3:]
+            if response_text.endswith("```"):
+                response_text = response_text[:-3]
+            response_text = response_text.strip()
+
+            result = json.loads(response_text)
 
             result["last_updated"] = datetime.now().isoformat()
             result["analysis_count"] = result.get("analysis_count", 0) + 1

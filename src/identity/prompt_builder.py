@@ -76,9 +76,20 @@ Mirror this user naturally:
             ", ".join([f"'{w}'" for w in common_words]) if common_words else "N/A"
         )
 
-        return f"""### Communication Style (confidence: {comm.confidence:.2f})
+        # Ensure numeric values are floats
+        try:
+            confidence = float(comm.confidence) if comm.confidence else 0.0
+        except (ValueError, TypeError):
+            confidence = 0.0
 
-- **Vocabulary**: {vocab_level} (formality: {formality:.1f}/1.0)
+        try:
+            formality_val = float(formality) if formality else 0.5
+        except (ValueError, TypeError):
+            formality_val = 0.5
+
+        return f"""### Communication Style (confidence: {confidence:.2f})
+
+- **Vocabulary**: {vocab_level} (formality: {formality_val:.1f}/1.0)
 - **Sentence Length**: Prefers {sentence_pref} sentences
 - **Common Words**: {words_list}
 - **Expressiveness**: {comm.expressiveness.get("level", "moderate")}

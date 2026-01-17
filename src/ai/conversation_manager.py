@@ -31,13 +31,16 @@ class ConversationManager:
     (GeminiCompanion) and handles the complete conversation flow.
     """
 
-    def __init__(self, user_id: str = "default_user"):
+    def __init__(
+        self, user_id: str = "default_user", custom_vocabulary: Optional[str] = None
+    ):
         """
         Initializes the ConversationManager, loading configurations and setting up
         the necessary components for the conversation.
 
         Args:
             user_id: User identifier for profile management
+            custom_vocabulary: Optional custom vocabulary for Whisper (e.g., "Common slang: yeet, lit, fr")
         """
         logger.info("Initializing ConversationManager...")
 
@@ -64,7 +67,10 @@ class ConversationManager:
         # Audio stream manager - handles transcription with 0.75s pause batching
         self.audio_manager = AudioStreamManager(
             on_transcription=self._on_transcription_received,
+            on_user_started_speaking=self._on_user_interrupt,
+            on_partial_transcript=self._on_partial_transcript,
             user_id=user_id,
+            custom_vocabulary=custom_vocabulary,
         )
 
         # Conversation tracker for exchange logging and identity analysis
@@ -95,6 +101,8 @@ class ConversationManager:
             ElevenLabsTTS(api_key=elevenlabs_api_key) if elevenlabs_api_key else None
         )
         if self.tts:
+            # Set callback to notify audio manager when AI is speaking
+            self.tts.on_speaking_changed = self._on_ai_speaking_changed
             logger.info("ElevenLabs TTS enabled")
         else:
             logger.warning("ELEVENLABS_API_KEY not found - TTS disabled")
@@ -143,6 +151,49 @@ class ConversationManager:
                 f.truncate()  # Remove remaining part if new data is smaller
         except Exception as e:
             logger.error(f"Failed to write to conversation log: {e}")
+
+    def _on_ai_speaking_changed(self, is_speaking: bool):
+        """
+        Callback when AI starts or stops speaking.
+        Used to prevent detecting AI's own voice as user speech.
+        """
+        if self.audio_manager:
+            self.audio_manager.set_ai_speaking(is_speaking)
+
+    def _on_user_interrupt(self):
+        """
+        Callback when user starts speaking (interruption detected).
+        Immediately stops the AI from speaking.
+        """
+        logger.info("User started speaking - interrupting AI")
+
+        # Stop TTS immediately
+        if self.tts:
+            self.tts.interrupt()
+
+    def _on_partial_transcript(self, partial_text: str, duration_seconds: float):
+        """Callback with partial transcript while user is still speaking."""
+        logger.debug(
+            f"Partial transcript ({duration_seconds:.1f}s): {partial_text[:100]}..."
+        )
+
+        # Ask AI if it should interrupt
+        should_interrupt, interruption_message = self.companion.should_interrupt_user(
+            partial_text, duration_seconds
+        )
+
+        if should_interrupt and interruption_message:
+            logger.info(f"AI interrupting user: {interruption_message}")
+
+            # Stop user recording
+            self.audio_manager.interrupt_user_recording()
+
+            # Speak the interruption
+            if self.tts:
+                self.tts.speak(interruption_message, block=False)
+
+            # Print to console
+            print(f"\n[AI INTERRUPTS]: {interruption_message}\n")
 
     def _on_transcription_received(self, text: str):
         """
@@ -292,7 +343,7 @@ class ConversationManager:
 
                 # Check if identity profile was updated (non-blocking)
                 if self.identity_manager.profile_was_updated():
-                    logger.info("✨ Identity profile was updated - updating AI...")
+                    logger.info("Identity profile was updated - updating AI...")
                     identity_prompt = (
                         self.identity_manager.get_system_prompt_additions()
                     )
@@ -369,6 +420,25 @@ class ConversationManager:
             self.ai_processing_thread.join(timeout=2.0)
 
         logger.info("ConversationManager stopped")
+
+    def update_whisper_vocabulary(self, vocabulary: Optional[str]):
+        """
+        Update Whisper's custom vocabulary for better recognition of specific words/slang.
+
+        Args:
+            vocabulary: Custom vocabulary string (e.g., "Common slang: yeet, lit, fr, ngl")
+                       or None to disable custom vocabulary
+
+        Example:
+            manager.update_whisper_vocabulary("Common slang: yeet, lit, fr, ngl, bruh")
+        """
+        if self.audio_manager and self.audio_manager.transcriber:
+            self.audio_manager.transcriber.update_custom_vocabulary(vocabulary)
+            logger.info("Whisper vocabulary updated via ConversationManager")
+        else:
+            logger.warning(
+                "Cannot update vocabulary - audio manager or transcriber not available"
+            )
 
     def cleanup(self):
         """Clean up all resources."""

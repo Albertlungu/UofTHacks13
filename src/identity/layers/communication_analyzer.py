@@ -48,9 +48,18 @@ class CommunicationAnalyzer:
                 )
                 return self._get_default_style()
 
-            # Attempt to parse JSON
+            # Attempt to parse JSON (strip code blocks if present)
             try:
-                result = json.loads(response.text)
+                response_text = response.text.strip()
+                if response_text.startswith("```json"):
+                    response_text = response_text[7:]
+                if response_text.startswith("```"):
+                    response_text = response_text[3:]
+                if response_text.endswith("```"):
+                    response_text = response_text[:-3]
+                response_text = response_text.strip()
+
+                result = json.loads(response_text)
             except json.JSONDecodeError as e:
                 logger.error(
                     f"JSON decoding error in communication analysis: {e}. Raw response: '{response.text}'"
@@ -63,6 +72,9 @@ class CommunicationAnalyzer:
             result["confidence"] = self._calculate_confidence(
                 result, len(recent_utterances)
             )
+
+            # Ensure confidence is a float
+            result["confidence"] = float(result["confidence"])
 
             logger.info(
                 f"Communication analysis complete (confidence: {result['confidence']:.2f})"

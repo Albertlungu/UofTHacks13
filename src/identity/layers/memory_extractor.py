@@ -48,9 +48,19 @@ class MemoryExtractor:
                 )
                 return self._get_empty_memory()
 
-            # Attempt to parse JSON
+            # Attempt to parse JSON (strip code blocks if present)
             try:
-                result = json.loads(response.text)
+                response_text = response.text.strip()
+                # Remove markdown code blocks if present
+                if response_text.startswith("```json"):
+                    response_text = response_text[7:]  # Remove ```json
+                if response_text.startswith("```"):
+                    response_text = response_text[3:]  # Remove ```
+                if response_text.endswith("```"):
+                    response_text = response_text[:-3]  # Remove trailing ```
+                response_text = response_text.strip()
+
+                result = json.loads(response_text)
             except json.JSONDecodeError as e:
                 logger.error(
                     f"JSON decoding error in memory extraction: {e}. Raw response: '{response.text}'"
