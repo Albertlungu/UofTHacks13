@@ -1,0 +1,37 @@
+{
+  "user_id": "default_user",
+  "exchange_count": 5,
+  "last_analysis_at": 0,
+  "exchanges": [
+    {
+      "timestamp": "2026-01-17T08:32:47.826216",
+      "user_text": "I have a what? Eight fours. Eight fours? You go all the way up with stairs. Like there's stairs all the way up.",
+      "ai_response": "Wait, what's an eight fours? Is that like, a really tall building with a ton of stairs?",
+      "exchange_number": 1
+    },
+    {
+      "timestamp": "2026-01-17T08:32:55.228221",
+      "user_text": "Wait, what's an eight fours? Is that like a really tall building with a ton of stairs?",
+      "ai_response": "Haha, I was trying to guess. What *is* it?",
+      "exchange_number": 2
+    },
+    {
+      "timestamp": "2026-01-17T08:33:02.774761",
+      "user_text": "I was trying to guess what asterisk is asterisk it",
+      "ai_response": "Okay... still lost. Can you spell it maybe?",
+      "exchange_number": 3
+    },
+    {
+      "timestamp": "2026-01-17T08:33:08.409572",
+      "user_text": "Okay, it's still lost. Can you spell it, maybe?",
+      "ai_response": "Okay, spelling it out. Got it. What's the context? What were you talking about?",
+      "exchange_number": 4
+    },
+    {
+      "timestamp": "2026-01-17T08:33:12.912248",
+      "user_text": "No, no, maybe. Okay, spelling it out. Got it.",
+      "ai_response": "Oh, you were just testing me? Sneaky! ;)",
+      "exchange_number": 5
+    }
+  ]
+}

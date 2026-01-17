@@ -1,0 +1,73 @@
+{
+  "user_id": "default_user",
+  "exchange_count": 11,
+  "last_analysis_at": 0,
+  "exchanges": [
+    {
+      "timestamp": "2026-01-17T11:04:36.668993",
+      "user_text": "Good.",
+      "ai_response": "Cool. What's up?",
+      "exchange_number": 1
+    },
+    {
+      "timestamp": "2026-01-17T11:04:47.682639",
+      "user_text": "Not much just from here, you know, I'm thinking about the hawkathon I'm doing now.",
+      "ai_response": "Oh yeah? What's the hackathon about?",
+      "exchange_number": 2
+    },
+    {
+      "timestamp": "2026-01-17T11:04:58.698818",
+      "user_text": "It's Hakakone U of T, so that's University of Toronto.",
+      "ai_response": "Nice! What are you building for it?",
+      "exchange_number": 3
+    },
+    {
+      "timestamp": "2026-01-17T11:05:11.859416",
+      "user_text": "it's what it seems like identity, basically making an AI becomes more like me, you know what I'm saying?",
+      "ai_response": "I think so. So, like, a digital version of yourself? What's the goal?",
+      "exchange_number": 4
+    },
+    {
+      "timestamp": "2026-01-17T11:05:45.145093",
+      "user_text": "And the top end of the A is actually, like, the X-Senscus.",
+      "ai_response": "Ah, interesting! So, how are you planning on tackling that? Like, what tech are you using?",
+      "exchange_number": 5
+    },
+    {
+      "timestamp": "2026-01-17T11:06:00.211702",
+      "user_text": "We're using Gemini for the AI stuff, which is for transcription.",
+      "ai_response": "Gotcha. How's Gemini working out for you?",
+      "exchange_number": 6
+    },
+    {
+      "timestamp": "2026-01-17T11:06:08.305253",
+      "user_text": "It was a massive pain in the ass.",
+      "ai_response": "Haha, yeah? What was the biggest headache?",
+      "exchange_number": 7
+    },
+    {
+      "timestamp": "2026-01-17T11:06:18.939196",
+      "user_text": "getting an insane amount of requests through.",
+      "ai_response": "Ugh, rate limiting? That's the worst. Are you caching anything to help with that?",
+      "exchange_number": 8
+    },
+    {
+      "timestamp": "2026-01-17T11:06:32.601748",
+      "user_text": "No, I have a question. Are you committing 18 to memory right now? Like what are you remembering about me?",
+      "ai_response": "I'm not really \"remembering\" in the way a human does. I'm just using our conversation to give you relevant responses in the moment. Why do you ask? Are you worried about something specific?",
+      "exchange_number": 9
+    },
+    {
+      "timestamp": "2026-01-17T11:07:13.779936",
+      "user_text": "I'm not sure where it was in specific. I just think privacy is really important though Like this that should stay local and I'll be centering at surfers. You know, I'm saying",
+      "ai_response": "Totally get that. Data privacy is a big deal. So, are you thinking about how to keep the hackathon project stuff local?",
+      "exchange_number": 10
+    },
+    {
+      "timestamp": "2026-01-17T11:07:46.601414",
+      "user_text": "Yeah, I'm all about open source, you know, so that's why I'm going to put it on like what to call on get hub and I forget how people can just use it and do it.",
+      "ai_response": "That's awesome! Open source is the way to go. Are you planning to license it a certain way?",
+      "exchange_number": 11
+    }
+  ]
+}

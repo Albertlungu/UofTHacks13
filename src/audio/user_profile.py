@@ -52,6 +52,10 @@ class UserSpeechProfile:
     calibration_time: float = 0.0
     total_words_spoken: int = 0
 
+    # Style analysis (from HelpingAI)
+    style_summary: Optional[str] = None
+    style_last_updated: Optional[str] = None
+
     # Raw pause data for learning
     pause_history: List[Dict] = None
 

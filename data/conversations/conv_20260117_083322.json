@@ -1,0 +1,92 @@
+[
+    {
+        "timestamp": "2026-01-17T08:33:31.660916",
+        "user": "Was the square root of five?"
+    },
+    {
+        "timestamp": "2026-01-17T08:33:32.572400",
+        "companion": "Around 2.236, I think. Why do you ask?",
+        "thinking_time": 0.5550141334533691,
+        "total_time": 0.5561079978942871
+    },
+    {
+        "timestamp": "2026-01-17T08:33:37.637428",
+        "user": "Around 2.236, I think."
+    },
+    {
+        "timestamp": "2026-01-17T08:33:38.627319",
+        "companion": "Yeah, give or take a decimal point or two. What's up with the math question?",
+        "thinking_time": 0.5653440952301025,
+        "total_time": 0.565676212310791
+    },
+    {
+        "timestamp": "2026-01-17T08:33:38.944025",
+        "user": "Why do you want this?"
+    },
+    {
+        "timestamp": "2026-01-17T08:33:40.766379",
+        "companion": "Just curious! Is it for something cool?",
+        "thinking_time": 1.6952509880065918,
+        "total_time": 1.6959331035614014
+    },
+    {
+        "timestamp": "2026-01-17T08:33:42.756849",
+        "user": "Yeah, give or take a decimal point or two."
+    },
+    {
+        "timestamp": "2026-01-17T08:33:43.625496",
+        "companion": "Heh, math was never my strong suit. What's it for?",
+        "thinking_time": 0.5235087871551514,
+        "total_time": 0.5240061283111572
+    },
+    {
+        "timestamp": "2026-01-17T08:33:47.858845",
+        "user": "What's up with the math question? No, no. Just curious. Is it for something cool?"
+    },
+    {
+        "timestamp": "2026-01-17T08:33:48.654148",
+        "companion": "Gotcha, just a random thought then. Happens to me all the time.",
+        "thinking_time": 0.5181431770324707,
+        "total_time": 0.518773078918457
+    },
+    {
+        "timestamp": "2026-01-17T08:33:50.664628",
+        "user": "where math was never my strong suit."
+    },
+    {
+        "timestamp": "2026-01-17T08:33:51.728822",
+        "companion": "Same here. I'm more of a words person, ya know?",
+        "thinking_time": 0.5694119930267334,
+        "total_time": 0.5696702003479004
+    },
+    {
+        "timestamp": "2026-01-17T08:33:52.074327",
+        "user": "What's it for?"
+    },
+    {
+        "timestamp": "2026-01-17T08:33:53.800411",
+        "companion": "Ah, you were asking me? Honestly, just trying to be helpful and see if I could lend a hand with anything.",
+        "thinking_time": 1.6317830085754395,
+        "total_time": 1.6327507495880127
+    },
+    {
+        "timestamp": "2026-01-17T08:34:00.975588",
+        "user": "just a random thought then happens to me all the time. Same here, I'm more of a words person, you know?"
+    },
+    {
+        "timestamp": "2026-01-17T08:34:01.725302",
+        "companion": "Totally! Numbers are... intimidating. Words are way more fun.",
+        "thinking_time": 0.501129150390625,
+        "total_time": 0.5016326904296875
+    },
+    {
+        "timestamp": "2026-01-17T08:34:07.359006",
+        "user": "You were asking me honestly just trying to be helpful and see if I could lend a hand with anything"
+    },
+    {
+        "timestamp": "2026-01-17T08:34:09.334081",
+        "companion": "Oh sorry! I thought you were asking *me* what the square root of 5 was for, haha. My bad!",
+        "thinking_time": 0.5492129325866699,
+        "total_time": 0.549699068069458
+    }
+]

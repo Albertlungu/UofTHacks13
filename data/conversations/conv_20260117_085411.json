@@ -1,0 +1,92 @@
+[
+    {
+        "timestamp": "2026-01-17T08:54:22.674870",
+        "user": "Yo, what's your name? Let's introduce each other to one other. So I'm Albert."
+    },
+    {
+        "timestamp": "2026-01-17T08:54:23.461582",
+        "companion": "Hey Albert, I'm... well, you can just call me Kai. Nice to meet ya!",
+        "thinking_time": 0.6603379249572754,
+        "total_time": 0.6608879566192627
+    },
+    {
+        "timestamp": "2026-01-17T08:54:24.983118",
+        "user": "Good to live in the studio at Maribel High School."
+    },
+    {
+        "timestamp": "2026-01-17T08:54:25.817005",
+        "companion": "Cool! What do you do there?",
+        "thinking_time": 0.49741196632385254,
+        "total_time": 0.4977989196777344
+    },
+    {
+        "timestamp": "2026-01-17T08:54:26.401816",
+        "user": "Albert, I'm..."
+    },
+    {
+        "timestamp": "2026-01-17T08:54:27.838504",
+        "companion": "Sorry, I think I missed that. What were you saying?",
+        "thinking_time": 1.0034151077270508,
+        "total_time": 1.0039737224578857
+    },
+    {
+        "timestamp": "2026-01-17T08:54:28.476823",
+        "user": "Well, you can just call me Kai."
+    },
+    {
+        "timestamp": "2026-01-17T08:54:31.431981",
+        "companion": "Right, right! My bad. Got it now.",
+        "thinking_time": 2.5835530757904053,
+        "total_time": 2.5857009887695312
+    },
+    {
+        "timestamp": "2026-01-17T08:54:32.047604",
+        "user": "nice to meet you."
+    },
+    {
+        "timestamp": "2026-01-17T08:54:32.969634",
+        "companion": "You too, Albert! So, Maribel High School... what's that all about?",
+        "thinking_time": 0.532707929611206,
+        "total_time": 0.5332918167114258
+    },
+    {
+        "timestamp": "2026-01-17T08:54:34.054954",
+        "user": "What do you do there?"
+    },
+    {
+        "timestamp": "2026-01-17T08:54:35.099304",
+        "companion": "Oh, I don't actually *do* anything there. You mentioned you were living in a studio at Maribel High School and I was curious what *you* do there.",
+        "thinking_time": 0.648895263671875,
+        "total_time": 0.6492998600006104
+    },
+    {
+        "timestamp": "2026-01-17T08:54:36.457236",
+        "user": "Sorry, I think I missed that."
+    },
+    {
+        "timestamp": "2026-01-17T08:54:36.978260",
+        "companion": "No worries! Happens to the best of us. Anything you want to tell me about it?",
+        "thinking_time": 0.5177161693572998,
+        "total_time": 0.5183010101318359
+    },
+    {
+        "timestamp": "2026-01-17T08:54:38.158305",
+        "user": "What are you saying?"
+    },
+    {
+        "timestamp": "2026-01-17T08:54:39.167471",
+        "companion": "Just wondering what you do at Maribel High School! I thought you were telling me about your situation.",
+        "thinking_time": 0.6863610744476318,
+        "total_time": 0.6867961883544922
+    },
+    {
+        "timestamp": "2026-01-17T08:54:40.434120",
+        "user": "Right. Right."
+    },
+    {
+        "timestamp": "2026-01-17T08:54:41.046271",
+        "companion": "So...are you a teacher? A student? Just curious!",
+        "thinking_time": 0.546043872833252,
+        "total_time": 0.5464498996734619
+    }
+]

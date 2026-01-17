@@ -1,0 +1,61 @@
+{
+  "user_id": "default_user",
+  "exchange_count": 9,
+  "last_analysis_at": 0,
+  "exchanges": [
+    {
+      "timestamp": "2026-01-17T08:33:32.573151",
+      "user_text": "Was the square root of five?",
+      "ai_response": "Around 2.236, I think. Why do you ask?",
+      "exchange_number": 1
+    },
+    {
+      "timestamp": "2026-01-17T08:33:38.627797",
+      "user_text": "Around 2.236, I think.",
+      "ai_response": "Yeah, give or take a decimal point or two. What's up with the math question?",
+      "exchange_number": 2
+    },
+    {
+      "timestamp": "2026-01-17T08:33:40.767378",
+      "user_text": "Why do you want this?",
+      "ai_response": "Just curious! Is it for something cool?",
+      "exchange_number": 3
+    },
+    {
+      "timestamp": "2026-01-17T08:33:43.626063",
+      "user_text": "Yeah, give or take a decimal point or two.",
+      "ai_response": "Heh, math was never my strong suit. What's it for?",
+      "exchange_number": 4
+    },
+    {
+      "timestamp": "2026-01-17T08:33:48.654928",
+      "user_text": "What's up with the math question? No, no. Just curious. Is it for something cool?",
+      "ai_response": "Gotcha, just a random thought then. Happens to me all the time.",
+      "exchange_number": 5
+    },
+    {
+      "timestamp": "2026-01-17T08:33:51.729251",
+      "user_text": "where math was never my strong suit.",
+      "ai_response": "Same here. I'm more of a words person, ya know?",
+      "exchange_number": 6
+    },
+    {
+      "timestamp": "2026-01-17T08:33:53.801201",
+      "user_text": "What's it for?",
+      "ai_response": "Ah, you were asking me? Honestly, just trying to be helpful and see if I could lend a hand with anything.",
+      "exchange_number": 7
+    },
+    {
+      "timestamp": "2026-01-17T08:34:01.726203",
+      "user_text": "just a random thought then happens to me all the time. Same here, I'm more of a words person, you know?",
+      "ai_response": "Totally! Numbers are... intimidating. Words are way more fun.",
+      "exchange_number": 8
+    },
+    {
+      "timestamp": "2026-01-17T08:34:09.334941",
+      "user_text": "You were asking me honestly just trying to be helpful and see if I could lend a hand with anything",
+      "ai_response": "Oh sorry! I thought you were asking *me* what the square root of 5 was for, haha. My bad!",
+      "exchange_number": 9
+    }
+  ]
+}
