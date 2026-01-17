@@ -11,12 +11,10 @@ This package handles:
 from src.ai.conversation_manager import ConversationManager
 from src.ai.conversation_tracker import ConversationExchange, ConversationTracker
 from src.ai.gemini_companion import GeminiCompanion
-from src.ai.style_analyzer import StyleAnalyzer
 
 __all__ = [
     "ConversationManager",
     "GeminiCompanion",
-    "StyleAnalyzer",
     "ConversationTracker",
     "ConversationExchange",
 ]

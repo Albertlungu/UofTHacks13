@@ -17,6 +17,7 @@ from loguru import logger
 
 from src.ai.gemini_companion import GeminiCompanion
 from src.audio.audio_stream_manager import AudioStreamManager
+from src.audio.tts_elevenlabs import ElevenLabsTTS
 
 
 class ConversationManager:
@@ -67,6 +68,16 @@ class ConversationManager:
         # Main AI companion for generating thoughtful, context-aware responses
         # Start without style summary - will be updated after calibration
         self.companion = GeminiCompanion(api_key=gemini_api_key)
+
+        # TTS for speaking responses
+        elevenlabs_api_key = os.getenv("ELEVENLABS_API_KEY")
+        self.tts = (
+            ElevenLabsTTS(api_key=elevenlabs_api_key) if elevenlabs_api_key else None
+        )
+        if self.tts:
+            logger.info("ElevenLabs TTS enabled")
+        else:
+            logger.warning("ELEVENLABS_API_KEY not found - TTS disabled")
 
         # --- Threading and State Management ---
         self.is_running = False
@@ -255,9 +266,13 @@ class ConversationManager:
                     }
                 )
 
-                # TODO: Send to TTS for audio output
-                # For now, just print to console
+                # Send to TTS for audio output
                 print(f"\n[AI COMPANION]: {companion_response}\n")
+
+                if self.tts:
+                    self.tts.speak(companion_response, block=False)
+                else:
+                    logger.warning("TTS not available - response only printed")
 
                 self.ai_response_queue.task_done()
 
@@ -280,6 +295,10 @@ class ConversationManager:
             raise RuntimeError("Audio setup failed")
 
         self.is_running = True
+
+        # Start TTS
+        if self.tts:
+            self.tts.start()
 
         # Start batch sender thread (monitors buffer and sends after timeout)
         self.batch_sender_thread = threading.Thread(
@@ -324,6 +343,8 @@ class ConversationManager:
         self.stop()
         if self.audio_manager:
             self.audio_manager.cleanup()
+        if self.tts:
+            self.tts.cleanup()
         logger.info("ConversationManager cleanup complete")
 
 

@@ -13,6 +13,7 @@ faster-whisper>=1.0.3
 pyaudio==0.2.14
 numpy==1.26.3
 webrtcvad==2.0.10
+pydub==0.25.1
 
 # Computer Vision (for camera tracking)
 opencv-python==4.9.0.80

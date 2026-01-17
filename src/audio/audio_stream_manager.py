@@ -13,23 +13,26 @@ from loguru import logger
 
 from src.audio.audio_config import (
     BUFFER_PADDING_MS,
-    CALIBRATION_LEARNING_RATE,
+    # CALIBRATION CODE - COMMENTED OUT
+    # CALIBRATION_LEARNING_RATE,
     CHANNELS,
     CHUNK_SIZE,
     CONTINUE_COMMANDS,
     DEFAULT_USER_ID,
     MAX_RECORDING_DURATION,
     NEED_MORE_TIME_COMMANDS,
-    POST_CALIBRATION_LEARNING_RATE,
+    # POST_CALIBRATION_LEARNING_RATE,
     RECALIBRATE_COMMANDS,
     SAMPLE_RATE,
     THINKING_COMMANDS,
     VAD_FRAME_DURATION_MS,
 )
 from src.audio.audio_device_manager import AudioDeviceManager
-from src.audio.calibration_manager import CalibrationManager
-from src.audio.speaking_rate import SpeakingRateCalculator
-from src.audio.user_profile import PausePattern, UserProfileManager
+
+# CALIBRATION CODE - COMMENTED OUT
+# from src.audio.calibration_manager import CalibrationManager
+# from src.audio.speaking_rate import SpeakingRateCalculator
+# from src.audio.user_profile import PausePattern, UserProfileManager
 from src.audio.vad_detector import VADDetector
 from src.audio.whisper_transcriber import WhisperTranscriber
 
@@ -51,20 +54,22 @@ class AudioStreamManager:
             on_transcription: Callback function called with transcribed text
             user_id: User identifier for profile management
         """
-        # Load or create user profile
-        self.profile_manager = UserProfileManager()
-        self.user_profile = self.profile_manager.load_profile(user_id)
+        # CALIBRATION CODE - COMMENTED OUT
+        # # Load or create user profile
+        # self.profile_manager = UserProfileManager()
+        # self.user_profile = self.profile_manager.load_profile(user_id)
 
-        # Initialize components with user profile
+        # Initialize components (without user profile)
         self.device_manager = AudioDeviceManager()
-        self.vad = VADDetector(user_profile=self.user_profile)
+        self.vad = VADDetector()  # No user profile
         self.transcriber = WhisperTranscriber()
-        self.speaking_rate_calc = SpeakingRateCalculator()
+        # CALIBRATION CODE - COMMENTED OUT
+        # self.speaking_rate_calc = SpeakingRateCalculator()
 
-        # Calibration manager for style analysis
-        self.calibration_manager = CalibrationManager(
-            self.profile_manager, self.user_profile
-        )
+        # # Calibration manager for style analysis
+        # self.calibration_manager = CalibrationManager(
+        #     self.profile_manager, self.user_profile
+        # )
 
         self.on_transcription = on_transcription
 
@@ -84,13 +89,11 @@ class AudioStreamManager:
         self.transcription_queue = queue.Queue()
         self.transcription_thread: Optional[threading.Thread] = None
 
-        # Track if we've triggered style analysis for this session
-        self.style_analysis_started = False
+        # CALIBRATION CODE - COMMENTED OUT
+        # # Track if we've triggered style analysis for this session
+        # self.style_analysis_started = False
 
-        logger.info(
-            f"AudioStreamManager initialized for user '{user_id}' "
-            f"(calibrated: {self.user_profile.is_calibrated})"
-        )
+        logger.info(f"AudioStreamManager initialized for user '{user_id}'")
 
     def setup(self) -> bool:
         """

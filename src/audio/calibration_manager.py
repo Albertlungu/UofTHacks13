@@ -69,31 +69,12 @@ class CalibrationManager:
             return
 
         self.on_style_complete = callback
-        self.style_analysis_in_progress = True
+        self.style_analysis_in_progress = False
 
-        logger.info(
-            f"Starting style analysis on {len(self.calibration_transcripts)} transcripts"
-        )
+        logger.info(f"Style analysis disabled - HelpingAI removed from project")
 
-        # Import here to avoid loading the model until needed
-        try:
-            from src.ai.style_analyzer import StyleAnalyzer
-
-            if self.style_analyzer is None:
-                self.style_analyzer = StyleAnalyzer()
-                logger.info("Loading HelpingAI model...")
-                self.style_analyzer.load_model()
-
-            # Run analysis in background
-            self.style_analyzer.analyze_style(
-                self.calibration_transcripts,
-                analysis_type="initial",
-                callback=self._on_analysis_complete,
-            )
-
-        except Exception as e:
-            logger.error(f"Failed to start style analysis: {e}")
-            self.style_analysis_in_progress = False
+        # Note: Style analysis is now handled by Gemini directly
+        # No separate model needed
 
     def _on_analysis_complete(self, style_summary: str):
         """
