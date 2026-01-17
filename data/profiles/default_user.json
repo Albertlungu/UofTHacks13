@@ -1,0 +1,20 @@
+{
+  "user_id": "default_user",
+  "avg_within_sentence_pause": 0.603,
+  "avg_between_sentence_pause": 1.0,
+  "avg_thinking_pause": 2.0,
+  "words_per_minute": 2711.136379094356,
+  "silence_threshold": 1.5,
+  "thinking_pause_threshold": 2.0,
+  "max_silence_before_interrupt": 3.0,
+  "is_calibrated": true,
+  "calibration_time": 64.52217507362366,
+  "total_words_spoken": 144,
+  "pause_history": [
+    {
+      "duration": 1.53,
+      "location": "within_sentence",
+      "was_thinking_pause": false
+    }
+  ]
+}
