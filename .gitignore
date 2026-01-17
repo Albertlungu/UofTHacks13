@@ -209,3 +209,5 @@ __marimo__/
 
 .DS_Store
 .claude
+
+src/frontend/node_modules/
