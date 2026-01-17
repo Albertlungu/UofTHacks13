@@ -162,14 +162,6 @@ class ConversationManager:
             {"timestamp": datetime.now().isoformat(), "user": text}
         )
 
-        # Check if we should update companion with style summary
-        if not self.style_updated and self.audio_manager.user_profile.is_calibrated:
-            style_summary = self.audio_manager.get_style_summary_for_gemini()
-            if style_summary:
-                logger.info("Updating companion with user's style profile")
-                self.companion.update_style_summary(style_summary)
-                self.style_updated = True
-
         # Smart batching: Buffer utterances and send after timeout
         word_count = len(text.split())
 
@@ -387,8 +379,6 @@ class ConversationManager:
             self.tts.cleanup()
         if self.identity_manager:
             self.identity_manager.cleanup()
-        if self.conversation_tracker:
-            self.conversation_tracker.save()
         logger.info("ConversationManager cleanup complete")
 
 

@@ -1,5 +1,5 @@
 {
-  "user_id": "test_user",
+  "user_id": "default_user",
   "communication_style": {
     "sentence_length": {
       "avg_words": 10,
@@ -23,7 +23,7 @@
       "uses_qualifiers": []
     },
     "filler_words": [],
-    "last_updated": "2026-01-17T07:56:54.915106",
+    "last_updated": "2026-01-17T08:12:09.010377",
     "confidence": 0.0,
     "sample_size": 0
   },
@@ -40,7 +40,7 @@
       "communication": "",
       "problem_solving": ""
     },
-    "last_updated": ""
+    "last_updated": "2026-01-17T08:12:11.649998"
   },
   "thought_patterns": {
     "cognitive_style": {
@@ -85,10 +85,7 @@
     "interests": [],
     "experiences": [],
     "recent_topics": [],
-    "last_updated": "2026-01-17T07:56:57.740178"
+    "last_updated": "2026-01-17T08:12:09.948827"
   },
-  "total_exchanges_analyzed": 5,
-  "created_at": "2026-01-17T07:42:14.424965",
-  "last_updated": "2026-01-17T07:56:57.740441",
-  "profile_maturity": "nascent"
+  "total_exchanges_analyzed": 13
 }
