@@ -1,0 +1,19 @@
+# Core dependencies
+python-dotenv==1.0.0
+
+# AI and ML (for later integration)
+google-generativeai==0.3.2
+elevenlabs==0.2.27
+
+# Audio Pipeline - REQUIRED
+faster-whisper>=1.0.3  # Let pip find compatible version
+pyaudio==0.2.14
+numpy==1.26.3
+webrtcvad==2.0.10
+
+# Utilities - REQUIRED
+loguru==0.7.2
+colorama==0.4.6
+
+# Testing
+pytest==7.4.4
