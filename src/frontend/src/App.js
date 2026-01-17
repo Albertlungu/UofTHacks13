@@ -8,7 +8,7 @@ function Avatar3D({ state, position, scale = 2.0 }) {
   const group = useRef();
   const { scene, animations } = useGLTF('http://localhost:5000/assets/models/chibi.glb');
   const { actions } = useAnimations(animations, group);
-  
+
   const currentAnimationIndex = useRef(0);
   const animationChangeInterval = useRef(null);
   const stateRef = useRef(state);
@@ -29,7 +29,7 @@ function Avatar3D({ state, position, scale = 2.0 }) {
     actionKeys.forEach(key => {
       if (actions[key]) actions[key].stop();
     });
-    
+
     // Clear any existing intervals
     if (animationChangeInterval.current) {
       clearInterval(animationChangeInterval.current);
@@ -45,23 +45,23 @@ function Avatar3D({ state, position, scale = 2.0 }) {
         firstAction.timeScale = 1.2; // Slightly faster
         firstAction.play();
       }
-      
+
       // Cycle through animations
       currentAnimationIndex.current = 0;
       animationChangeInterval.current = setInterval(() => {
         if (stateRef.current !== 'SPEAKING') return;
-        
+
         currentAnimationIndex.current = (currentAnimationIndex.current + 1) % actionKeys.length;
         const nextKey = actionKeys[currentAnimationIndex.current];
         const nextAction = actions[nextKey];
-        
+
         if (nextAction) {
           actionKeys.forEach(key => {
             if (key !== nextKey && actions[key]) {
               actions[key].fadeOut(0.3);
             }
           });
-          
+
           nextAction.reset();
           nextAction.fadeIn(0.3);
           nextAction.setLoop(THREE.LoopRepeat);
@@ -69,7 +69,7 @@ function Avatar3D({ state, position, scale = 2.0 }) {
           nextAction.play();
         }
       }, 2500);
-      
+
     } else if (state === 'THINKING') {
       // THINKING: Slow looping animation, intentional silence
       const firstAction = actions[actionKeys[0]];
@@ -79,7 +79,7 @@ function Avatar3D({ state, position, scale = 2.0 }) {
         firstAction.timeScale = 0.4; // Much slower
         firstAction.play();
       }
-      
+
     } else if (state === 'LISTENING') {
       // LISTENING: Subtle animation, attentive
       const firstAction = actions[actionKeys[0]];
@@ -89,7 +89,7 @@ function Avatar3D({ state, position, scale = 2.0 }) {
         firstAction.timeScale = 0.6;
         firstAction.play();
       }
-      
+
     } else {
       // IDLE: Minimal movement, observing
       // No animations playing, just procedural motion
@@ -127,32 +127,32 @@ function Avatar3D({ state, position, scale = 2.0 }) {
       // IDLE: Subtle breathing, occasional eye movement
       const breathe = Math.sin(time * 1.2) * 0.01;
       group.current.position.z = -0.2 + breathe;
-      
+
       const subtleRotation = Math.sin(time * 0.2) * 0.02;
       group.current.rotation.y = subtleRotation;
-      
+
     } else if (currentState === 'LISTENING') {
       // LISTENING: Head tilt, attentive posture
       const breathe = Math.sin(time * 1.5) * 0.008;
       group.current.position.z = -0.1 + breathe;
-      
+
       const headTilt = Math.sin(time * 0.3) * 0.06;
       group.current.rotation.z = headTilt;
       group.current.rotation.y = 0.1;  // Slight lean toward user
-      
+
     } else if (currentState === 'THINKING') {
       // THINKING: Slow, contemplative motion
       const slowFloat = Math.sin(time * 0.4) * 0.01;
       group.current.position.z = -0.15 + slowFloat;
-      
+
       const slowRotation = Math.sin(time * 0.25) * 0.04;
       group.current.rotation.y = slowRotation;
-      
+
     } else if (currentState === 'SPEAKING') {
       // SPEAKING: Energetic but controlled
       const bounce = Math.sin(time * 4) * 0.01;
       group.current.position.z = -0.1 + bounce;
-      
+
       const activeRotation = Math.sin(time * 0.3) * 0.03;
       group.current.rotation.y = activeRotation;
     }
@@ -173,34 +173,34 @@ function Avatar3D({ state, position, scale = 2.0 }) {
   return (
     <group ref={group} position={[0, -1, 0]} scale={scale}>
       <primitive object={scene} />
-      
+
       {/* State-specific lighting */}
       <pointLight position={[3, 3, 3]} intensity={1.0} color="#ffffff" />
       <pointLight position={[-3, 2, 2]} intensity={0.6} color="#ffffff" />
-      
+
       {state === 'LISTENING' && (
-        <pointLight 
-          position={[0, 1, 2]} 
-          intensity={0.8} 
-          color="#4ecdc4" 
+        <pointLight
+          position={[0, 1, 2]}
+          intensity={0.8}
+          color="#4ecdc4"
           distance={4}
         />
       )}
-      
+
       {state === 'THINKING' && (
-        <pointLight 
-          position={[0, 2, 2]} 
-          intensity={1.0} 
-          color="#9b59b6" 
+        <pointLight
+          position={[0, 2, 2]}
+          intensity={1.0}
+          color="#9b59b6"
           distance={4}
         />
       )}
-      
+
       {state === 'SPEAKING' && (
-        <pointLight 
-          position={[0, 0, 2]} 
-          intensity={1.5} 
-          color="#ff4444" 
+        <pointLight
+          position={[0, 0, 2]}
+          intensity={1.5}
+          color="#ff4444"
           distance={4}
         />
       )}
@@ -211,7 +211,7 @@ function Avatar3D({ state, position, scale = 2.0 }) {
 function FallbackAvatar({ state, position }) {
   const meshRef = useRef();
   const mouthRef = useRef();
-  
+
   useFrame((state) => {
     if (meshRef.current && position) {
       meshRef.current.position.x = THREE.MathUtils.lerp(
@@ -238,7 +238,7 @@ function FallbackAvatar({ state, position }) {
     <group>
       <mesh ref={meshRef} position={[0, 0, 0]}>
         <sphereGeometry args={[0.4, 32, 32]} />
-        <meshStandardMaterial 
+        <meshStandardMaterial
           color={stateColors[state] || "#4ecdc4"}
           transparent
           opacity={0.85}
@@ -246,17 +246,17 @@ function FallbackAvatar({ state, position }) {
           emissiveIntensity={0.4}
         />
       </mesh>
-      
+
       <mesh position={[-0.12, 0.1, 0.35]}>
         <sphereGeometry args={[0.06, 16, 16]} />
         <meshStandardMaterial color="black" />
       </mesh>
-      
+
       <mesh position={[0.12, 0.1, 0.35]}>
         <sphereGeometry args={[0.06, 16, 16]} />
         <meshStandardMaterial color="black" />
       </mesh>
-      
+
       <mesh ref={mouthRef} position={[0, -0.08, 0.35]}>
         <boxGeometry args={[0.2, 0.06, 0.05]} />
         <meshStandardMaterial color="black" />
@@ -309,12 +309,12 @@ function Scene({ avatarState, faceData }) {
       // Normalize face position to -1 to 1 range
       const normX = (faceData.center_x - 640) / 640;
       const normY = -(faceData.center_y - 360) / 360;
-      
+
       // Avatar follows face position smoothly (stays near face, slightly offset)
-      setAvatarPosition({ 
+      setAvatarPosition({
         x: normX * 1.5,    // Direct follow, no extra offset
         y: normY * 1.2,    // Vertical follow
-        z: 0 
+        z: 0
       });
     }
   }, [faceData]);
@@ -324,9 +324,9 @@ function Scene({ avatarState, faceData }) {
       <ambientLight intensity={0.5} />
       <directionalLight position={[10, 10, 5]} intensity={1.0} castShadow />
       <hemisphereLight args={['#87CEEB', '#1a1a1a', 0.7]} />
-      
+
       <AvatarWithErrorBoundary state={avatarState} position={avatarPosition} />
-      
+
       <PerspectiveCamera makeDefault position={[0, 0, 8]} fov={45} />
     </>
   );
@@ -376,7 +376,7 @@ function App() {
       try {
         const res = await fetch('http://localhost:5000/speaking_status');
         const data = await res.json();
-        
+
         setSpeaking(data.is_speaking);
         setAudioAvailable(data.audio_available);
         setCurrentVolume(data.current_volume || 0);
@@ -414,10 +414,10 @@ function App() {
   };
 
   return (
-    <div style={{ 
-      width: '100vw', 
-      height: '100vh', 
-      display: 'flex', 
+    <div style={{
+      width: '100vw',
+      height: '100vh',
+      display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
@@ -436,9 +436,9 @@ function App() {
         AI Companion
       </h1>
 
-      <div style={{ 
-        position: 'relative', 
-        width: '1280px', 
+      <div style={{
+        position: 'relative',
+        width: '1280px',
         height: '720px',
         backgroundColor: '#000',
         overflow: 'hidden',
@@ -463,7 +463,7 @@ function App() {
             WebkitImageRendering: 'crisp-edges'  // For Safari
           }}
         />
-        
+
         {show3D && (
           <div style={{
             position: 'absolute',
@@ -479,7 +479,7 @@ function App() {
             </Canvas>
           </div>
         )}
-        
+
         {/* Minimal Status Bar */}
         <div style={{
           position: 'absolute',
@@ -514,7 +514,7 @@ function App() {
               </span>
             </span>
           </div>
-          
+
           <button
             onClick={() => setShow3D(!show3D)}
             style={{
@@ -540,17 +540,17 @@ function App() {
           width: '200px',
           zIndex: 3
         }}>
-          <div style={{ 
-            fontSize: '10px', 
-            color: '#aaa', 
+          <div style={{
+            fontSize: '10px',
+            color: '#aaa',
             marginBottom: '4px',
             fontFamily: 'monospace'
           }}>
             VOL: {currentVolume.toFixed(0)} / {threshold}
           </div>
-          <div style={{ 
-            width: '100%', 
-            height: '3px', 
+          <div style={{
+            width: '100%',
+            height: '3px',
             background: '#222',
             overflow: 'hidden'
           }}>
@@ -609,6 +609,17 @@ function App() {
       </div>
     </div>
   );
+}
+
+import React from "react";
+import BlockBuilder3D from "./BlockBuilder3D";
+
+function App() {
+    return (
+        <div className="App">
+            <BlockBuilder3D />
+        </div>
+    );
 }
 
 export default App;
