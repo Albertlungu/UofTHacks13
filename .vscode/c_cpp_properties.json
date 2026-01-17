@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${env:LOCALAPPDATA}\\Arduino15\\packages\\arduino\\hardware\\renesas_uno\\*\\cores\\arduino",
+                "${env:LOCALAPPDATA}\\Arduino15\\packages\\arduino\\hardware\\renesas_uno\\*\\variants\\UNOWIFIR4",
+                "${env:LOCALAPPDATA}\\Arduino15\\packages\\arduino\\tools\\**"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "windowsSdkVersion": "10.0.19041.0",
+            "compilerPath": "cl.exe",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "windows-msvc-x64"
+        }
+    ],
+    "version": 4
+}
