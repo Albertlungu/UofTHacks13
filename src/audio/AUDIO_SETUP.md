@@ -1,10 +1,19 @@
 # Audio Pipeline Setup Guide
 
-This guide explains how to set up and test the AirPods -> Whisper audio pipeline for the Goonvengers AI companion.
+This guide explains how to set up and test the AirPods -> Whisper audio pipeline with **adaptive learning** for the Goonvengers AI companion.
 
 ## Overview
 
-The audio pipeline captures audio from AirPods, uses Voice Activity Detection (VAD) to detect when you're speaking, and transcribes your speech using local Whisper. No audio files are saved - everything is streamed directly.
+The audio pipeline captures audio from AirPods, uses Voice Activity Detection (VAD) to detect when you're speaking, and transcribes your speech using local Whisper. The system **learns your speech patterns** during the first 45-60 seconds and adapts to your natural speaking style.
+
+### Key Features
+
+- **Adaptive Silence Detection**: Learns your natural pause patterns
+- **Speaking Rate Tracking**: Measures and adapts to your words-per-minute
+- **Pause Pattern Learning**: Tracks where you pause (within/between sentences)
+- **Thinking Pause Detection**: Distinguishes between "done speaking" and "still thinking"
+- **User Profiles**: Saves learned patterns for future sessions
+- **Continuous Learning**: Keeps updating (slowly) after initial calibration
 
 ## Architecture
 
@@ -13,11 +22,17 @@ AirPods Microphone
     ↓
 PyAudio Stream (16kHz, mono, int16)
     ↓
-VAD Detector (WebRTC VAD)
+VAD Detector (WebRTC VAD + Adaptive Learning)
+    ↓
+Pause Pattern Tracking
     ↓
 Audio Buffer (accumulated during speech)
     ↓
 Whisper Transcriber (faster-whisper, local)
+    ↓
+Speaking Rate Calculator (WPM)
+    ↓
+User Profile Update (learning)
     ↓
 Text Output → [Your Callback Function]
 ```
@@ -25,241 +40,339 @@ Text Output → [Your Callback Function]
 ## Prerequisites
 
 - macOS (tested on Darwin 25.3.0)
-- Python 3.9 or higher
+- **Python 3.11, 3.12, or 3.13** (NOT 3.14 - onnxruntime not supported yet)
 - AirPods or other Bluetooth headphones
 - Homebrew (for macOS dependencies)
 
 ## Installation
 
-### Automated Setup
-
-Run the setup script:
+### Step 1: Install System Dependencies
 
 ```bash
-./setup.sh
+# Install FFmpeg and portaudio
+brew install ffmpeg pkg-config portaudio
 ```
 
-This will:
-1. Create a virtual environment
-2. Install all dependencies
-3. Download the Whisper model
-4. Set up logging directories
-5. Run basic tests
-
-### Manual Setup
-
-If you prefer manual setup:
+### Step 2: Set Up Python Environment
 
 ```bash
+# Use Python 3.12 (recommended)
+brew install python@3.12
+
 # Create virtual environment
-python3 -m venv venv
+python3.12 -m venv venv
 source venv/bin/activate
 
-# Install portaudio (required for PyAudio on macOS)
-brew install portaudio
+# Install setuptools (required)
+pip install setuptools
 
-# Install Python dependencies
+# Install project dependencies
 pip install -r requirements.txt
-
-# Test installation
-python -c "from faster_whisper import WhisperModel; print('OK')"
 ```
+
+### Step 3: Verify Installation
+
+```bash
+python verify_installation.py
+```
+
+You should see green checkmarks for all components.
+
+## How Adaptive Learning Works
+
+### Phase 1: Calibration (First 45-60 seconds)
+
+During the first minute, the system:
+
+1. **Uses lenient thresholds** (+2 seconds buffer) to avoid cutting you off
+2. **Tracks all pauses**:
+   - Duration of each pause
+   - Location (within/between sentences)
+   - Whether you resumed speaking (= thinking pause)
+3. **Measures speaking rate** (words per minute)
+4. **Collects at least 100 words** before completing calibration
+5. **Extends calibration** if not enough data collected
+
+After calibration, the system calculates:
+- Average within-sentence pause duration
+- Average between-sentence pause duration
+- Average thinking pause duration
+- Your typical speaking rate (WPM)
+
+### Phase 2: Adapted Behavior (After Calibration)
+
+The system applies learned thresholds:
+- `silence_threshold` = avg_between_sentence_pause + 0.5s
+- `thinking_pause_threshold` = avg_thinking_pause * 0.8
+- `max_silence_before_interrupt` = avg_thinking_pause * 1.5
+
+### Phase 3: Continuous Learning (Ongoing)
+
+After calibration, the system continues learning at 10% learning rate:
+- Slowly adapts to changes in your speech
+- Updates saved profile periodically
+- Maintains stability while still being responsive
 
 ## Configuration
 
-Audio settings can be adjusted in `src/audio/audio_config.py`:
+### Calibration Settings (`src/audio/audio_config.py`)
+
+```python
+CALIBRATION_DURATION = 60.0  # 45-60 seconds
+CALIBRATION_SILENCE_BUFFER = 2.0  # Extra patience during calibration
+MIN_CALIBRATION_SENTENCES = 3  # Minimum data needed
+CALIBRATION_LEARNING_RATE = 1.0  # Full learning during calibration
+POST_CALIBRATION_LEARNING_RATE = 0.1  # Slower learning after
+```
 
 ### VAD Settings
+
 - `VAD_MODE`: Aggressiveness (0-3, higher = more aggressive)
-- `INITIAL_SILENCE_THRESHOLD`: Seconds of silence before transcription (default: 1.5s)
-- `THINKING_PAUSE_THRESHOLD`: Long pause detection (default: 3.0s)
-- `MAX_SILENCE_BEFORE_INTERRUPT`: Max silence tolerance (default: 5.0s)
+- Thresholds are now **adaptive** and loaded from user profile
 
 ### Whisper Settings
-- `WHISPER_MODEL`: Model size (tiny, base, small, medium, large)
-  - **tiny**: Fastest, least accurate (~1GB RAM)
-  - **base**: Good balance (~1GB RAM) ⭐ Recommended
-  - **small**: Better accuracy (~2GB RAM)
-  - **medium**: High accuracy (~5GB RAM)
-  - **large**: Best accuracy (~10GB RAM)
 
-### Audio Quality
-- `SAMPLE_RATE`: 16000 Hz (optimal for Whisper)
-- `CHANNELS`: 1 (mono)
-- `CHUNK_SIZE`: 1024 frames
+- `WHISPER_MODEL`: "base" (recommended)
+  - **tiny**: Fastest (~0.5s latency)
+  - **base**: Best balance (~1s latency) ⭐
+  - **small**: Better accuracy (~2s latency)
 
 ## Usage
 
 ### Running the Demo
 
 1. **Connect your AirPods** to your Mac
-2. Activate the virtual environment:
+2. **Activate the virtual environment**:
    ```bash
    source venv/bin/activate
    ```
-3. Run the demo:
+3. **Run the demo**:
    ```bash
    python -m src.audio.demo
    ```
-4. **Speak into your AirPods** - the system will automatically detect when you start/stop speaking
+
+### First Time Use
+
+On your first run, you'll see:
+```
+READY TO LISTEN (Calibration Mode)
+========================================
+
+First 45-60 seconds: Learning your speech patterns...
+Please speak naturally - the system is adapting to you!
+```
+
+**During calibration:**
+- Speak naturally about anything
+- Take pauses as you normally would
+- If you resume speaking after a pause, it's marked as a "thinking pause"
+- System is extra patient - won't cut you off
+
+**After calibration:**
+```
+Calibration complete! Applied thresholds:
+  silence=1.8s, thinking=2.5s, max=4.0s
+```
 
 ### Special Commands
 
-The system recognizes special commands:
+The system recognizes these voice commands:
 
-- **Thinking mode**: Say "wait", "hold on", "let me think"
-  - System will wait longer before interrupting
+- **"wait", "hold on", "let me think"**
+  - Enters thinking mode (extra patience)
   
-- **Resume**: Say "okay", "continue", "go ahead"
-  - Return to normal conversation mode
+- **"okay", "continue", "go ahead"**
+  - Exits thinking mode (back to normal)
 
-### Output
+- **"need more time", "slower today"**
+  - Temporarily increases all thresholds by 1.5x
+  - Use when you're tired or need extra thinking time
 
-When you speak, you'll see:
+- **"recalibrate", "reset calibration"**
+  - Clears learned profile and starts fresh calibration
+  - Use if system isn't adapting well
+
+### User Profiles
+
+Profiles are automatically saved to `./data/profiles/default_user.json`
+
+Example profile:
+```json
+{
+  "user_id": "default_user",
+  "avg_within_sentence_pause": 0.6,
+  "avg_between_sentence_pause": 1.2,
+  "avg_thinking_pause": 2.8,
+  "words_per_minute": 145.3,
+  "silence_threshold": 1.7,
+  "thinking_pause_threshold": 2.24,
+  "max_silence_before_interrupt": 4.2,
+  "is_calibrated": true,
+  "total_words_spoken": 147
+}
 ```
->>> USER: [Your transcribed speech here]
-```
 
-Logs are written to:
-- Console (with colors)
-- `logs/goonvengers_[timestamp].log`
+### Viewing Your Profile
+
+After running once, your profile stats are shown:
+```
+READY TO LISTEN (Calibrated Profile)
+========================================
+
+Your speech profile:
+  - Speaking rate: 145.3 WPM
+  - Silence threshold: 1.70s
+  - Thinking pause: 2.24s
+```
 
 ## Testing
 
-Run the test suite:
+### System Test
 
 ```bash
-# All tests
+python test_system.py
+```
+
+This tests all components including the new adaptive learning system.
+
+### Unit Tests
+
+```bash
 pytest tests/ -v
-
-# Specific test
-pytest tests/test_audio_pipeline.py::TestWhisperTranscriber -v
-
-# With coverage
-pytest tests/ --cov=src/audio --cov-report=html
 ```
 
 ## Troubleshooting
 
-### AirPods Not Detected
+### Python 3.14 Issues
 
-If AirPods aren't found:
-
-1. Check Bluetooth connection in System Settings
-2. Make sure AirPods are selected as input device
-3. List available devices:
-   ```python
-   from src.audio import AudioDeviceManager
-   manager = AudioDeviceManager()
-   for device in manager.list_all_devices():
-       print(f"{device['index']}: {device['name']}")
-   ```
-
-### PyAudio Installation Fails
-
-On macOS, install portaudio first:
+If you get "No matching distribution found for onnxruntime":
 ```bash
-brew install portaudio
-pip install pyaudio
+# Use Python 3.12 instead
+brew install python@3.12
+python3.12 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
 ```
 
-### Whisper Model Download Issues
+### FFmpeg Missing
 
-If the model doesn't download:
+If you get "Package 'libavformat' not found":
 ```bash
-python -c "from faster_whisper import WhisperModel; WhisperModel('base', device='cpu', compute_type='int8')"
+brew install ffmpeg pkg-config
 ```
 
-### Low Transcription Quality
+### Calibration Not Completing
 
-Try these adjustments:
+If calibration extends beyond 60 seconds:
+- System needs at least 100 words spoken
+- Keep speaking naturally
+- System will complete when it has enough data
 
-1. **Use a better model**: Change `WHISPER_MODEL` to "small" or "medium"
-2. **Adjust VAD sensitivity**: Increase `VAD_MODE` to 3
-3. **Check microphone position**: Speak clearly toward AirPods
-4. **Reduce background noise**
+### System Too Sensitive / Not Sensitive Enough
 
-### High Latency
+1. **Recalibrate**: Say "recalibrate" while using the system
+2. **Manual adjustment**: Edit thresholds in `./data/profiles/default_user.json`
+3. **Delete profile**: Remove JSON file to start fresh
 
-To reduce latency:
+### Profile Not Saving
 
-1. **Use smaller model**: Set `WHISPER_MODEL` to "tiny" or "base"
-2. **Reduce silence threshold**: Lower `INITIAL_SILENCE_THRESHOLD` to 1.0s
-3. **Use GPU** (if available):
-   ```python
-   transcriber = WhisperTranscriber(device="cuda")
-   ```
+Check:
+- `./data/profiles/` directory exists
+- You have write permissions
+- Check logs for save errors
 
-## Integration with Goonvengers
-
-To integrate with the full Goonvengers system:
+## Integration Example
 
 ```python
 from src.audio import AudioStreamManager
 
-def on_transcription(text: str):
-    # 1. Send to emotion detection
-    emotion = detect_emotion(text)
-    
-    # 2. Store in Amplitude
-    amplitude.track('user_speech', {'text': text, 'emotion': emotion})
-    
-    # 3. Send to Gemini
-    response = gemini.generate(text, emotion=emotion)
-    
-    # 4. Speak response via ElevenLabs
-    elevenlabs.speak(response)
+# Create stream manager with user ID
+stream = AudioStreamManager(
+    on_transcription=on_transcription,
+    user_id="albert"  # Multi-user ready
+)
 
-# Create and start stream
-stream = AudioStreamManager(on_transcription=on_transcription)
+# Setup and start
 stream.setup()
 stream.start()
+
+# Profile automatically loads and saves
+# System adapts to this specific user's speech patterns
 ```
 
-## Performance Metrics
+## Architecture Details
 
-Expected performance with different models on M1/M2 Mac:
-
-| Model  | Latency | Accuracy | RAM Usage |
-|--------|---------|----------|-----------|
-| tiny   | ~0.5s   | Good     | ~1GB      |
-| base   | ~1.0s   | Better   | ~1GB      |
-| small  | ~2.0s   | Great    | ~2GB      |
-| medium | ~4.0s   | Excellent| ~5GB      |
-
-## Files Structure
+### Files Structure
 
 ```
 src/audio/
 ├── audio_config.py           # Configuration constants
-├── audio_device_manager.py   # Device detection and management
-├── vad_detector.py           # Voice Activity Detection
+├── audio_device_manager.py   # Device detection
+├── vad_detector.py           # VAD with calibration
 ├── whisper_transcriber.py    # Whisper integration
-├── audio_stream_manager.py   # Main pipeline coordinator
-├── error_handler.py          # Error handling and logging
+├── user_profile.py          # Profile management (NEW)
+├── speaking_rate.py         # WPM calculation (NEW)
+├── audio_stream_manager.py   # Main coordinator (UPDATED)
+├── error_handler.py          # Error handling
 ├── demo.py                   # Demo application
 └── __init__.py              # Package exports
+
+data/profiles/
+└── default_user.json        # Saved user profile
 ```
+
+### Learning Algorithm
+
+**Pause Classification:**
+1. When silence starts → record timestamp and location
+2. If user resumes speaking → mark as "thinking pause"
+3. If user says continue command → mark as "not thinking"
+4. If transcription completes → mark as "end of thought"
+
+**Threshold Calculation:**
+```python
+silence_threshold = max(avg_between_sentence + 0.5, 1.0)
+thinking_threshold = max(avg_thinking * 0.8, silence_threshold + 0.5)
+max_silence = max(avg_thinking * 1.5, thinking_threshold + 1.0)
+```
+
+**Exponential Moving Average:**
+```python
+new_value = learning_rate * measured_value + (1 - learning_rate) * old_value
+```
+- Calibration: learning_rate = 1.0 (full weight on new data)
+- Post-calibration: learning_rate = 0.1 (slow adaptation)
+
+## Performance
+
+Expected performance on M1/M2 Mac:
+
+| Phase        | Action         | Time    |
+|--------------|----------------|---------|
+| Startup      | Load model     | 2-3s    |
+| Calibration  | Learning       | 45-60s  |
+| Transcription| Per utterance  | 1-2s    |
+| Profile save | Periodic       | <0.1s   |
 
 ## Next Steps
 
 After the audio pipeline is working:
 
-1. **Emotion Detection**: Integrate emotion model for speech analysis
-2. **Gemini Integration**: Connect transcribed text to Gemini API
-3. **ElevenLabs**: Add voice response synthesis
-4. **Amplitude**: Store conversation history
-5. **Camera Integration**: Add facial expression analysis
-6. **Full System**: Combine all components
+1. **Emotion Detection**: Analyze tone and emotion from audio/text
+2. **Gemini Integration**: Generate responses based on personality
+3. **ElevenLabs**: Synthesize voice responses
+4. **Camera Tracking**: Follow user with cameras
+5. **Amplitude**: Store conversation history and patterns
+6. **Multi-user**: Support multiple user profiles with voice recognition
 
 ## Support
 
 If you encounter issues:
 
-1. Check logs in `logs/` directory
-2. Run with debug logging: Set `logger.level = "DEBUG"`
-3. Test individual components with pytest
-4. Verify audio devices are properly connected
+1. Check logs: `logs/goonvengers_*.log`
+2. Run system test: `python test_system.py`
+3. Check profile: `cat data/profiles/default_user.json`
+4. Enable debug logging in code: `logger.level = "DEBUG"`
 
 ## License
 

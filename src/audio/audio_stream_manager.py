@@ -1,5 +1,5 @@
 """
-Main audio stream manager that coordinates capture, VAD, and transcription.
+Main audio stream manager that coordinates capture, VAD, transcription, and learning.
 """
 
 import queue
@@ -13,34 +13,52 @@ from loguru import logger
 
 from src.audio.audio_config import (
     BUFFER_PADDING_MS,
+    CALIBRATION_LEARNING_RATE,
     CHANNELS,
     CHUNK_SIZE,
     CONTINUE_COMMANDS,
+    DEFAULT_USER_ID,
     MAX_RECORDING_DURATION,
+    NEED_MORE_TIME_COMMANDS,
+    POST_CALIBRATION_LEARNING_RATE,
+    RECALIBRATE_COMMANDS,
     SAMPLE_RATE,
     THINKING_COMMANDS,
     VAD_FRAME_DURATION_MS,
 )
 from src.audio.audio_device_manager import AudioDeviceManager
+from src.audio.speaking_rate import SpeakingRateCalculator
+from src.audio.user_profile import PausePattern, UserProfileManager
 from src.audio.vad_detector import VADDetector
 from src.audio.whisper_transcriber import WhisperTranscriber
 
 
 class AudioStreamManager:
     """
-    Manages the complete audio pipeline: capture -> VAD -> transcription.
+    Manages the complete audio pipeline: capture -> VAD -> transcription -> learning.
     """
 
-    def __init__(self, on_transcription: Optional[Callable[[str], None]] = None):
+    def __init__(
+        self,
+        on_transcription: Optional[Callable[[str], None]] = None,
+        user_id: str = DEFAULT_USER_ID,
+    ):
         """
         Initialize the audio stream manager.
 
         Args:
             on_transcription: Callback function called with transcribed text
+            user_id: User identifier for profile management
         """
+        # Load or create user profile
+        self.profile_manager = UserProfileManager()
+        self.user_profile = self.profile_manager.load_profile(user_id)
+
+        # Initialize components with user profile
         self.device_manager = AudioDeviceManager()
-        self.vad = VADDetector()
+        self.vad = VADDetector(user_profile=self.user_profile)
         self.transcriber = WhisperTranscriber()
+        self.speaking_rate_calc = SpeakingRateCalculator()
 
         self.on_transcription = on_transcription
 
@@ -60,7 +78,10 @@ class AudioStreamManager:
         self.transcription_queue = queue.Queue()
         self.transcription_thread: Optional[threading.Thread] = None
 
-        logger.info("AudioStreamManager initialized")
+        logger.info(
+            f"AudioStreamManager initialized for user '{user_id}' "
+            f"(calibrated: {self.user_profile.is_calibrated})"
+        )
 
     def setup(self) -> bool:
         """
@@ -122,7 +143,10 @@ class AudioStreamManager:
             )
             self.transcription_thread.start()
 
-            logger.info("Audio stream started - now listening")
+            if self.vad.is_calibrating:
+                logger.info("Audio stream started - CALIBRATION MODE (first 45-60s)")
+            else:
+                logger.info("Audio stream started - now listening")
 
         except Exception as e:
             logger.error(f"Failed to start audio stream: {e}")
@@ -133,6 +157,10 @@ class AudioStreamManager:
         """Stop the audio capture and processing pipeline."""
         logger.info("Stopping audio stream...")
         self.is_running = False
+
+        # Save profile before stopping
+        if self.user_profile:
+            self.profile_manager.save_profile(self.user_profile)
 
         # Wait for threads to finish
         if self.capture_thread:
@@ -166,12 +194,22 @@ class AudioStreamManager:
                     frame = temp_buffer[:vad_frame_bytes]
                     temp_buffer = temp_buffer[vad_frame_bytes:]
 
-                    # Process with VAD
-                    vad_result = self.vad.process_frame(frame)
+                    # Process with VAD (returns tuple now)
+                    vad_result, pause_info = self.vad.process_frame(frame)
+
+                    # Handle pause information
+                    if pause_info:
+                        pause = PausePattern(
+                            duration=pause_info["duration"],
+                            location=pause_info["location"],
+                            was_thinking_pause=pause_info["was_thinking_pause"],
+                        )
+                        self.profile_manager.add_pause(self.user_profile, pause)
 
                     if vad_result == "speech_start":
                         self.is_listening = True
                         self.audio_buffer = [frame]
+                        self.speaking_rate_calc.start_speech_segment()
                         logger.debug("Started recording")
 
                     elif vad_result == "speech_continue":
@@ -240,11 +278,60 @@ class AudioStreamManager:
                     text = result["text"].strip()
                     logger.info(f'Transcribed: "{text}"')
 
-                    # Check for thinking commands
+                    # Update speaking rate
+                    wpm = self.speaking_rate_calc.end_speech_segment(text)
+                    if wpm:
+                        learning_rate = (
+                            CALIBRATION_LEARNING_RATE
+                            if self.vad.is_calibrating
+                            else POST_CALIBRATION_LEARNING_RATE
+                        )
+                        self.profile_manager.update_speaking_rate(
+                            self.user_profile, wpm, learning_rate
+                        )
+
+                    # Update pause statistics
+                    learning_rate = (
+                        CALIBRATION_LEARNING_RATE
+                        if self.vad.is_calibrating
+                        else POST_CALIBRATION_LEARNING_RATE
+                    )
+                    self.profile_manager.update_statistics(
+                        self.user_profile, learning_rate
+                    )
+
+                    # Update word count for calibration
+                    if self.vad.is_calibrating:
+                        word_count = len(text.split())
+                        self.user_profile.total_words_spoken += word_count
+                        self.user_profile.calibration_time = (
+                            time.time() - self.vad.calibration_start_time
+                        )
+
+                    # Check if calibration just completed
+                    if (
+                        not self.vad.is_calibrating
+                        and not self.user_profile.is_calibrated
+                    ):
+                        self.profile_manager.complete_calibration(self.user_profile)
+
+                    # Check for special commands
                     text_lower = text.lower()
-                    if any(cmd in text_lower for cmd in THINKING_COMMANDS):
+
+                    if any(cmd in text_lower for cmd in RECALIBRATE_COMMANDS):
+                        logger.info("User requested recalibration")
+                        self.profile_manager.reset_calibration(self.user_profile)
+                        self.vad = VADDetector(user_profile=self.user_profile)
+                        self.speaking_rate_calc.reset()
+
+                    elif any(cmd in text_lower for cmd in NEED_MORE_TIME_COMMANDS):
+                        logger.info("User needs more time")
+                        self.vad.adjust_for_more_time()
+
+                    elif any(cmd in text_lower for cmd in THINKING_COMMANDS):
                         logger.info("User requested thinking time")
                         self.vad.enter_thinking_mode()
+
                     elif any(cmd in text_lower for cmd in CONTINUE_COMMANDS):
                         logger.info("User ready to continue")
                         self.vad.exit_thinking_mode()

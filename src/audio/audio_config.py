@@ -6,7 +6,7 @@ Audio configuration constants for the Goonvengers system.
 SAMPLE_RATE = 16000  # Whisper's optimal sample rate
 CHANNELS = 1  # Mono
 CHUNK_SIZE = 1024  # Frames per buffer
-FORMAT = 'int16'  # 16-bit audio
+FORMAT = "int16"  # 16-bit audio
 
 # VAD settings
 VAD_MODE = 2  # WebRTC VAD aggressiveness (0-3, where 3 is most aggressive)
@@ -30,3 +30,21 @@ WHISPER_TASK = "transcribe"
 # Command detection
 THINKING_COMMANDS = ["wait", "hold on", "give me a second", "let me think", "thinking"]
 CONTINUE_COMMANDS = ["okay", "continue", "go ahead", "keep going"]
+RECALIBRATE_COMMANDS = ["recalibrate", "reset calibration", "start over"]
+NEED_MORE_TIME_COMMANDS = ["need more time", "slower today", "give me more time"]
+
+# Calibration settings
+CALIBRATION_DURATION = 60.0  # Seconds to calibrate (45-60s)
+CALIBRATION_SILENCE_BUFFER = 2.0  # Extra seconds during calibration
+MIN_CALIBRATION_WORDS = 70  # Minimum words needed for calibration
+CALIBRATION_LEARNING_RATE = 1.0  # Full learning during calibration
+POST_CALIBRATION_LEARNING_RATE = 0.1  # Slower learning after calibration
+
+# Speaking rate settings
+MIN_WORDS_PER_MINUTE = 80  # Very slow speech
+NORMAL_WORDS_PER_MINUTE = 150  # Average speech rate
+MAX_WORDS_PER_MINUTE = 200  # Fast speech
+
+# User profile settings
+USER_PROFILE_DIR = "./data/profiles"
+DEFAULT_USER_ID = "default_user"

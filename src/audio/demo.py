@@ -68,13 +68,34 @@ class AudioDemo:
 
         logger.info("Audio setup complete!")
         print("\n" + "=" * 60)
-        print("READY TO LISTEN")
-        print("=" * 60)
+
+        # Show calibration status
+        if self.stream_manager.user_profile.is_calibrated:
+            print("READY TO LISTEN (Calibrated Profile)")
+            print("=" * 60)
+            print(f"\nYour speech profile:")
+            print(
+                f"  - Speaking rate: {self.stream_manager.user_profile.words_per_minute:.1f} WPM"
+            )
+            print(
+                f"  - Silence threshold: {self.stream_manager.user_profile.silence_threshold:.2f}s"
+            )
+            print(
+                f"  - Thinking pause: {self.stream_manager.user_profile.thinking_pause_threshold:.2f}s"
+            )
+        else:
+            print("READY TO LISTEN (Calibration Mode)")
+            print("=" * 60)
+            print("\nFirst 45-60 seconds: Learning your speech patterns...")
+            print("Please speak naturally - the system is adapting to you!")
+
         print("\nSpeak naturally into your AirPods.")
         print("The system will detect when you start and stop speaking.")
         print("\nSpecial commands:")
         print("  - Say 'wait' or 'hold on' to enter thinking mode")
         print("  - Say 'okay' or 'continue' to resume")
+        print("  - Say 'need more time' to temporarily increase pause tolerance")
+        print("  - Say 'recalibrate' to reset and relearn your patterns")
         print("\nPress Ctrl+C to exit.\n")
 
         # Start listening
