@@ -1,20 +1,19 @@
-<<<<<<< HEAD
-opencv-python==4.8.1.78
-flask==3.0.0
-flask-cors==4.0.0
-numpy<2.0.0
-=======
 # Core dependencies
 python-dotenv==1.0.0
+
+# Camera and Computer Vision
+opencv-python-headless==4.10.0.84
+flask==3.0.0
+flask-cors==4.0.0
+numpy==1.26.3
 
 # AI and ML (for later integration)
 google-generativeai==0.3.2
 elevenlabs==0.2.27
 
 # Audio Pipeline - REQUIRED
-faster-whisper>=1.0.3  # Let pip find compatible version
+faster-whisper>=1.0.3
 pyaudio==0.2.14
-numpy==1.26.3
 webrtcvad==2.0.10
 
 # Utilities - REQUIRED
@@ -23,3 +22,6 @@ colorama==0.4.6
 
 # Testing
 pytest==7.4.4
+
+# Hardware Control - Arduino Serial Communication
+pyserial==3.5
