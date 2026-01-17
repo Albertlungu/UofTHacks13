@@ -151,7 +151,7 @@ case $MODE in
         
         # Start backend in background
         echo -e "${BLUE}Starting center stage backend...${NC}"
-        python src/camera/center_stage.py &
+        python src/camera/facial_analysis/camera_with_faces.py &
         BACKEND_PID=$!
         
         # Wait for backend to start
