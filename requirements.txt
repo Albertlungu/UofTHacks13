@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+opencv-python==4.8.1.78
+flask==3.0.0
+flask-cors==4.0.0
+numpy<2.0.0
+=======
 # Core dependencies
 python-dotenv==1.0.0
 
