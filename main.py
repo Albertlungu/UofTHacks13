@@ -103,31 +103,32 @@ def main():
         print_instructions()
 
         # Check calibration status
-        if manager.audio_manager.user_profile.is_calibrated:
-            print(
-                f"{Fore.GREEN}[PROFILE LOADED]{Style.RESET_ALL} Using your saved speech profile"
-            )
-            print(
-                f"  - Speaking rate: {manager.audio_manager.user_profile.words_per_minute:.1f} WPM"
-            )
-            print(
-                f"  - Pause threshold: {manager.audio_manager.user_profile.silence_threshold:.2f}s"
-            )
-
-            if manager.audio_manager.user_profile.style_summary:
-                print(f"  - Style profile: {Fore.GREEN}Available{Style.RESET_ALL}")
-            else:
-                print(
-                    f"  - Style profile: {Fore.YELLOW}Will be generated{Style.RESET_ALL}"
-                )
-        else:
-            print(
-                f"{Fore.YELLOW}[CALIBRATION MODE]{Style.RESET_ALL} First 45-60 seconds"
-            )
-            print(
-                "  The system will learn your speech patterns and communication style"
-            )
-            print("  Please speak naturally - the AI is adapting to you!")
+        # NOTE: Calibration system is currently disabled
+        # if manager.audio_manager.user_profile.is_calibrated:
+        #     print(
+        #         f"{Fore.GREEN}[PROFILE LOADED]{Style.RESET_ALL} Using your saved speech profile"
+        #     )
+        #     print(
+        #         f"  - Speaking rate: {manager.audio_manager.user_profile.words_per_minute:.1f} WPM"
+        #     )
+        #     print(
+        #         f"  - Pause threshold: {manager.audio_manager.user_profile.silence_threshold:.2f}s"
+        #     )
+        #
+        #     if manager.audio_manager.user_profile.style_summary:
+        #         print(f"  - Style profile: {Fore.GREEN}Available{Style.RESET_ALL}")
+        #     else:
+        #         print(
+        #             f"  - Style profile: {Fore.YELLOW}Will be generated{Style.RESET_ALL}"
+        #         )
+        # else:
+        #     print(
+        #         f"{Fore.YELLOW}[CALIBRATION MODE]{Style.RESET_ALL} First 45-60 seconds"
+        #     )
+        #     print(
+        #         "  The system will learn your speech patterns and communication style"
+        #     )
+        #    print("  Please speak naturally - the AI is adapting to you!")
 
         print(f"\n{Fore.GREEN}Starting conversation system...{Style.RESET_ALL}\n")
 

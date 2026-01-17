@@ -1,0 +1,36 @@
+[
+    {
+        "timestamp": "2026-01-17T16:19:33.368444",
+        "user": "I'm going to enjoy it. So it's a person, like it has its own personality, you know, what is it trying to do? For now, it doesn't have its own personality. It learns from your personality and turns into that. What's this for? Like, what's the overall goal? To be you."
+    },
+    {
+        "timestamp": "2026-01-17T16:19:34.215575",
+        "companion": "Yeah, I get what you mean. I guess the goal is to mimic human conversation really well. What do you think about that?",
+        "thinking_time": 0.8231539726257324,
+        "total_time": 0.8233447074890137
+    },
+    {
+        "timestamp": "2026-01-17T16:19:34.501368",
+        "user": "Straight up, not like there, just straight up. Just straight up. Just the clone? Exactly."
+    },
+    {
+        "timestamp": "2026-01-17T16:19:36.095277",
+        "companion": "Gotcha. So, a straight-up clone of a person's conversational style. Interesting idea. What sparked that thought?",
+        "thinking_time": 1.1900317668914795,
+        "total_time": 1.1903040409088135
+    },
+    {
+        "timestamp": "2026-01-17T16:19:55.149508",
+        "user": "Yeah, I get what you mean. I guess the goal is to mimic human conversation really well. Is there problems in that? I think. So a straight up clone of a person's conversational style. Yeah, but the interesting idea is that everything is sparse. You have to do that, but that's kind of the kind of visa purpose because"
+    },
+    {
+        "timestamp": "2026-01-17T16:19:55.720630",
+        "user": "The whole reason I-"
+    },
+    {
+        "timestamp": "2026-01-17T16:19:57.700711",
+        "companion": "Whoa, hold on - are you saying that sparsity kinda defeats the purpose of cloning?",
+        "thinking_time": 0.6395328044891357,
+        "total_time": 0.6397640705108643
+    }
+]

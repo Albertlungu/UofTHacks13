@@ -143,12 +143,13 @@ class ConversationManager:
         )
 
         # Check if we should update companion with style summary
-        if not self.style_updated and self.audio_manager.user_profile.is_calibrated:
-            style_summary = self.audio_manager.get_style_summary_for_gemini()
-            if style_summary:
-                logger.info("Updating companion with user's style profile")
-                self.companion.update_style_summary(style_summary)
-                self.style_updated = True
+        # NOTE: Calibration system is currently disabled
+        # if not self.style_updated and self.audio_manager.user_profile.is_calibrated:
+        #     style_summary = self.audio_manager.get_style_summary_for_gemini()
+        #     if style_summary:
+        #         logger.info("Updating companion with user's style profile")
+        #         self.companion.update_style_summary(style_summary)
+        #         self.style_updated = True
 
         # Smart batching: Buffer utterances and send after timeout
         word_count = len(text.split())

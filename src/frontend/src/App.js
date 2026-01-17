@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
+import BlockBuilder3D from "./BlockBuilder3D";
 
 function App() {
-  return (
-    <div>
-      <h1>Camera Feed</h1>
-      <img src="http://localhost:5000/video_feed" alt="Camera Feed" />
-    </div>
-  );
+    return (
+        <div className="App">
+            <BlockBuilder3D />
+        </div>
+    );
 }
 
 export default App;
