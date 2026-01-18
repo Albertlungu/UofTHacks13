@@ -1,5 +1,5 @@
 """
-Audio processing package for Goonvengers.
+Audio processing package for shadow.
 
 This package handles:
 - Audio capture from AirPods

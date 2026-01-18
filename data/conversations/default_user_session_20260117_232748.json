@@ -1,0 +1,25 @@
+{
+  "user_id": "default_user",
+  "exchange_count": 3,
+  "last_analysis_at": 0,
+  "exchanges": [
+    {
+      "timestamp": "2026-01-17T23:28:17.816324",
+      "user_text": "There we go. So I'm here right now. I am, this is Albert and I'm actually over here. We're looking at a project right now, so I'm going to get this to work.",
+      "ai_response": "Sounds good! What's the project about?",
+      "exchange_number": 1
+    },
+    {
+      "timestamp": "2026-01-17T23:28:20.785661",
+      "user_text": "Um",
+      "ai_response": "Everything alright?",
+      "exchange_number": 2
+    },
+    {
+      "timestamp": "2026-01-17T23:28:29.051822",
+      "user_text": "Thank you so much.",
+      "ai_response": "No problem! Glad I could help, even if I didn't do anything, haha.",
+      "exchange_number": 3
+    }
+  ]
+}

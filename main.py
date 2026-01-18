@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Main entry point for Goonvengers AI Companion.
+Main entry point for shadow AI Companion.
 
 This script starts the complete conversation system including:
 - Audio capture and transcription (Whisper)
@@ -27,7 +27,7 @@ init(autoreset=True)
 def print_banner():
     """Print the welcome banner."""
     print("\n" + Fore.CYAN + "=" * 70 + Style.RESET_ALL)
-    print(Fore.CYAN + "  GOONVENGERS AI COMPANION" + Style.RESET_ALL)
+    print(Fore.CYAN + "  shadow AI COMPANION" + Style.RESET_ALL)
     print(
         Fore.CYAN
         + "  Real-time Voice Conversation with Style Adaptation"
@@ -57,7 +57,7 @@ def print_instructions():
 def main():
     """Main entry point."""
     parser = argparse.ArgumentParser(
-        description="Goonvengers AI Companion - Voice conversation with style adaptation"
+        description="shadow AI Companion - Voice conversation with style adaptation"
     )
     parser.add_argument(
         "--user-id",

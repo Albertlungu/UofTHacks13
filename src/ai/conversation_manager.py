@@ -479,7 +479,7 @@ if __name__ == "__main__":
     signal.signal(signal.SIGTERM, signal_handler)
 
     print("\n" + "=" * 60)
-    print("GOONVENGERS CONVERSATION MANAGER - TEST MODE")
+    print("shadow CONVERSATION MANAGER - TEST MODE")
     print("=" * 60)
     print("\nStarting conversation system...")
     print("Speak into your microphone. The system will:")

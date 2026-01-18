@@ -361,7 +361,7 @@ def servo_center():
 
 if __name__ == '__main__':
     print("\n" + "="*50)
-    print("● GOONVENGERS AI Server - High Performance Mode")
+    print("● shadow AI Server - High Performance Mode")
     print("="*50 + "\n")
     
     assets_path = get_assets_path()

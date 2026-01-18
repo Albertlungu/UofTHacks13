@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# Goonvengers Setup Script
-# This script sets up the development environment for the Goonvengers AI companion
+# shadow Setup Script
+# This script sets up the development environment for the shadow AI companion
 
 set -e  # Exit on error
 
 echo "=========================================="
-echo "Goonvengers Setup"
+echo "shadow Setup"
 echo "=========================================="
 echo ""
 

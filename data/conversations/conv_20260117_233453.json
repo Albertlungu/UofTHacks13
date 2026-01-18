@@ -1,0 +1,12 @@
+[
+    {
+        "timestamp": "2026-01-17T23:35:06.165248",
+        "user": "Yeah, I think this works right now. So as long as it transcribes my audio, it's just gonna be back to the top."
+    },
+    {
+        "timestamp": "2026-01-17T23:35:07.869817",
+        "companion": "Cool, so is the transcription part working well now?",
+        "thinking_time": 1.1974890232086182,
+        "total_time": 1.1978859901428223
+    }
+]

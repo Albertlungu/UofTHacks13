@@ -4,7 +4,7 @@
 set -e
 
 echo "=========================================="
-echo "  GOONVENGERS Setup & Launcher"
+echo "  shadow Setup & Launcher"
 echo "=========================================="
 echo ""
 

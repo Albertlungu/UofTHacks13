@@ -127,7 +127,7 @@ class AudioDemo:
     def run(self):
         """Run the demo application."""
         logger.info("=" * 60)
-        logger.info("Goonvengers Audio Pipeline Demo with Style Analysis")
+        logger.info("shadow Audio Pipeline Demo with Style Analysis")
         logger.info("=" * 60)
 
         # Set up signal handlers

@@ -1,0 +1,32 @@
+[
+    {
+        "timestamp": "2026-01-17T23:28:17.240745",
+        "user": "There we go. So I'm here right now. I am, this is Albert and I'm actually over here. We're looking at a project right now, so I'm going to get this to work."
+    },
+    {
+        "timestamp": "2026-01-17T23:28:17.815994",
+        "companion": "Sounds good! What's the project about?",
+        "thinking_time": 0.5091969966888428,
+        "total_time": 0.5095291137695312
+    },
+    {
+        "timestamp": "2026-01-17T23:28:19.033692",
+        "user": "Um"
+    },
+    {
+        "timestamp": "2026-01-17T23:28:20.785209",
+        "companion": "Everything alright?",
+        "thinking_time": 0.45063185691833496,
+        "total_time": 0.4514338970184326
+    },
+    {
+        "timestamp": "2026-01-17T23:28:28.343481",
+        "user": "Thank you so much."
+    },
+    {
+        "timestamp": "2026-01-17T23:28:29.051185",
+        "companion": "No problem! Glad I could help, even if I didn't do anything, haha.",
+        "thinking_time": 0.6597747802734375,
+        "total_time": 0.6606721878051758
+    }
+]

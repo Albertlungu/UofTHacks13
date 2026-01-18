@@ -1,5 +1,5 @@
 # Project Idea
-**Goonvengers**
+**shadow**
 
 - Using Logitech cams and Airpods (audio I/O)
 - AI companion

@@ -2,7 +2,9 @@ import React, { useEffect, useState, useRef, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useGLTF, useAnimations, PerspectiveCamera } from "@react-three/drei";
 import * as THREE from "three";
-import BlockBuilder3D from "./BlockBuilder3D";
+import { Badge } from "./components/ui/badge";
+import { Button } from "./components/ui/button";
+import { Eye, EyeOff, Activity } from "lucide-react";
 
 // Avatar States: IDLE, LISTENING, THINKING, SPEAKING
 function Avatar3D({ state, position, scale = 2.0 }) {
@@ -16,40 +18,34 @@ function Avatar3D({ state, position, scale = 2.0 }) {
     const animationChangeInterval = useRef(null);
     const stateRef = useRef(state);
 
-    // Update state ref
     useEffect(() => {
         stateRef.current = state;
     }, [state]);
 
-    // Animation management based on state
     useEffect(() => {
         if (!actions) return;
 
         const actionKeys = Object.keys(actions);
         if (actionKeys.length === 0) return;
 
-        // Stop all animations
         actionKeys.forEach((key) => {
             if (actions[key]) actions[key].stop();
         });
 
-        // Clear any existing intervals
         if (animationChangeInterval.current) {
             clearInterval(animationChangeInterval.current);
             animationChangeInterval.current = null;
         }
 
         if (state === "SPEAKING") {
-            // SPEAKING: Active mouth animations, cycling
             const firstAction = actions[actionKeys[0]];
             if (firstAction) {
                 firstAction.reset();
                 firstAction.setLoop(THREE.LoopRepeat);
-                firstAction.timeScale = 1.2; // Slightly faster
+                firstAction.timeScale = 1.2;
                 firstAction.play();
             }
 
-            // Cycle through animations
             currentAnimationIndex.current = 0;
             animationChangeInterval.current = setInterval(() => {
                 if (stateRef.current !== "SPEAKING") return;
@@ -74,16 +70,14 @@ function Avatar3D({ state, position, scale = 2.0 }) {
                 }
             }, 2500);
         } else if (state === "THINKING") {
-            // THINKING: Slow looping animation, intentional silence
             const firstAction = actions[actionKeys[0]];
             if (firstAction) {
                 firstAction.reset();
                 firstAction.setLoop(THREE.LoopRepeat);
-                firstAction.timeScale = 0.4; // Much slower
+                firstAction.timeScale = 0.4;
                 firstAction.play();
             }
         } else if (state === "LISTENING") {
-            // LISTENING: Subtle animation, attentive
             const firstAction = actions[actionKeys[0]];
             if (firstAction) {
                 firstAction.reset();
@@ -91,9 +85,6 @@ function Avatar3D({ state, position, scale = 2.0 }) {
                 firstAction.timeScale = 0.6;
                 firstAction.play();
             }
-        } else {
-            // IDLE: Minimal movement, observing
-            // No animations playing, just procedural motion
         }
 
         return () => {
@@ -103,19 +94,17 @@ function Avatar3D({ state, position, scale = 2.0 }) {
         };
     }, [state, actions]);
 
-    // Procedural animations based on state
     useFrame((state) => {
         if (!group.current) return;
 
         const time = state.clock.elapsedTime;
         const currentState = stateRef.current;
 
-        // VERY SMOOTH position tracking - slower lerp for natural motion
         if (position) {
             group.current.position.x = THREE.MathUtils.lerp(
                 group.current.position.x,
                 position.x,
-                0.08, // Slower = smoother following
+                0.08,
             );
             group.current.position.y = THREE.MathUtils.lerp(
                 group.current.position.y,
@@ -125,29 +114,25 @@ function Avatar3D({ state, position, scale = 2.0 }) {
         }
 
         if (currentState === "IDLE") {
-            // IDLE: Subtle breathing, occasional eye movement
             const breathe = Math.sin(time * 1.2) * 0.01;
             group.current.position.z = -0.2 + breathe;
 
             const subtleRotation = Math.sin(time * 0.2) * 0.02;
             group.current.rotation.y = subtleRotation;
         } else if (currentState === "LISTENING") {
-            // LISTENING: Head tilt, attentive posture
             const breathe = Math.sin(time * 1.5) * 0.008;
             group.current.position.z = -0.1 + breathe;
 
             const headTilt = Math.sin(time * 0.3) * 0.06;
             group.current.rotation.z = headTilt;
-            group.current.rotation.y = 0.1; // Slight lean toward user
+            group.current.rotation.y = 0.1;
         } else if (currentState === "THINKING") {
-            // THINKING: Slow, contemplative motion
             const slowFloat = Math.sin(time * 0.4) * 0.01;
             group.current.position.z = -0.15 + slowFloat;
 
             const slowRotation = Math.sin(time * 0.25) * 0.04;
             group.current.rotation.y = slowRotation;
         } else if (currentState === "SPEAKING") {
-            // SPEAKING: Energetic but controlled
             const bounce = Math.sin(time * 4) * 0.01;
             group.current.position.z = -0.1 + bounce;
 
@@ -156,7 +141,6 @@ function Avatar3D({ state, position, scale = 2.0 }) {
         }
     });
 
-    // Semi-transparent rendering
     useEffect(() => {
         if (scene) {
             scene.traverse((child) => {
@@ -172,7 +156,6 @@ function Avatar3D({ state, position, scale = 2.0 }) {
         <group ref={group} position={[0, -1, 0]} scale={scale}>
             <primitive object={scene} />
 
-            {/* State-specific lighting */}
             <pointLight position={[3, 3, 3]} intensity={1.0} color="#ffffff" />
             <pointLight position={[-3, 2, 2]} intensity={0.6} color="#ffffff" />
 
@@ -208,7 +191,6 @@ function Avatar3D({ state, position, scale = 2.0 }) {
 
 function FallbackAvatar({ state, position }) {
     const meshRef = useRef();
-    const mouthRef = useRef();
 
     useFrame((state) => {
         if (meshRef.current && position) {
@@ -226,10 +208,10 @@ function FallbackAvatar({ state, position }) {
     });
 
     const stateColors = {
-        IDLE: "#4ecdc4",
+        IDLE: "#666666",
         LISTENING: "#4ecdc4",
         THINKING: "#9b59b6",
-        SPEAKING: "#ff4444",
+        SPEAKING: "#ef4444",
     };
 
     return (
@@ -237,10 +219,10 @@ function FallbackAvatar({ state, position }) {
             <mesh ref={meshRef} position={[0, 0, 0]}>
                 <sphereGeometry args={[0.4, 32, 32]} />
                 <meshStandardMaterial
-                    color={stateColors[state] || "#4ecdc4"}
+                    color={stateColors[state] || "#666666"}
                     transparent
                     opacity={0.85}
-                    emissive={stateColors[state] || "#4ecdc4"}
+                    emissive={stateColors[state] || "#666666"}
                     emissiveIntensity={0.4}
                 />
             </mesh>
@@ -255,7 +237,7 @@ function FallbackAvatar({ state, position }) {
                 <meshStandardMaterial color="black" />
             </mesh>
 
-            <mesh ref={mouthRef} position={[0, -0.08, 0.35]}>
+            <mesh position={[0, -0.08, 0.35]}>
                 <boxGeometry args={[0.2, 0.06, 0.05]} />
                 <meshStandardMaterial color="black" />
             </mesh>
@@ -267,7 +249,7 @@ function LoadingAvatar() {
     return (
         <mesh>
             <sphereGeometry args={[0.3, 16, 16]} />
-            <meshStandardMaterial color="#4CAF50" wireframe />
+            <meshStandardMaterial color="#a1a1aa" wireframe />
         </mesh>
     );
 }
@@ -304,14 +286,12 @@ function Scene({ avatarState, faceData }) {
 
     useEffect(() => {
         if (faceData) {
-            // Normalize face position to -1 to 1 range
             const normX = (faceData.center_x - 640) / 640;
             const normY = -(faceData.center_y - 360) / 360;
 
-            // Avatar follows face position smoothly (stays near face, slightly offset)
             setAvatarPosition({
-                x: normX * 1.5, // Direct follow, no extra offset
-                y: normY * 1.2, // Vertical follow
+                x: normX * 1.5,
+                y: normY * 1.2,
                 z: 0,
             });
         }
@@ -346,12 +326,10 @@ function App() {
     const [show3D, setShow3D] = useState(true);
     const [avatarState, setAvatarState] = useState("IDLE");
 
-    // Determine avatar state based on conditions
     useEffect(() => {
         if (speaking) {
             setAvatarState("SPEAKING");
         } else if (faceData) {
-            // If face detected but not speaking = LISTENING
             setAvatarState("LISTENING");
         } else {
             setAvatarState("IDLE");
@@ -408,244 +386,114 @@ function App() {
 
     const volumePercent = Math.min((currentVolume / threshold) * 100, 100);
 
-    const stateColors = {
-        IDLE: "#666",
-        LISTENING: "#4ecdc4",
-        THINKING: "#9b59b6",
-        SPEAKING: "#ff4444",
-    };
-
-    const stateLabels = {
-        IDLE: "IDLE",
-        LISTENING: "LISTENING",
-        THINKING: "THINKING",
-        SPEAKING: "SPEAKING",
+    const getStateBadgeVariant = (state) => {
+        switch (state) {
+            case "LISTENING":
+                return "default";
+            case "SPEAKING":
+                return "destructive";
+            case "THINKING":
+                return "secondary";
+            default:
+                return "idle";
+        }
     };
 
     return (
-        <div
-            style={{
-                width: "100vw",
-                height: "100vh",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "#000000",
-                fontFamily: '"Segoe UI", Arial, sans-serif',
-                overflow: "hidden",
-            }}
-        >
-            <h1
-                style={{
-                    color: "#ffffff",
-                    marginBottom: "20px",
-                    fontSize: "2.5rem",
-                    fontWeight: "600",
-                    letterSpacing: "1px",
-                    textTransform: "uppercase",
-                }}
-            >
-                AI Companion
-            </h1>
+        <div className="min-h-screen bg-black flex flex-col items-center justify-center p-8">
+            <div className="w-full max-w-7xl space-y-4">
+                {/* Header */}
+                <div className="flex items-center justify-between">
+                    <h1 className="text-2xl font-semibold tracking-tight text-white">
+                        AI Companion
+                    </h1>
+                    <div className="flex items-center gap-3">
+                        <Badge variant={audioAvailable ? "success" : "outline"}>
+                            {audioAvailable ? "Audio Active" : "Audio Inactive"}
+                        </Badge>
+                        <Badge variant={faceData ? "success" : "outline"}>
+                            {faceData ? "Face Detected" : "No Face"}
+                        </Badge>
+                        <Badge variant={getStateBadgeVariant(avatarState)}>
+                            {avatarState}
+                        </Badge>
+                    </div>
+                </div>
 
-            <div
-                style={{
-                    position: "relative",
-                    width: "1280px",
-                    height: "720px",
-                    backgroundColor: "#000",
-                    overflow: "hidden",
-                    border: "1px solid #333",
-                }}
-            >
-                {/* HIGH QUALITY Camera Feed */}
-                <img
-                    src="http://localhost:5000/video_feed"
-                    alt="Camera Feed"
-                    style={{
-                        width: "1280px",
-                        height: "720px",
-                        objectFit: "cover",
-                        display: "block",
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                        zIndex: 1,
-                        opacity: 1.0, // Changed from 0.7 to full opacity
-                        imageRendering: "crisp-edges", // Use crisp rendering
-                        filter: "brightness(1.0) contrast(1.1)", // Slight contrast boost
-                        WebkitImageRendering: "crisp-edges", // For Safari
-                    }}
-                />
-
-                {show3D && (
-                    <div
+                {/* Main Video Container */}
+                <div className="relative w-full aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800">
+                    {/* Camera Feed */}
+                    <img
+                        src="http://localhost:5000/video_feed"
+                        alt="Camera Feed"
+                        className="absolute inset-0 w-full h-full object-cover"
                         style={{
-                            position: "absolute",
-                            top: 0,
-                            left: 0,
-                            width: "100%",
-                            height: "100%",
-                            zIndex: 2,
-                            pointerEvents: "none",
+                            imageRendering: "crisp-edges",
+                            WebkitImageRendering: "crisp-edges",
                         }}
-                    >
-                        <Canvas shadows>
-                            <Scene
-                                avatarState={avatarState}
-                                faceData={faceData}
+                    />
+
+                    {/* 3D Avatar Overlay */}
+                    {show3D && (
+                        <div className="absolute inset-0 pointer-events-none z-10">
+                            <Canvas shadows>
+                                <Scene
+                                    avatarState={avatarState}
+                                    faceData={faceData}
+                                />
+                            </Canvas>
+                        </div>
+                    )}
+
+                    {/* Controls Overlay - Top Right */}
+                    <div className="absolute top-4 right-4 z-20">
+                        <Button
+                            onClick={() => setShow3D(!show3D)}
+                            variant={show3D ? "default" : "outline"}
+                            size="sm"
+                            className="gap-2"
+                        >
+                            {show3D ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
+                            3D Avatar
+                        </Button>
+                    </div>
+
+                    {/* Volume Indicator - Bottom Left */}
+                    <div className="absolute bottom-4 left-4 z-20 space-y-2">
+                        <div className="flex items-center gap-2 text-xs text-zinc-400 font-mono">
+                            <Activity className="h-3 w-3" />
+                            <span>Volume: {currentVolume.toFixed(0)} / {threshold}</span>
+                        </div>
+                        <div className="w-48 h-1 bg-zinc-800 rounded-full overflow-hidden">
+                            <div
+                                className={`h-full transition-all duration-100 ${
+                                    speaking ? "bg-red-500" : "bg-green-500"
+                                }`}
+                                style={{ width: `${volumePercent}%` }}
                             />
-                        </Canvas>
+                        </div>
                     </div>
-                )}
 
-                {/* Minimal Status Bar */}
-                <div
-                    style={{
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        background: "rgba(0,0,0,0.9)",
-                        color: "#ffffff",
-                        padding: "12px 20px",
-                        zIndex: 3,
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        borderBottom: "1px solid #333",
-                        fontFamily: "monospace",
-                        fontSize: "12px",
-                    }}
-                >
-                    <div style={{ display: "flex", gap: "25px" }}>
-                        <span>
-                            AUDIO:{" "}
-                            <span
-                                style={{
-                                    color: audioAvailable ? "#4CAF50" : "#666",
-                                }}
+                    {/* Manual Control - Bottom Center */}
+                    {!audioAvailable && (
+                        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20">
+                            <Button
+                                onClick={handleManualToggle}
+                                variant={speaking ? "destructive" : "default"}
+                                size="lg"
                             >
-                                {audioAvailable ? "ON" : "OFF"}
-                            </span>
-                        </span>
-                        <span>
-                            FACE:{" "}
-                            <span
-                                style={{ color: faceData ? "#4CAF50" : "#666" }}
-                            >
-                                {faceData ? "DETECTED" : "NONE"}
-                            </span>
-                        </span>
-                        <span>
-                            STATE:{" "}
-                            <span style={{ color: stateColors[avatarState] }}>
-                                {stateLabels[avatarState]}
-                            </span>
-                        </span>
-                    </div>
+                                {speaking ? "Stop" : "Start"}
+                            </Button>
+                        </div>
+                    )}
 
-                    <button
-                        onClick={() => setShow3D(!show3D)}
-                        style={{
-                            padding: "5px 14px",
-                            background: show3D ? "#4CAF50" : "#444",
-                            color: "white",
-                            border: "none",
-                            cursor: "pointer",
-                            fontWeight: "600",
-                            fontSize: "11px",
-                            textTransform: "uppercase",
-                        }}
-                    >
-                        3D {show3D ? "ON" : "OFF"}
-                    </button>
-                </div>
-
-                {/* Volume Indicator */}
-                <div
-                    style={{
-                        position: "absolute",
-                        top: "50px",
-                        left: "20px",
-                        width: "200px",
-                        zIndex: 3,
-                    }}
-                >
-                    <div
-                        style={{
-                            fontSize: "10px",
-                            color: "#aaa",
-                            marginBottom: "4px",
-                            fontFamily: "monospace",
-                        }}
-                    >
-                        VOL: {currentVolume.toFixed(0)} / {threshold}
-                    </div>
-                    <div
-                        style={{
-                            width: "100%",
-                            height: "3px",
-                            background: "#222",
-                            overflow: "hidden",
-                        }}
-                    >
-                        <div
-                            style={{
-                                width: `${volumePercent}%`,
-                                height: "100%",
-                                background: speaking ? "#ff4444" : "#4CAF50",
-                                transition: "width 0.1s",
-                            }}
-                        ></div>
-                    </div>
-                </div>
-
-                {!audioAvailable && (
-                    <button
-                        onClick={handleManualToggle}
-                        style={{
-                            position: "absolute",
-                            bottom: "70px",
-                            left: "50%",
-                            transform: "translateX(-50%)",
-                            padding: "10px 25px",
-                            background: speaking ? "#ff4444" : "#4CAF50",
-                            color: "white",
-                            border: "none",
-                            cursor: "pointer",
-                            fontWeight: "600",
-                            zIndex: 3,
-                            fontSize: "13px",
-                            textTransform: "uppercase",
-                        }}
-                    >
-                        {speaking ? "STOP" : "START"}
-                    </button>
-                )}
-
-                {/* Status Message */}
-                <div
-                    style={{
-                        position: "absolute",
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        background: `rgba(${avatarState === "SPEAKING" ? "255,68,68" : avatarState === "LISTENING" ? "78,205,196" : "102,102,102"}, 0.95)`,
-                        color: "#ffffff",
-                        padding: "10px",
-                        zIndex: 3,
-                        textAlign: "center",
-                        fontWeight: "600",
-                        fontSize: "12px",
-                        borderTop: "1px solid",
-                        borderColor: stateColors[avatarState],
-                        textTransform: "uppercase",
-                        letterSpacing: "1px",
-                    }}
-                >
-                    {stateLabels[avatarState]}
+                    {/* State Indicator - Bottom */}
+                    <div className={`absolute bottom-0 left-0 right-0 h-1 transition-colors z-20 ${
+                        avatarState === "SPEAKING" ? "bg-red-500" :
+                        avatarState === "LISTENING" ? "bg-cyan-500" :
+                        avatarState === "THINKING" ? "bg-purple-500" :
+                        "bg-zinc-600"
+                    }`} />
                 </div>
             </div>
         </div>

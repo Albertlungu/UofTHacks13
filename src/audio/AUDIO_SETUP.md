@@ -1,6 +1,6 @@
 # Audio Pipeline Setup Guide
 
-This guide explains how to set up and test the AirPods -> Whisper audio pipeline with **adaptive learning** for the Goonvengers AI companion.
+This guide explains how to set up and test the AirPods -> Whisper audio pipeline with **adaptive learning** for the shadow AI companion.
 
 ## Overview
 
@@ -369,7 +369,7 @@ After the audio pipeline is working:
 
 If you encounter issues:
 
-1. Check logs: `logs/goonvengers_*.log`
+1. Check logs: `logs/shadow_*.log`
 2. Run system test: `python test_system.py`
 3. Check profile: `cat data/profiles/default_user.json`
 4. Enable debug logging in code: `logger.level = "DEBUG"`

@@ -1,5 +1,5 @@
 """
-Audio configuration constants for the Goonvengers system.
+Audio configuration constants for the shadow system.
 """
 
 # Audio capture settings

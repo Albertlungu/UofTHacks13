@@ -1,0 +1,12 @@
+[
+    {
+        "timestamp": "2026-01-17T23:31:55.288790",
+        "user": "We should do our flight check-in. We should check-in. Check-in. Yeah, it says in a minute. That's what flight he says. Thank you, check-in."
+    },
+    {
+        "timestamp": "2026-01-17T23:31:56.308754",
+        "companion": "Haha, check-in time! You excited for the flight? Where are you headed?",
+        "thinking_time": 0.5704009532928467,
+        "total_time": 0.5711040496826172
+    }
+]
