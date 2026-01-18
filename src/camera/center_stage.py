@@ -7,7 +7,7 @@ import os
 os.environ['OPENCV_VIDEOIO_PRIORITY_MSMF'] = '0'
 os.environ['OPENCV_VIDEOIO_DEBUG'] = '0'
 
-from flask import Flask, Response, jsonify
+from flask import Flask, Response, jsonify, send_from_directory
 from flask_cors import CORS
 
 # Add parent directories to path
@@ -21,6 +21,9 @@ from hardware.stepper_motors.stepper_controller import StepperMotor
 app = Flask(__name__)
 CORS(app)
 
+# Get project root directory (3 levels up from this file)
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 # Global components
 camera = None
 face_analyzer = FacialAnalyzer()
@@ -31,6 +34,12 @@ stepper_motor = StepperMotor()  # Pan motor - auto-detects Arduino
 tracking_enabled = True
 last_movement_time = 0
 movement_cooldown = 0.5  # Minimum seconds between movements
+
+# Speaking state (for avatar synchronization)
+is_speaking = False
+audio_available = False
+current_volume = 0.0
+volume_threshold = 5.0
 
 def get_camera():
     global camera
@@ -184,6 +193,29 @@ def calibrate_motor():
         'message': 'Motor calibrated to center',
         'position': stepper_motor.get_position()
     })
+
+@app.route('/assets/<path:path>')
+def serve_assets(path):
+    """Serve static assets like 3D models."""
+    assets_dir = os.path.join(PROJECT_ROOT, 'assets')
+    return send_from_directory(assets_dir, path)
+
+@app.route('/speaking_status')
+def speaking_status():
+    """Get current speaking/audio status for avatar synchronization."""
+    return jsonify({
+        'is_speaking': is_speaking,
+        'audio_available': audio_available,
+        'current_volume': current_volume,
+        'threshold': volume_threshold
+    })
+
+@app.route('/toggle_speaking', methods=['POST'])
+def toggle_speaking():
+    """Toggle speaking state manually."""
+    global is_speaking
+    is_speaking = not is_speaking
+    return jsonify({'is_speaking': is_speaking})
 
 @app.route('/health')
 def health():

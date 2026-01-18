@@ -42,13 +42,21 @@ echo ""
 # Function to cleanup background processes on exit
 cleanup() {
     echo ""
-    echo "🛑 Shutting down..."
+    echo "🛑 Shutting down all services..."
+    if [ ! -z "$CAMERA_PID" ]; then
+        echo "  - Stopping camera system..."
+        kill $CAMERA_PID 2>/dev/null || true
+    fi
+    if [ ! -z "$AUDIO_PID" ]; then
+        echo "  - Stopping audio conversation..."
+        kill $AUDIO_PID 2>/dev/null || true
+    fi
     if [ ! -z "$HAND_TRACKER_PID" ]; then
+        echo "  - Stopping hand tracker..."
         kill $HAND_TRACKER_PID 2>/dev/null || true
     fi
-    if [ ! -z "$MAIN_PID" ]; then
-        kill $MAIN_PID 2>/dev/null || true
-    fi
+    # Kill any remaining npm/node processes from frontend
+    pkill -f "react-scripts start" 2>/dev/null || true
     echo "✓ Cleanup complete"
     exit 0
 }
@@ -56,8 +64,31 @@ cleanup() {
 # Set up trap to catch Ctrl+C and cleanup
 trap cleanup SIGINT SIGTERM
 
+# Start camera system in background
+echo "📹 Starting camera system (Center Stage)..."
+python src/camera/center_stage.py &
+CAMERA_PID=$!
+echo "✓ Camera system started (PID: $CAMERA_PID)"
+echo "  - Flask server on http://localhost:5000"
+echo "  - Video feed at http://localhost:5000/video_feed"
+echo ""
+
+# Wait a moment for camera to initialize
+sleep 2
+
+# Start audio conversation system in background
+echo "🎤 Starting audio conversation system..."
+python main.py &
+AUDIO_PID=$!
+echo "✓ Audio system started (PID: $AUDIO_PID)"
+echo "  - Voice conversation active in terminal"
+echo ""
+
+# Wait a moment for audio to initialize
+sleep 2
+
 # Start hand tracker in background
-echo "🖐️  Starting hand tracker..."
+echo "🖐️  Starting hand tracker (3D builder backend)..."
 python run_hand_tracker.py 1 &
 HAND_TRACKER_PID=$!
 echo "✓ Hand tracker started (PID: $HAND_TRACKER_PID)"
@@ -66,29 +97,26 @@ echo ""
 # Wait a moment for hand tracker to initialize
 sleep 2
 
-
-# Start main application
-echo "🚀 Starting main application..."
-python main.py &
-MAIN_PID=$!
-echo "✓ Main application started (PID: $MAIN_PID)"
-echo ""
-
-
-echo "Starting localhost"
+# Start frontend (this runs in foreground and keeps script alive)
+echo "🌐 Starting frontend server..."
 cd src/frontend
 npm install
-npm start
-
-cd ../../
-
-open http://localhost:3000/?app=hand_tracker
-
+echo ""
 echo "=========================================="
 echo "  All services running!"
+echo "=========================================="
+echo "  - Camera (Center Stage): http://localhost:5000"
+echo "  - 3D Builder (Frontend): http://localhost:3000"
+echo "  - Audio Conversation: Running in terminal background"
+echo ""
 echo "  Press Ctrl+C to stop all services"
 echo "=========================================="
 echo ""
 
-# Wait for both processes
-wait $HAND_TRACKER_PID $MAIN_PID
+# Open browser windows before starting frontend
+(sleep 3 && open http://localhost:3000/?app=hand_tracker && open http://localhost:5000/video_feed) &
+
+# Start frontend in foreground (keeps script alive)
+npm start
+
+cd ../../

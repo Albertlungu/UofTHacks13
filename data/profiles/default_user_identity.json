@@ -2,53 +2,47 @@
   "user_id": "default_user",
   "communication_style": {
     "sentence_length": {
-      "avg_words": 12.4,
+      "avg_words": "9.6",
       "preference": "medium",
       "examples": [
-        "start recording? How are we going to start recording already?",
-        "And now the rotation works much better."
+        "Why am I denied the access to view frickin local holster?",
+        "Clearing your cache is just deleting some temporary files your browser saves."
       ]
     },
     "vocabulary": {
-      "level": "casual",
+      "level": "mixed",
       "common_words": [
-        "what",
-        "how",
-        "that",
-        "now",
-        "you",
-        "like",
-        "just",
-        "thank"
+        "I",
+        "to",
+        "the",
+        "is",
+        "your"
       ],
       "technical_terms": [
-        "recording",
-        "rotation",
-        "3D model"
+        "local holster",
+        "local hosts",
+        "cache",
+        "browser",
+        "MPM install"
       ],
       "formality_score": "3"
     },
     "humor_style": {
-      "type": "playful",
-      "frequency": "moderate",
-      "examples": [
-        "How'd you guys exist there? Because I told you like once and you just remember it. That's amazing, isn't it?"
-      ]
+      "type": "none",
+      "frequency": "never",
+      "examples": []
     },
     "expressiveness": {
-      "level": "enthusiastic",
+      "level": "moderate",
       "uses_emphasis": "true",
       "uses_qualifiers": [
-        "much",
-        "exactly",
-        "actually",
-        "smoothly"
+        "probably",
+        "just",
+        "for sure"
       ]
     },
-    "filler_words": [
-      "like"
-    ],
-    "last_updated": "2026-01-17T20:27:39.258075",
+    "filler_words": [],
+    "last_updated": "2026-01-17T20:48:26.707226",
     "confidence": 0.8999999999999999,
     "sample_size": 5
   },
@@ -326,6 +320,24 @@
         "id": "fact_1768699421",
         "timestamp": "2026-01-17T20:23:41.795958",
         "reference_count": 1
+      },
+      {
+        "category": "project",
+        "fact": "The user is denied access to view local holster.",
+        "source_quote": "Why am I denied the access to view frickin local holster?",
+        "relevance_score": "10",
+        "id": "fact_1768700908",
+        "timestamp": "2026-01-17T20:48:28.586201",
+        "reference_count": 1
+      },
+      {
+        "category": "project",
+        "fact": "The user has run 'MPM install'.",
+        "source_quote": "Yeah, I ran MPM install.",
+        "relevance_score": "10",
+        "id": "fact_1768700908",
+        "timestamp": "2026-01-17T20:48:28.586201",
+        "reference_count": 1
       }
     ],
     "people_mentioned": [
@@ -340,6 +352,12 @@
         "relationship": "subject of a 3D project",
         "context": "The user is working on a 3D project involving Iron Man.",
         "first_mentioned": "2026-01-17T20:23:41.795958"
+      },
+      {
+        "name": "He",
+        "relationship": "unclear",
+        "context": "Gave the user access denied to local hosts.",
+        "first_mentioned": "2026-01-17T20:48:28.586201"
       }
     ],
     "goals": [
@@ -366,6 +384,12 @@
         "status": "completed",
         "priority": "medium",
         "mentioned_at": "2026-01-17T20:27:41.454236"
+      },
+      {
+        "goal": "To view local holster",
+        "status": "blocked",
+        "priority": "high",
+        "mentioned_at": "2026-01-17T20:48:28.586201"
       }
     ],
     "interests": [
@@ -435,10 +459,14 @@
         "type": "success",
         "description": "The 3D model's rotation is now working much better.",
         "source_quote": "And now the rotation works much better."
+      },
+      {
+        "type": "challenge",
+        "description": "The user is experiencing access denied to local holster."
       }
     ],
     "recent_topics": [],
-    "last_updated": "2026-01-17T20:27:41.454532"
+    "last_updated": "2026-01-17T20:48:28.586508"
   },
   "total_exchanges_analyzed": 9
 }
