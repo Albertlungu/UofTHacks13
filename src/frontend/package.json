@@ -5,9 +5,11 @@
     "dependencies": {
         "@react-three/drei": "^9.122.0",
         "@react-three/fiber": "^8.18.0",
+        "npm": "^11.7.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-scripts": "5.0.1",
+        "start": "^5.1.0",
         "three": "^0.160.0"
     },
     "scripts": {

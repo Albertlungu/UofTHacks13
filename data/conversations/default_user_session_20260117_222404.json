@@ -1,0 +1,13 @@
+{
+  "user_id": "default_user",
+  "exchange_count": 1,
+  "last_analysis_at": 0,
+  "exchanges": [
+    {
+      "timestamp": "2026-01-17T22:24:18.288835",
+      "user_text": "Hello, hello",
+      "ai_response": "[Error generating response: Connection error.]",
+      "exchange_number": 1
+    }
+  ]
+}

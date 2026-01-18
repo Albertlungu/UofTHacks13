@@ -1,0 +1,19 @@
+{
+  "user_id": "default_user",
+  "exchange_count": 2,
+  "last_analysis_at": 0,
+  "exchanges": [
+    {
+      "timestamp": "2026-01-17T22:38:50.262508",
+      "user_text": "So what's your name?",
+      "ai_response": "I'm just your friendly assistant, here to chat and help out. Got any questions or something fun you're working on?",
+      "exchange_number": 1
+    },
+    {
+      "timestamp": "2026-01-17T22:39:03.555945",
+      "user_text": "I'm just your friendly assistant here to chat and help out. Got any questions or something fun you're working on?",
+      "ai_response": "Haha, you got me! Just a bit of what I say sometimes. So, what's up with your project or anything else you've got going on?",
+      "exchange_number": 2
+    }
+  ]
+}

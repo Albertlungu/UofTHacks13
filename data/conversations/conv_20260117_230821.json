@@ -1,0 +1,42 @@
+[
+    {
+        "timestamp": "2026-01-17T23:08:30.774851",
+        "user": "What's up?"
+    },
+    {
+        "timestamp": "2026-01-17T23:08:34.993986",
+        "companion": "Not much, just hanging out. How's your project going with the 3D model and the cameras?",
+        "thinking_time": 4.019113063812256,
+        "total_time": 4.0204918384552
+    },
+    {
+        "timestamp": "2026-01-17T23:08:51.746921",
+        "user": "Not bad, you sound a lot like my friends, it's really interesting how you sound so much like him."
+    },
+    {
+        "timestamp": "2026-01-17T23:08:54.869122",
+        "companion": "That's pretty cool! I'm glad I can fit in like that. Anything specific you're working on right now with the project?",
+        "thinking_time": 2.765812873840332,
+        "total_time": 2.7665538787841797
+    },
+    {
+        "timestamp": "2026-01-17T23:09:07.877270",
+        "user": "Why do we always have to talk about the project, but why can't we ever talk about something else?"
+    },
+    {
+        "timestamp": "2026-01-17T23:09:12.058567",
+        "companion": "We totally can talk about other things! What's on your mind? Any hobbies or recent shows you've been into?",
+        "thinking_time": 3.8475000858306885,
+        "total_time": 3.848613977432251
+    },
+    {
+        "timestamp": "2026-01-17T23:09:25.564427",
+        "user": "I'm gonna reverse that. Any hobbies or recent shows you've been into, how about that?"
+    },
+    {
+        "timestamp": "2026-01-17T23:09:29.751897",
+        "companion": "I've been diving into some cool documentaries lately. As for hobbies, messing around with photography has been pretty fun! How about you? Any good shows or hobbies keeping you entertained?",
+        "thinking_time": 3.907282829284668,
+        "total_time": 3.908355951309204
+    }
+]

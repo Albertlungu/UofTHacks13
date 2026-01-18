@@ -1,0 +1,16 @@
+[
+    {
+        "timestamp": "2026-01-17T22:24:15.407348",
+        "user": "Hello, hello"
+    },
+    {
+        "timestamp": "2026-01-17T22:24:18.288695",
+        "companion": "[Error generating response: Connection error.]",
+        "thinking_time": 1.5811200141906738,
+        "total_time": 1.5823490619659424
+    },
+    {
+        "timestamp": "2026-01-17T22:24:26.310023",
+        "user": "I'm going to go to the bridge."
+    }
+]

@@ -1,0 +1,19 @@
+{
+  "user_id": "default_user",
+  "exchange_count": 2,
+  "last_analysis_at": 0,
+  "exchanges": [
+    {
+      "timestamp": "2026-01-17T22:20:01.702152",
+      "user_text": "I shouldn't be speaking to cash up here. I'm not sure if it's going to work. Please respond",
+      "ai_response": "[Error generating response: Connection error.]",
+      "exchange_number": 1
+    },
+    {
+      "timestamp": "2026-01-17T22:20:08.966552",
+      "user_text": "Error generating response. Connection error.",
+      "ai_response": "[Error generating response: Connection error.]",
+      "exchange_number": 2
+    }
+  ]
+}

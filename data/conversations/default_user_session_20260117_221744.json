@@ -1,0 +1,13 @@
+{
+  "user_id": "default_user",
+  "exchange_count": 1,
+  "last_analysis_at": 0,
+  "exchanges": [
+    {
+      "timestamp": "2026-01-17T22:18:05.976793",
+      "user_text": "Wait, is this my voice? Is this supposed to be my voice? Oh, that's crazy. So like, I'm just kind of confusing what to say because I'm just like shell shocked by my own voice. It sounds crazy good.",
+      "ai_response": "[Error generating response: Connection error.]",
+      "exchange_number": 1
+    }
+  ]
+}

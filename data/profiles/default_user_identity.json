@@ -2,28 +2,29 @@
   "user_id": "default_user",
   "communication_style": {
     "sentence_length": {
-      "avg_words": "9.6",
+      "avg_words": "14",
       "preference": "medium",
       "examples": [
-        "Why am I denied the access to view frickin local holster?",
-        "Clearing your cache is just deleting some temporary files your browser saves."
+        "Okay, here we go.",
+        "What's the problem? What's the problem?"
       ]
     },
     "vocabulary": {
       "level": "mixed",
       "common_words": [
-        "I",
-        "to",
-        "the",
-        "is",
-        "your"
+        "okay",
+        "so",
+        "like",
+        "that",
+        "one",
+        "camera",
+        "right"
       ],
       "technical_terms": [
-        "local holster",
-        "local hosts",
-        "cache",
-        "browser",
-        "MPM install"
+        "UI",
+        "mode",
+        "tracking",
+        "feeds"
       ],
       "formality_score": "3"
     },
@@ -36,15 +37,20 @@
       "level": "moderate",
       "uses_emphasis": "true",
       "uses_qualifiers": [
+        "like",
+        "I think",
+        "though",
         "probably",
-        "just",
-        "for sure"
+        "really",
+        "genuinely"
       ]
     },
-    "filler_words": [],
-    "last_updated": "2026-01-17T20:48:26.707226",
-    "confidence": 0.8999999999999999,
-    "sample_size": 5
+    "filler_words": [
+      "like"
+    ],
+    "last_updated": "2026-01-17T21:33:15.668487",
+    "confidence": 1.0,
+    "sample_size": 10
   },
   "opinions_beliefs": {
     "beliefs": [
@@ -96,6 +102,30 @@
         "id": "belief_1768699491",
         "first_mentioned": "2026-01-17T20:24:51.518823",
         "mention_count": 1
+      },
+      {
+        "category": "technology",
+        "topic": "UI performance",
+        "stance": "The UI is showing incorrect data about time spent.",
+        "confidence": "7",
+        "supporting_quotes": [
+          "So I have the, like, thousands of days spent in the UI. Why is that? They show that, but when you run the mode, it's super easy."
+        ],
+        "id": "belief_1768703599",
+        "first_mentioned": "2026-01-17T21:33:19.274384",
+        "mention_count": 1
+      },
+      {
+        "category": "technology",
+        "topic": "Camera utility",
+        "stance": "Both cameras will be useful for tracking.",
+        "confidence": "8",
+        "supporting_quotes": [
+          "No, those are both going to be useful, right, like they're both tracking, right?"
+        ],
+        "id": "belief_1768703599",
+        "first_mentioned": "2026-01-17T21:33:19.274388",
+        "mention_count": 1
       }
     ],
     "values": [
@@ -127,16 +157,14 @@
     "decision_patterns": {
       "risk_tolerance": "moderate",
       "speed_vs_quality": "balanced",
-      "examples": [
-        "Willing to delay less enjoyable tasks but acknowledges the need to complete them."
-      ]
+      "examples": []
     },
     "preferences": {
-      "work_style": "Prefers engaging and enjoyable tasks, but understands the need to complete less desirable ones.",
-      "communication": "Casual and informal, uses slang.",
-      "problem_solving": "Seems to be experimenting and iterating, enjoying the process."
+      "work_style": "collaborative",
+      "communication": "somewhat unclear, needs clarification",
+      "problem_solving": "exploratory, brainstorming"
     },
-    "last_updated": "2026-01-17T20:24:51.519168"
+    "last_updated": "2026-01-17T21:33:19.274759"
   },
   "thought_patterns": {
     "cognitive_style": {},
@@ -338,6 +366,60 @@
         "id": "fact_1768700908",
         "timestamp": "2026-01-17T20:48:28.586201",
         "reference_count": 1
+      },
+      {
+        "category": "life",
+        "fact": "The user has three companions.",
+        "source_quote": "Okay, I have three companions",
+        "relevance_score": "10",
+        "id": "fact_1768703296",
+        "timestamp": "2026-01-17T21:28:16.132929",
+        "reference_count": 1
+      },
+      {
+        "category": "project",
+        "fact": "The user is getting warnings and errors.",
+        "source_quote": "so I'm getting warnings and errors.",
+        "relevance_score": "10",
+        "id": "fact_1768703556",
+        "timestamp": "2026-01-17T21:32:36.313578",
+        "reference_count": 1
+      },
+      {
+        "category": "project",
+        "fact": "The user has thousands of days spent in the UI.",
+        "source_quote": "So I have the, like, thousands of days spent in the UI.",
+        "relevance_score": "10",
+        "id": "fact_1768703556",
+        "timestamp": "2026-01-17T21:32:36.313578",
+        "reference_count": 1
+      },
+      {
+        "category": "project",
+        "fact": "The user is working on a presentation that will use two cameras.",
+        "source_quote": "Because during presentation we'll have the two cameras hooked up to this.",
+        "relevance_score": "10",
+        "id": "fact_1768703597",
+        "timestamp": "2026-01-17T21:33:17.426379",
+        "reference_count": 1
+      },
+      {
+        "category": "project",
+        "fact": "One of the cameras will be displaying a feed.",
+        "source_quote": "The two cameras will be displaying one of the feeds, so I'll have this camera open for business.",
+        "relevance_score": "10",
+        "id": "fact_1768703597",
+        "timestamp": "2026-01-17T21:33:17.426379",
+        "reference_count": 1
+      },
+      {
+        "category": "project",
+        "fact": "Both cameras are tracking.",
+        "source_quote": "No, those are both going to be useful, right, like they're both tracking, right?",
+        "relevance_score": "10",
+        "id": "fact_1768703597",
+        "timestamp": "2026-01-17T21:33:17.426379",
+        "reference_count": 1
       }
     ],
     "people_mentioned": [
@@ -358,6 +440,12 @@
         "relationship": "unclear",
         "context": "Gave the user access denied to local hosts.",
         "first_mentioned": "2026-01-17T20:48:28.586201"
+      },
+      {
+        "name": "guys",
+        "relationship": "companions",
+        "context": "User is directing them to come over to see something.",
+        "first_mentioned": "2026-01-17T21:28:16.132929"
       }
     ],
     "goals": [
@@ -390,6 +478,12 @@
         "status": "blocked",
         "priority": "high",
         "mentioned_at": "2026-01-17T20:48:28.586201"
+      },
+      {
+        "goal": "To use two cameras effectively during a presentation.",
+        "status": "planning",
+        "priority": "high",
+        "mentioned_at": "2026-01-17T21:33:17.426379"
       }
     ],
     "interests": [
@@ -463,10 +557,22 @@
       {
         "type": "challenge",
         "description": "The user is experiencing access denied to local holster."
+      },
+      {
+        "type": "challenge",
+        "description": "The user is experiencing issues with a server that turned off.",
+        "source_quote": "stop I guess. The server turned off. I think the server turned off. You had the server turned off. Yeah, check the platform. Check the terminal. The chances are like crashed. Nah, it's the terminal.",
+        "relevance_score": "8"
+      },
+      {
+        "type": "challenge",
+        "description": "The user is encountering warnings and errors.",
+        "source_quote": "so I'm getting warnings and errors.",
+        "relevance_score": "10"
       }
     ],
     "recent_topics": [],
-    "last_updated": "2026-01-17T20:48:28.586508"
+    "last_updated": "2026-01-17T21:33:17.426742"
   },
-  "total_exchanges_analyzed": 9
+  "total_exchanges_analyzed": 4
 }
