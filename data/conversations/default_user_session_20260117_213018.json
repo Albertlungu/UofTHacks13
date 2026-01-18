@@ -1,0 +1,73 @@
+{
+  "user_id": "default_user",
+  "exchange_count": 11,
+  "last_analysis_at": 0,
+  "exchanges": [
+    {
+      "timestamp": "2026-01-17T21:30:31.438179",
+      "user_text": "so I'm getting warnings and errors.",
+      "ai_response": "Oh no! What kind of warnings and errors are you seeing?",
+      "exchange_number": 1
+    },
+    {
+      "timestamp": "2026-01-17T21:31:14.736312",
+      "user_text": "Like, I think, though, I think you should still do it. Well, if it's really cool, I would have to get you to just be empty here or rewrites.",
+      "ai_response": "Okay, I'm not totally following. What's the main thing you're trying to figure out right now?",
+      "exchange_number": 2
+    },
+    {
+      "timestamp": "2026-01-17T21:31:32.852883",
+      "user_text": "Can the cards still be there, but then it has to be there for you? Did you pull that right just now? Are we fine? We're not. We're fine. Who's got it? You mean? What's the problem? What's the problem?",
+      "ai_response": "Okay, hold on, what cards are we talking about here? And what problem are you trying to solve?",
+      "exchange_number": 3
+    },
+    {
+      "timestamp": "2026-01-17T21:31:45.576191",
+      "user_text": "Okay, here we go. So I have the, like, thousands of days spent in the UI. Why is that? They show that, but when you run the mode, it's super easy.",
+      "ai_response": "Gotcha. So the UI is showing a crazy high number of days, but the actual model runs quickly? Is that the problem?",
+      "exchange_number": 4
+    },
+    {
+      "timestamp": "2026-01-17T21:32:32.846667",
+      "user_text": "Could one of them just not like, okay, so one of them could use the other one and that one sends that camera to you, the other one, how about that? That's going to take a while.",
+      "ai_response": "Are you talking about using one camera to send info to your virtual assistant model? Is that right?",
+      "exchange_number": 5
+    },
+    {
+      "timestamp": "2026-01-17T21:32:44.441473",
+      "user_text": "What if we look and just use one of the cameras on our camera? Are we genuinely slow? Because during presentation we'll have the two cameras hooked up to this.",
+      "ai_response": "Okay, so you're thinking of using just one camera for the presentation instead of two? What's making you consider that?",
+      "exchange_number": 6
+    },
+    {
+      "timestamp": "2026-01-17T21:32:49.996378",
+      "user_text": "The two cameras will be displaying one of the feeds, so I'll have this camera open for business.",
+      "ai_response": "Got it. So one camera's feed will be displayed. What's the goal of having the second camera then?",
+      "exchange_number": 7
+    },
+    {
+      "timestamp": "2026-01-17T21:33:01.037381",
+      "user_text": "No, those are both going to be useful, right, like they're both tracking, right?",
+      "ai_response": "So, both cameras will be tracking things. What exactly are they tracking for your virtual assistant project?",
+      "exchange_number": 8
+    },
+    {
+      "timestamp": "2026-01-17T21:33:06.243868",
+      "user_text": "or am I slow? I'm probably slow.",
+      "ai_response": "Nah, you're not slow! What part are you feeling stuck on right now? Maybe I can help.",
+      "exchange_number": 9
+    },
+    {
+      "timestamp": "2026-01-17T21:33:13.575648",
+      "user_text": "Okay, so that one's gonna be for turning and then",
+      "ai_response": "And the other camera? What's it tracking?",
+      "exchange_number": 10
+    },
+    {
+      "timestamp": "2026-01-17T21:33:30.729930",
+      "user_text": "What would we do it",
+      "ai_response": "Sorry, could you say that again? I didn't quite catch that.",
+      "exchange_number": 11
+    }
+  ]
+}

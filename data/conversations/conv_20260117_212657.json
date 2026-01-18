@@ -1,0 +1,52 @@
+[
+    {
+        "timestamp": "2026-01-17T21:27:17.524185",
+        "user": "Okay, I have three companions"
+    },
+    {
+        "timestamp": "2026-01-17T21:27:19.569330",
+        "companion": "Cool, who are they? What are their names?",
+        "thinking_time": 0.6235880851745605,
+        "total_time": 0.6239738464355469
+    },
+    {
+        "timestamp": "2026-01-17T21:27:30.447591",
+        "user": "Okay, so I'm gonna move this over here. Hey guys guys come here. So we got this stuff. This is the setup"
+    },
+    {
+        "timestamp": "2026-01-17T21:27:32.530557",
+        "companion": "Sounds like you're setting things up for the project? What's the plan?",
+        "thinking_time": 0.4988899230957031,
+        "total_time": 0.4992177486419678
+    },
+    {
+        "timestamp": "2026-01-17T21:27:47.643297",
+        "user": "This one's here. Oh, did it work? Yup. So now we've got this is how it's going to be."
+    },
+    {
+        "timestamp": "2026-01-17T21:27:48.148036",
+        "companion": "Nice, is that how the cameras will be set up for recording?",
+        "thinking_time": 0.4948422908782959,
+        "total_time": 0.4952700138092041
+    },
+    {
+        "timestamp": "2026-01-17T21:27:59.203041",
+        "user": "Oh shit. So yeah, balance there, and this one's here. This one works. Fuck, this is the result of the thing. And this one, for some reason, is..."
+    },
+    {
+        "timestamp": "2026-01-17T21:27:59.701880",
+        "companion": "Something not working right? What's up with that last one?",
+        "thinking_time": 0.4575459957122803,
+        "total_time": 0.45809316635131836
+    },
+    {
+        "timestamp": "2026-01-17T21:28:12.038012",
+        "user": "stop I guess. The server turned off. I think the server turned off. You had the server turned off. Yeah, check the platform. Check the terminal. The chances are like crashed. Nah, it's the terminal."
+    },
+    {
+        "timestamp": "2026-01-17T21:28:12.868068",
+        "companion": "Ah gotcha, so just need to restart the server, right?",
+        "thinking_time": 0.535477876663208,
+        "total_time": 0.5358729362487793
+    }
+]

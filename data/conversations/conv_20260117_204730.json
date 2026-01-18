@@ -1,0 +1,92 @@
+[
+    {
+        "timestamp": "2026-01-17T20:47:47.871047",
+        "user": "Why am I denied the access to view frickin local holster?"
+    },
+    {
+        "timestamp": "2026-01-17T20:47:48.886597",
+        "companion": "Whoa, that's frustrating! What exactly happens when you try to access it?",
+        "thinking_time": 0.5926969051361084,
+        "total_time": 0.5928809642791748
+    },
+    {
+        "timestamp": "2026-01-17T20:47:51.229534",
+        "user": "He's given me access denied to local hosts."
+    },
+    {
+        "timestamp": "2026-01-17T20:47:52.003803",
+        "companion": "Hmm, weird. Have you tried clearing your cache or using a different browser? Sometimes that helps.",
+        "thinking_time": 0.6841690540313721,
+        "total_time": 0.6844120025634766
+    },
+    {
+        "timestamp": "2026-01-17T20:48:02.666977",
+        "user": "I don't know what that probably means, also, again with this..."
+    },
+    {
+        "timestamp": "2026-01-17T20:48:03.565120",
+        "companion": "Okay, no worries! Clearing your cache is just deleting some temporary files your browser saves. It can sometimes fix weird issues. Want me to walk you through it? What browser are you using?",
+        "thinking_time": 0.6627390384674072,
+        "total_time": 0.6629898548126221
+    },
+    {
+        "timestamp": "2026-01-17T20:48:14.890394",
+        "user": "Ok, no worries. Clearing your cache is just deleting some temporary files your browser saves."
+    },
+    {
+        "timestamp": "2026-01-17T20:48:15.495443",
+        "companion": "Yeah, exactly! It's like hitting a reset button for your browser.",
+        "thinking_time": 0.5210070610046387,
+        "total_time": 0.5213170051574707
+    },
+    {
+        "timestamp": "2026-01-17T20:48:23.694598",
+        "user": "Yeah, I ran MPM install. MPM install has been run, I can tell you that for sure."
+    },
+    {
+        "timestamp": "2026-01-17T20:48:24.629532",
+        "companion": "Gotcha. So, you're sure it's installed. What's the next step you're expecting to happen after that?",
+        "thinking_time": 0.5930302143096924,
+        "total_time": 0.5932588577270508
+    },
+    {
+        "timestamp": "2026-01-17T20:48:38.443137",
+        "user": "Could you try on your computer on because I want to see if we get the same thing Yeah, no, I'm running the run all the SH"
+    },
+    {
+        "timestamp": "2026-01-17T20:48:40.382155",
+        "companion": "Ah, I gotcha. Unfortunately, I can't really \"try it\" on my end since I don't have your specific setup. What happens when you run those SH files? Any errors popping up?",
+        "thinking_time": 0.7209720611572266,
+        "total_time": 0.7212440967559814
+    },
+    {
+        "timestamp": "2026-01-17T20:48:46.145562",
+        "user": "All you bro, I don't know windows"
+    },
+    {
+        "timestamp": "2026-01-17T20:48:48.427129",
+        "companion": "Haha, yeah, Windows can be a beast. Are the SH files definitely meant to be run on Windows? They're usually for Linux/Mac.",
+        "thinking_time": 0.7180697917938232,
+        "total_time": 0.718376874923706
+    },
+    {
+        "timestamp": "2026-01-17T20:48:57.827366",
+        "user": "It's a cop, bro."
+    },
+    {
+        "timestamp": "2026-01-17T20:48:58.975760",
+        "companion": "Okay, so you're saying you need to run those .sh files on Windows? You might need something like Git Bash or WSL (Windows Subsystem for Linux) to run them. Have you heard of those?",
+        "thinking_time": 0.7089798450469971,
+        "total_time": 0.709312915802002
+    },
+    {
+        "timestamp": "2026-01-17T20:49:18.759046",
+        "user": "You're just calling up to make it. No, I'm just doing what I can to make it. I'm going to have time. There's your parcel. Okay. Thank you. You're welcome. Thanks. Thanks. Thanks. Thanks. Thanks. Thanks. Thanks. Thanks. Thanks. Thanks. Thanks. Thanks. Thanks. Thanks. Thanks. Thanks. Thanks. Thanks."
+    },
+    {
+        "timestamp": "2026-01-17T20:49:19.507949",
+        "companion": "Whoa, lots going on there! What part are you focused on right now?",
+        "thinking_time": 0.6051299571990967,
+        "total_time": 0.6055848598480225
+    }
+]

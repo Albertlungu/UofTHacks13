@@ -1,0 +1,13 @@
+{
+  "user_id": "default_user",
+  "exchange_count": 1,
+  "last_analysis_at": 0,
+  "exchanges": [
+    {
+      "timestamp": "2026-01-17T20:42:39.034804",
+      "user_text": "Oh my god, why is it opening? Take these to give him a local host.",
+      "ai_response": "Whoa, what's opening? And who needs the localhost?",
+      "exchange_number": 1
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "user_id": "default_user",
+  "exchange_count": 9,
+  "last_analysis_at": 0,
+  "exchanges": [
+    {
+      "timestamp": "2026-01-17T20:47:48.886798",
+      "user_text": "Why am I denied the access to view frickin local holster?",
+      "ai_response": "Whoa, that's frustrating! What exactly happens when you try to access it?",
+      "exchange_number": 1
+    },
+    {
+      "timestamp": "2026-01-17T20:47:52.004101",
+      "user_text": "He's given me access denied to local hosts.",
+      "ai_response": "Hmm, weird. Have you tried clearing your cache or using a different browser? Sometimes that helps.",
+      "exchange_number": 2
+    },
+    {
+      "timestamp": "2026-01-17T20:48:03.565449",
+      "user_text": "I don't know what that probably means, also, again with this...",
+      "ai_response": "Okay, no worries! Clearing your cache is just deleting some temporary files your browser saves. It can sometimes fix weird issues. Want me to walk you through it? What browser are you using?",
+      "exchange_number": 3
+    },
+    {
+      "timestamp": "2026-01-17T20:48:15.495731",
+      "user_text": "Ok, no worries. Clearing your cache is just deleting some temporary files your browser saves.",
+      "ai_response": "Yeah, exactly! It's like hitting a reset button for your browser.",
+      "exchange_number": 4
+    },
+    {
+      "timestamp": "2026-01-17T20:48:24.630116",
+      "user_text": "Yeah, I ran MPM install. MPM install has been run, I can tell you that for sure.",
+      "ai_response": "Gotcha. So, you're sure it's installed. What's the next step you're expecting to happen after that?",
+      "exchange_number": 5
+    },
+    {
+      "timestamp": "2026-01-17T20:48:40.382513",
+      "user_text": "Could you try on your computer on because I want to see if we get the same thing Yeah, no, I'm running the run all the SH",
+      "ai_response": "Ah, I gotcha. Unfortunately, I can't really \"try it\" on my end since I don't have your specific setup. What happens when you run those SH files? Any errors popping up?",
+      "exchange_number": 6
+    },
+    {
+      "timestamp": "2026-01-17T20:48:48.427633",
+      "user_text": "All you bro, I don't know windows",
+      "ai_response": "Haha, yeah, Windows can be a beast. Are the SH files definitely meant to be run on Windows? They're usually for Linux/Mac.",
+      "exchange_number": 7
+    },
+    {
+      "timestamp": "2026-01-17T20:48:58.976263",
+      "user_text": "It's a cop, bro.",
+      "ai_response": "Okay, so you're saying you need to run those .sh files on Windows? You might need something like Git Bash or WSL (Windows Subsystem for Linux) to run them. Have you heard of those?",
+      "exchange_number": 8
+    },
+    {
+      "timestamp": "2026-01-17T20:49:19.508395",
+      "user_text": "You're just calling up to make it. No, I'm just doing what I can to make it. I'm going to have time. There's your parcel. Okay. Thank you. You're welcome. Thanks. Thanks. Thanks. Thanks. Thanks. Thanks. Thanks. Thanks. Thanks. Thanks. Thanks. Thanks. Thanks. Thanks. Thanks. Thanks. Thanks. Thanks.",
+      "ai_response": "Whoa, lots going on there! What part are you focused on right now?",
+      "exchange_number": 9
+    }
+  ]
+}

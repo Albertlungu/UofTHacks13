@@ -1,0 +1,12 @@
+[
+    {
+        "timestamp": "2026-01-17T22:18:03.955175",
+        "user": "Wait, is this my voice? Is this supposed to be my voice? Oh, that's crazy. So like, I'm just kind of confusing what to say because I'm just like shell shocked by my own voice. It sounds crazy good."
+    },
+    {
+        "timestamp": "2026-01-17T22:18:05.976642",
+        "companion": "[Error generating response: Connection error.]",
+        "thinking_time": 1.6034750938415527,
+        "total_time": 1.6043040752410889
+    }
+]

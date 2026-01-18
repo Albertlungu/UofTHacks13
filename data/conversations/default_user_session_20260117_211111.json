@@ -1,0 +1,25 @@
+{
+  "user_id": "default_user",
+  "exchange_count": 3,
+  "last_analysis_at": 0,
+  "exchanges": [
+    {
+      "timestamp": "2026-01-17T21:11:27.818615",
+      "user_text": "We're taking time for the time to run out. How long? I'm going to take the phone. Can you just leave it there for a while? It's a simple SMPP phone.",
+      "ai_response": "Okay, you want me to leave the phone there for a while. How long are we talking?",
+      "exchange_number": 1
+    },
+    {
+      "timestamp": "2026-01-17T21:11:46.360771",
+      "user_text": "Dude, why is it still you know what is going on? Why is there still an error? Okay, hold on Why'd you when you ran when you ran the the shell script? Then what you run it with",
+      "ai_response": "Errors are the worst! What shell script are you running?",
+      "exchange_number": 2
+    },
+    {
+      "timestamp": "2026-01-17T21:11:51.337221",
+      "user_text": "So what command did you want to like to get this thing to work?",
+      "ai_response": "To get what to work, exactly?",
+      "exchange_number": 3
+    }
+  ]
+}

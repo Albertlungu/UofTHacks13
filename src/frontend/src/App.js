@@ -7,16 +7,14 @@ import { Button } from "./components/ui/button";
 import { Eye, EyeOff, Activity } from "lucide-react";
 
 // Avatar States: IDLE, LISTENING, THINKING, SPEAKING
-function Avatar3D({ state, position, scale = 2.0 }) {
-    const group = useRef();
-    const { scene, animations } = useGLTF(
-        "http://localhost:5000/assets/models/chibi.glb",
-    );
-    const { actions } = useAnimations(animations, group);
-
-    const currentAnimationIndex = useRef(0);
-    const animationChangeInterval = useRef(null);
-    const stateRef = useRef(state);
+function Avatar3D({ state, position, scale = 0.6 }) {
+  const group = useRef();
+  const { scene, animations } = useGLTF('http://localhost:5000/assets/models/droid.glb');
+  const { actions } = useAnimations(animations, group);
+  
+  const stateRef = useRef(state);
+  const positionRef = useRef(position);
+  const timeOffsetRef = useRef(Math.random() * 1000); // Random start for variation
 
     useEffect(() => {
         stateRef.current = state;
@@ -255,34 +253,34 @@ function LoadingAvatar() {
 }
 
 function AvatarWithErrorBoundary({ state, position }) {
-    const [hasError, setHasError] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
-    if (hasError) {
-        return <FallbackAvatar state={state} position={position} />;
-    }
+  if (hasError) {
+    return <FallbackAvatar state={state} position={position} />;
+  }
 
-    return (
-        <Suspense fallback={<LoadingAvatar />}>
-            <ErrorBoundary onError={() => setHasError(true)}>
-                <Avatar3D state={state} position={position} scale={2.0} />
-            </ErrorBoundary>
-        </Suspense>
-    );
+  return (
+    <Suspense fallback={<LoadingAvatar />}>
+      <ErrorBoundary onError={() => setHasError(true)}>
+        <Avatar3D state={state} position={position} scale={0.6} />
+      </ErrorBoundary>
+    </Suspense>
+  );
 }
 
 class ErrorBoundary extends React.Component {
-    componentDidCatch(error) {
-        console.error("Avatar error:", error.message);
-        this.props.onError();
-    }
+  componentDidCatch(error) {
+    console.error('Avatar error:', error.message);
+    this.props.onError();
+  }
 
-    render() {
-        return this.props.children;
-    }
+  render() {
+    return this.props.children;
+  }
 }
 
 function Scene({ avatarState, faceData }) {
-    const [avatarPosition, setAvatarPosition] = useState({ x: 0, y: 0, z: 0 });
+  const [avatarPosition, setAvatarPosition] = useState({ x: 0, y: 0, z: 0 });
 
     useEffect(() => {
         if (faceData) {
@@ -298,33 +296,32 @@ function Scene({ avatarState, faceData }) {
     }, [faceData]);
 
     return (
-        <>
-            <ambientLight intensity={0.5} />
-            <directionalLight
-                position={[10, 10, 5]}
-                intensity={1.0}
-                castShadow
-            />
-            <hemisphereLight args={["#87CEEB", "#1a1a1a", 0.7]} />
-
-            <AvatarWithErrorBoundary
-                state={avatarState}
-                position={avatarPosition}
-            />
-
-            <PerspectiveCamera makeDefault position={[0, 0, 8]} fov={45} />
-        </>
+      <>
+        {/* MAXIMUM AMBIENT for full visibility */}
+        <ambientLight intensity={1.2} />
+        <directionalLight position={[8, 10, 6]} intensity={1.8} castShadow />
+        <directionalLight position={[-8, 8, 5]} intensity={1.2} castShadow />
+        <hemisphereLight args={['#ffffff', '#888888', 1.0]} />
+        
+        {/* Additional fill lights for dark corners */}
+        <pointLight position={[0, 5, 0]} intensity={2.0} color="#ffffff" />
+        
+        <AvatarWithErrorBoundary state={avatarState} position={avatarPosition} />
+        
+        {/* FIXED camera position - NO ZOOM */}
+        <PerspectiveCamera makeDefault position={[0, 0, 5.5]} fov={50} />
+      </>
     );
 }
 
 function App() {
-    const [faceData, setFaceData] = useState(null);
-    const [speaking, setSpeaking] = useState(false);
-    const [audioAvailable, setAudioAvailable] = useState(false);
-    const [currentVolume, setCurrentVolume] = useState(0);
-    const [threshold, setThreshold] = useState(0);
-    const [show3D, setShow3D] = useState(true);
-    const [avatarState, setAvatarState] = useState("IDLE");
+  const [faceData, setFaceData] = useState(null);
+  const [speaking, setSpeaking] = useState(false);
+  const [audioAvailable, setAudioAvailable] = useState(false);
+  const [currentVolume, setCurrentVolume] = useState(0);
+  const [threshold, setThreshold] = useState(0);
+  const [show3D, setShow3D] = useState(true);
+  const [avatarState, setAvatarState] = useState('IDLE');
 
     useEffect(() => {
         if (speaking) {
@@ -336,55 +333,51 @@ function App() {
         }
     }, [speaking, faceData]);
 
-    useEffect(() => {
-        const interval = setInterval(async () => {
-            try {
-                const res = await fetch("http://localhost:5000/face_data");
-                const data = await res.json();
-                if (data.faces && data.faces.length > 0) {
-                    setFaceData(data.faces[0]);
-                } else {
-                    setFaceData(null);
-                }
-            } catch (err) {
-                // Silent fail
-            }
-        }, 100);
-
-        return () => clearInterval(interval);
-    }, []);
-
-    useEffect(() => {
-        const interval = setInterval(async () => {
-            try {
-                const res = await fetch(
-                    "http://localhost:5000/speaking_status",
-                );
-                const data = await res.json();
-
-                setSpeaking(data.is_speaking);
-                setAudioAvailable(data.audio_available);
-                setCurrentVolume(data.current_volume || 0);
-                setThreshold(data.threshold || 5);
-            } catch (err) {
-                // Silent fail
-            }
-        }, 100);
-
-        return () => clearInterval(interval);
-    }, []);
-
-    const handleManualToggle = async () => {
-        try {
-            await fetch("http://localhost:5000/toggle_speaking", {
-                method: "POST",
-            });
-        } catch (err) {
-            console.error("Error toggling:", err);
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      try {
+        const res = await fetch('http://localhost:5000/face_data');
+        const data = await res.json();
+        if (data.faces && data.faces.length > 0) {
+          setFaceData(data.faces[0]);
+        } else {
+          setFaceData(null);
         }
-    };
+      } catch (err) {
+        // Silent fail
+      }
+    }, 100);
 
-    const volumePercent = Math.min((currentVolume / threshold) * 100, 100);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      try {
+        const res = await fetch('http://localhost:5000/speaking_status');
+        const data = await res.json();
+        
+        setSpeaking(data.is_speaking);
+        setAudioAvailable(data.audio_available);
+        setCurrentVolume(data.current_volume || 0);
+        setThreshold(data.threshold || 5);
+      } catch (err) {
+        // Silent fail
+      }
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleManualToggle = async () => {
+    try {
+      await fetch('http://localhost:5000/toggle_speaking', { method: 'POST' });
+    } catch (err) {
+      console.error('Error toggling:', err);
+    }
+  };
+
+  const volumePercent = Math.min((currentVolume / threshold) * 100, 100);
 
     const getStateBadgeVariant = (state) => {
         switch (state) {
@@ -501,4 +494,3 @@ function App() {
 }
 
 export default App;
-

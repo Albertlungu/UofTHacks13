@@ -1,0 +1,112 @@
+[
+    {
+        "timestamp": "2026-01-17T21:30:30.515594",
+        "user": "so I'm getting warnings and errors."
+    },
+    {
+        "timestamp": "2026-01-17T21:30:31.437811",
+        "companion": "Oh no! What kind of warnings and errors are you seeing?",
+        "thinking_time": 0.5490400791168213,
+        "total_time": 0.5492970943450928
+    },
+    {
+        "timestamp": "2026-01-17T21:31:13.766128",
+        "user": "Like, I think, though, I think you should still do it. Well, if it's really cool, I would have to get you to just be empty here or rewrites."
+    },
+    {
+        "timestamp": "2026-01-17T21:31:14.735963",
+        "companion": "Okay, I'm not totally following. What's the main thing you're trying to figure out right now?",
+        "thinking_time": 0.5269811153411865,
+        "total_time": 0.5272293090820312
+    },
+    {
+        "timestamp": "2026-01-17T21:31:32.080761",
+        "user": "Can the cards still be there, but then it has to be there for you? Did you pull that right just now? Are we fine? We're not. We're fine. Who's got it? You mean? What's the problem? What's the problem?"
+    },
+    {
+        "timestamp": "2026-01-17T21:31:32.852356",
+        "companion": "Okay, hold on, what cards are we talking about here? And what problem are you trying to solve?",
+        "thinking_time": 0.528914213180542,
+        "total_time": 0.5292999744415283
+    },
+    {
+        "timestamp": "2026-01-17T21:31:44.478121",
+        "user": "Okay, here we go. So I have the, like, thousands of days spent in the UI. Why is that? They show that, but when you run the mode, it's super easy."
+    },
+    {
+        "timestamp": "2026-01-17T21:31:45.575416",
+        "companion": "Gotcha. So the UI is showing a crazy high number of days, but the actual model runs quickly? Is that the problem?",
+        "thinking_time": 0.6516821384429932,
+        "total_time": 0.6526858806610107
+    },
+    {
+        "timestamp": "2026-01-17T21:32:31.902149",
+        "user": "Could one of them just not like, okay, so one of them could use the other one and that one sends that camera to you, the other one, how about that? That's going to take a while."
+    },
+    {
+        "timestamp": "2026-01-17T21:32:32.846224",
+        "companion": "Are you talking about using one camera to send info to your virtual assistant model? Is that right?",
+        "thinking_time": 0.575829029083252,
+        "total_time": 0.5761191844940186
+    },
+    {
+        "timestamp": "2026-01-17T21:32:43.651991",
+        "user": "What if we look and just use one of the cameras on our camera? Are we genuinely slow? Because during presentation we'll have the two cameras hooked up to this."
+    },
+    {
+        "timestamp": "2026-01-17T21:32:44.441032",
+        "companion": "Okay, so you're thinking of using just one camera for the presentation instead of two? What's making you consider that?",
+        "thinking_time": 0.574012279510498,
+        "total_time": 0.5742557048797607
+    },
+    {
+        "timestamp": "2026-01-17T21:32:49.009479",
+        "user": "The two cameras will be displaying one of the feeds, so I'll have this camera open for business."
+    },
+    {
+        "timestamp": "2026-01-17T21:32:49.995820",
+        "companion": "Got it. So one camera's feed will be displayed. What's the goal of having the second camera then?",
+        "thinking_time": 0.5933072566986084,
+        "total_time": 0.5935940742492676
+    },
+    {
+        "timestamp": "2026-01-17T21:33:00.169371",
+        "user": "No, those are both going to be useful, right, like they're both tracking, right?"
+    },
+    {
+        "timestamp": "2026-01-17T21:33:01.036871",
+        "companion": "So, both cameras will be tracking things. What exactly are they tracking for your virtual assistant project?",
+        "thinking_time": 0.5643472671508789,
+        "total_time": 0.5646438598632812
+    },
+    {
+        "timestamp": "2026-01-17T21:33:05.415788",
+        "user": "or am I slow? I'm probably slow."
+    },
+    {
+        "timestamp": "2026-01-17T21:33:06.243178",
+        "companion": "Nah, you're not slow! What part are you feeling stuck on right now? Maybe I can help.",
+        "thinking_time": 0.7387449741363525,
+        "total_time": 0.7390978336334229
+    },
+    {
+        "timestamp": "2026-01-17T21:33:11.792002",
+        "user": "Okay, so that one's gonna be for turning and then"
+    },
+    {
+        "timestamp": "2026-01-17T21:33:13.575127",
+        "companion": "And the other camera? What's it tracking?",
+        "thinking_time": 0.5143327713012695,
+        "total_time": 0.5146079063415527
+    },
+    {
+        "timestamp": "2026-01-17T21:33:28.709717",
+        "user": "What would we do it"
+    },
+    {
+        "timestamp": "2026-01-17T21:33:30.729053",
+        "companion": "Sorry, could you say that again? I didn't quite catch that.",
+        "thinking_time": 0.5518250465393066,
+        "total_time": 0.5521018505096436
+    }
+]

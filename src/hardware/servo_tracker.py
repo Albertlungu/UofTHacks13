@@ -25,26 +25,20 @@ class ServoTracker:
         self.is_connected = False
         self.tracking_enabled = False
         
-        # Servo angle limits (adjust based on your servo)
+        # Servo angle limits
         self.pan_min = 0      # Left limit
         self.pan_max = 180    # Right limit
         self.pan_center = 90  # Center position
         
-        self.tilt_min = 45    # Down limit
-        self.tilt_max = 135   # Up limit
-        self.tilt_center = 90 # Center position
-        
         # Current servo positions
         self.current_pan = 90
-        self.current_tilt = 90
         
         # Smoothing for servo movement
-        self.pan_smoothing = 0.3
-        self.tilt_smoothing = 0.3
+        self.pan_smoothing = 0.5  # Increased for more responsive
         
-        # Threading
-        self.update_thread = None
-        self.running = False
+        # Debug
+        self.last_pan = 90
+        self.update_count = 0
         
         print("✓ ServoTracker initialized")
     
@@ -74,7 +68,6 @@ class ServoTracker:
             return
         
         self.tracking_enabled = True
-        self.running = True
         print("✓ Tracking enabled")
     
     def stop_tracking(self):
@@ -85,39 +78,35 @@ class ServoTracker:
     
     def update_face_position(self, face_center_x: int, face_center_y: int, 
                         frame_width: int, frame_height: int):
-        """
-        Update servo position based on face X location (pan only)
-        
-        Args:
-            face_center_x: X coordinate of face center (pixels)
-            face_center_y: Y coordinate of face center (pixels)
-            frame_width: Camera frame width (pixels)
-            frame_height: Camera frame height (pixels)
-        """
+        """Update servo position based on face X location (pan only)"""
         if not self.tracking_enabled or not self.is_connected:
             return
         
+        self.update_count += 1
+        
         # Calculate normalized X position (-1 to 1)
         norm_x = (face_center_x - frame_width / 2) / (frame_width / 2)
-        
-        # Clamp to -1 to 1
         norm_x = max(-1, min(1, norm_x))
         
-        # Calculate target servo angle
-        # Pan: move left/right based on X position
-        target_pan = self.pan_center + (norm_x * (self.pan_max - self.pan_center) / 2)
-        
-        # Clamp to servo limits
+        # Calculate target pan angle
+        target_pan = self.pan_center + (norm_x * 90)
         target_pan = max(self.pan_min, min(self.pan_max, target_pan))
         
-        # Apply smoothing (exponential moving average)
+        # Apply smoothing
         self.current_pan = int(
             self.current_pan * (1 - self.pan_smoothing) + 
             target_pan * self.pan_smoothing
         )
         
-        # Send to Arduino (pan only)
+        # DEBUG: Print every 10 updates
+        if self.update_count % 10 == 0:
+            print(f"SERVO DEBUG | Face X: {face_center_x:4d}/{frame_width} | "
+                  f"Norm: {norm_x:6.2f} | Target: {target_pan:3.0f}° | "
+                  f"Current: {self.current_pan:3d}° | Delta: {self.current_pan - self.last_pan:+3d}°")
+        
+        # Send to Arduino
         self._send_servo_command(self.current_pan)
+        self.last_pan = self.current_pan
     
     def _send_servo_command(self, pan: int):
         """Send servo angle to Arduino via serial"""
@@ -128,6 +117,8 @@ class ServoTracker:
             # Format: "PAN:90\n"
             command = f"PAN:{pan}\n"
             self.serial_conn.write(command.encode())
+            # DEBUG: uncomment to see every command
+            # print(f"  → Sent: {command.strip()}")
         except Exception as e:
             print(f"✗ Serial write error: {e}")
             self.is_connected = False
@@ -136,19 +127,15 @@ class ServoTracker:
         """Center servo to neutral position"""
         self.current_pan = self.pan_center
         self._send_servo_command(self.pan_center)
-        print(f"● Servo centered")
+        print(f"● Servo centered to 90°")
         
-    def set_servo_limits(self, pan_min: int, pan_max: int, 
-                        tilt_min: int, tilt_max: int):
+    def set_servo_limits(self, pan_min: int, pan_max: int):
         """Adjust servo angle limits"""
         self.pan_min = pan_min
         self.pan_max = pan_max
-        self.tilt_min = tilt_min
-        self.tilt_max = tilt_max
-        print(f"✓ Servo limits updated: Pan({pan_min}-{pan_max}), Tilt({tilt_min}-{tilt_max})")
+        print(f"✓ Servo limits updated: Pan({pan_min}-{pan_max})")
     
-    def set_smoothing(self, pan_smoothing: float, tilt_smoothing: float):
-        """Adjust tracking smoothness (0.0-1.0, higher = smoother)"""
-        self.pan_smoothing = max(0, min(1, pan_smoothing))
-        self.tilt_smoothing = max(0, min(1, tilt_smoothing))
-        print(f"✓ Smoothing updated: Pan({self.pan_smoothing}), Tilt({self.tilt_smoothing})")
+    def set_smoothing(self, pan_smoothing: float):
+        """Adjust tracking smoothness (0.0-1.0, higher = more responsive)"""
+        self.pan_smoothing = 0.1
+        print(f"✓ Smoothing updated: {self.pan_smoothing}")

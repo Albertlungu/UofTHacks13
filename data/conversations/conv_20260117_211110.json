@@ -1,0 +1,32 @@
+[
+    {
+        "timestamp": "2026-01-17T21:11:27.011090",
+        "user": "We're taking time for the time to run out. How long? I'm going to take the phone. Can you just leave it there for a while? It's a simple SMPP phone."
+    },
+    {
+        "timestamp": "2026-01-17T21:11:27.818338",
+        "companion": "Okay, you want me to leave the phone there for a while. How long are we talking?",
+        "thinking_time": 0.6086959838867188,
+        "total_time": 0.6090490818023682
+    },
+    {
+        "timestamp": "2026-01-17T21:11:44.463444",
+        "user": "Dude, why is it still you know what is going on? Why is there still an error? Okay, hold on Why'd you when you ran when you ran the the shell script? Then what you run it with"
+    },
+    {
+        "timestamp": "2026-01-17T21:11:46.359603",
+        "companion": "Errors are the worst! What shell script are you running?",
+        "thinking_time": 0.5199377536773682,
+        "total_time": 0.5203719139099121
+    },
+    {
+        "timestamp": "2026-01-17T21:11:50.583063",
+        "user": "So what command did you want to like to get this thing to work?"
+    },
+    {
+        "timestamp": "2026-01-17T21:11:51.336851",
+        "companion": "To get what to work, exactly?",
+        "thinking_time": 0.4646449089050293,
+        "total_time": 0.46489596366882324
+    }
+]
