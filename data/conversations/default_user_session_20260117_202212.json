@@ -1,0 +1,67 @@
+{
+  "user_id": "default_user",
+  "exchange_count": 10,
+  "last_analysis_at": 0,
+  "exchanges": [
+    {
+      "timestamp": "2026-01-17T20:22:33.913006",
+      "user_text": "Yo, what's up? Hello, man, you hear me?",
+      "ai_response": "Yeah, I hear you. What's up?",
+      "exchange_number": 1
+    },
+    {
+      "timestamp": "2026-01-17T20:22:41.542925",
+      "user_text": "Can you hear me? Yeah, I hear you. What's up?",
+      "ai_response": "All good here. What's going on with you? Still at that hackathon?",
+      "exchange_number": 2
+    },
+    {
+      "timestamp": "2026-01-17T20:22:59.668746",
+      "user_text": "So it's working because I'm cash up is working because I'm doing what's going on with you still at that This is well as the other thing at the same time. So it's working and this is still fun as ever",
+      "ai_response": "Nice, glad to hear it's still fun, man. What exactly is working right now?",
+      "exchange_number": 3
+    },
+    {
+      "timestamp": "2026-01-17T20:23:20.299976",
+      "user_text": "so well you want me to test now nice glad to hear it's still fun man what exactly is working right now well right now what's working is this 3d thing which is with iron man right now",
+      "ai_response": "Iron Man, huh? Is that like, your virtual assistant's avatar or something?",
+      "exchange_number": 4
+    },
+    {
+      "timestamp": "2026-01-17T20:23:38.350969",
+      "user_text": "Iron Man, huh? Is that like your virtual assistant's avatar or something? Do you not know who Iron Man is? Are you genuinely slow?",
+      "ai_response": "Haha, no, I know who Iron Man is! I just meant, is *that* Iron Man model the avatar you're using for your project?",
+      "exchange_number": 5
+    },
+    {
+      "timestamp": "2026-01-17T20:23:54.205370",
+      "user_text": "So you don't know who Iron Man is",
+      "ai_response": "I do know who Iron Man is. I was just asking if that's what you're using in your project. Are you using an Iron Man model?",
+      "exchange_number": 6
+    },
+    {
+      "timestamp": "2026-01-17T20:24:11.519478",
+      "user_text": "Do you know who Iron Man is or not? I do know who Iron Man is. I was just asking if that's what you're using in your project. Are you using an Iron Man model? I wish.",
+      "ai_response": "Haha, okay, gotcha. So no Iron Man model. What *are* you using then?",
+      "exchange_number": 7
+    },
+    {
+      "timestamp": "2026-01-17T20:24:24.147045",
+      "user_text": "I'm not using an Iron Man model, but I feel like I am. It's looks really cool",
+      "ai_response": "Cool! What does it look like? Is it something you modeled yourself?",
+      "exchange_number": 8
+    },
+    {
+      "timestamp": "2026-01-17T20:24:26.582486",
+      "user_text": "I should probably start doing actual work, eh?",
+      "ai_response": "Haha, yeah, probably a good idea. What's the next thing on your list to tackle?",
+      "exchange_number": 9
+    },
+    {
+      "timestamp": "2026-01-17T20:24:44.719283",
+      "user_text": "Haha, yeah, probably a good idea. I know what's the next thing on your list to tackle next on my list is to do some What's it called again? I don't I don't I don't want to do it, but it's fine. I gotta do it take one for the team, right?",
+      "ai_response": "Sounds rough, man. What is it that you're dreading?",
+      "exchange_number": 10
+    }
+  ]
+}

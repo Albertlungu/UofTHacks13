@@ -671,8 +671,8 @@ const BlockBuilder3D = () => {
             const deltaX = worldPos.x - prevFistPosRef.current.x;
             const deltaY = worldPos.y - prevFistPosRef.current.y;
 
-            gridGroupRef.current.rotation.y += deltaX * 0.05;
-            gridGroupRef.current.rotation.x += deltaY * 0.05;
+            gridGroupRef.current.rotation.y -= deltaX * 0.05;
+            gridGroupRef.current.rotation.x -= deltaY * 0.05;
         }
 
         prevFistPosRef.current = worldPos;

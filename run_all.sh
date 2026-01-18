@@ -58,7 +58,7 @@ trap cleanup SIGINT SIGTERM
 
 # Start hand tracker in background
 echo "🖐️  Starting hand tracker..."
-python run_hand_tracker.py &
+python run_hand_tracker.py 1 &
 HAND_TRACKER_PID=$!
 echo "✓ Hand tracker started (PID: $HAND_TRACKER_PID)"
 echo ""
@@ -66,12 +66,23 @@ echo ""
 # Wait a moment for hand tracker to initialize
 sleep 2
 
+
 # Start main application
 echo "🚀 Starting main application..."
 python main.py &
 MAIN_PID=$!
 echo "✓ Main application started (PID: $MAIN_PID)"
 echo ""
+
+
+echo "Starting localhost"
+cd src/frontend
+npm install
+npm start
+
+cd ../../
+
+open http://localhost:3000/?app=hand_tracker
 
 echo "=========================================="
 echo "  All services running!"

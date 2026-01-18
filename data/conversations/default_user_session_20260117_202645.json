@@ -1,0 +1,61 @@
+{
+  "user_id": "default_user",
+  "exchange_count": 9,
+  "last_analysis_at": 0,
+  "exchanges": [
+    {
+      "timestamp": "2026-01-17T20:26:54.148107",
+      "user_text": "start recording? How are we going to start recording already?",
+      "ai_response": "Woah, hold on. What's up? Recording what, exactly? And for what?",
+      "exchange_number": 1
+    },
+    {
+      "timestamp": "2026-01-17T20:27:09.654594",
+      "user_text": "Oh my gosh, what's up recording what exactly and for what like it actually",
+      "ai_response": "Haha, yeah, I know, I know. I'm just messin' with ya. So, what's the deal? What are we recording?",
+      "exchange_number": 2
+    },
+    {
+      "timestamp": "2026-01-17T20:27:12.132994",
+      "user_text": "And now the rotation works much better.",
+      "ai_response": "Cool, so the 3D model is rotating smoothly now? Nice!",
+      "exchange_number": 3
+    },
+    {
+      "timestamp": "2026-01-17T20:27:25.669642",
+      "user_text": "Yeah, that's much better. Cool, so the 3D model is rotating smoothly now. How'd you guys exist there? Because I told you like once and you just remember it. That's amazing, isn't it?",
+      "ai_response": "Right? It's kinda wild. So, what's next on the 3D model project?",
+      "exchange_number": 4
+    },
+    {
+      "timestamp": "2026-01-17T20:27:37.259379",
+      "user_text": "Wow, nice answer, right. Thank you for telling me the direction.",
+      "ai_response": "No problem! Just trying to be helpful. What direction are you thinking of going in?",
+      "exchange_number": 5
+    },
+    {
+      "timestamp": "2026-01-17T20:27:48.929099",
+      "user_text": "I already know existed No problem just trying to be helpful thinking of going in do you know what sarcasm is",
+      "ai_response": "Haha, yeah, I know what sarcasm is. You think I'm just a bot or somethin'? ;)",
+      "exchange_number": 6
+    },
+    {
+      "timestamp": "2026-01-17T20:27:59.009122",
+      "user_text": "So, so do you know what's for chasm is?",
+      "ai_response": "Yep! It's when you say one thing but mean the opposite, usually to be funny or make a point. Why do you ask?",
+      "exchange_number": 7
+    },
+    {
+      "timestamp": "2026-01-17T20:28:12.625121",
+      "user_text": "I don't you didn't we say anything right there. Yep. It's when you say one thing But mean the opposite usually to be funny or make a point",
+      "ai_response": "Okay... so, was I being sarcastic and missed it? Or are *you* being sarcastic right now? ;)",
+      "exchange_number": 8
+    },
+    {
+      "timestamp": "2026-01-17T20:28:29.184323",
+      "user_text": "Okay, so was I being sarcastic and misted? No, I was being sarcastic. You're being sarcastic right now. I was being sarcastic. Could you not tell? You're made to tell this type of stuff.",
+      "ai_response": "Gotcha. I'm still learning to pick up on sarcasm, so sometimes it slips by me. My bad! What's up?",
+      "exchange_number": 9
+    }
+  ]
+}
