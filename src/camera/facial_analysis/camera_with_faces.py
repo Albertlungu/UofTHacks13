@@ -60,20 +60,17 @@ class CameraThread(threading.Thread):
             print("✗ Failed to open camera")
             return
         
-        # OPTIMIZED settings for speed and quality
+        # NATURAL settings - no processing
         camera.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
         camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
-        camera.set(cv2.CAP_PROP_FPS, 60)  # Request higher FPS
+        camera.set(cv2.CAP_PROP_FPS, 30)
         camera.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'MJPG'))
-        camera.set(cv2.CAP_PROP_BUFFERSIZE, 1)  # Minimize latency
+        camera.set(cv2.CAP_PROP_BUFFERSIZE, 1)
         
-        # Optimized for brightness
-        camera.set(cv2.CAP_PROP_BRIGHTNESS, 150)   # Dial back from 200
-        camera.set(cv2.CAP_PROP_CONTRAST, 160)
-        camera.set(cv2.CAP_PROP_SATURATION, 130)
-        camera.set(cv2.CAP_PROP_SHARPNESS, 255)
-        camera.set(cv2.CAP_PROP_AUTO_EXPOSURE, 1)
-        camera.set(cv2.CAP_PROP_AUTOFOCUS, 1)
+        # Disable ALL processing - raw camera feed
+        camera.set(cv2.CAP_PROP_AUTO_EXPOSURE, 3)   # Auto mode
+        camera.set(cv2.CAP_PROP_AUTOFOCUS, 1)       # Autofocus on
+        camera.set(cv2.CAP_PROP_AUTO_WB, 1)         # Auto white balance
         
         # Verify actual settings
         actual_width = int(camera.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -232,7 +229,7 @@ def model_files(filename):
     return send_from_directory(models_path, filename, mimetype=mimetype)
 
 def generate_frames():
-    """OPTIMIZED frame generator - minimal processing"""
+    """RAW camera feed - NO PROCESSING"""
     last_frame_time = time.time()
     target_interval = 1.0 / 30.0  # 30 FPS target
     
@@ -247,15 +244,11 @@ def generate_frames():
         # Flip frame horizontally (mirror effect - natural for camera feed)
         frame = cv2.flip(frame, 1)
         
-        # Face detection (lightweight annotations only)
-        annotated_frame, face_count = face_analyzer.annotate_frame(frame)
+        # NO FACE DETECTION HERE - just encode raw frame
         
-        # HIGH QUALITY JPEG encoding (no sharpening - causes artifacts)
-        encode_param = [
-            int(cv2.IMWRITE_JPEG_QUALITY), 95,
-            int(cv2.IMWRITE_JPEG_OPTIMIZE), 1
-        ]
-        ret, buffer = cv2.imencode('.jpg', annotated_frame, encode_param)
+        # Natural JPEG encoding
+        encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 92]
+        ret, buffer = cv2.imencode('.jpg', frame, encode_param)
         
         if not ret:
             continue
@@ -300,7 +293,12 @@ def face_data():
     # Update servo if face detected and tracker is connected
     if servo_tracker and servo_tracker.is_connected and face_info:
         h, w = frame.shape[:2]
-        face = face_info[0]  # Track first face
+        servo_tracker.update_face_position(
+            w - face['center_x'],  # MIRROR X - flip horizontally
+            face['center_y'],
+            w,
+            h
+        )
         
         # DEBUG
         if servo_tracker.update_count % 50 == 0:
@@ -372,12 +370,12 @@ if __name__ == '__main__':
     
     assets_path = get_assets_path()
     models_path = os.path.join(assets_path, 'models')
-    avatar_glb = os.path.join(models_path, 'chibi.glb')
+    avatar_glb = os.path.join(models_path, 'droid.glb')
     
     if os.path.exists(avatar_glb):
-        print(f"✓ Found chibi.glb")
+        print(f"✓ Found droid.glb")
     else:
-        print(f"⚠ chibi.glb not found")
+        print(f"⚠ droid.glb not found")
     
     print()
     

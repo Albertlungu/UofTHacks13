@@ -30,7 +30,7 @@ pydub==0.25.1
 
 # Computer Vision (for camera tracking)
 opencv-python==4.9.0.80
-mediapipe==0.10.2
+mediapipe==0.10.14
 
 # WebSocket (for hand tracking streaming)
 websockets>=13.0,<15.1
