@@ -51,7 +51,7 @@ class CameraThread(threading.Thread):
         
         # Try multiple camera backends for best performance
         for backend in [cv2.CAP_DSHOW, cv2.CAP_MSMF, cv2.CAP_ANY]:
-            camera = cv2.VideoCapture(0, backend)
+            camera = cv2.VideoCapture(1, backend)
             if camera.isOpened():
                 print(f"✓ Camera opened with backend: {backend}")
                 break
@@ -67,12 +67,12 @@ class CameraThread(threading.Thread):
         camera.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'MJPG'))
         camera.set(cv2.CAP_PROP_BUFFERSIZE, 1)  # Minimize latency
         
-        # Enhanced image quality
-        camera.set(cv2.CAP_PROP_BRIGHTNESS, 130)
-        camera.set(cv2.CAP_PROP_CONTRAST, 160)  # Increased from 140
-        camera.set(cv2.CAP_PROP_SATURATION, 120)
-        camera.set(cv2.CAP_PROP_SHARPNESS, 255)  # Max sharpness
-        camera.set(cv2.CAP_PROP_AUTO_EXPOSURE, 3)
+        # Optimized for brightness
+        camera.set(cv2.CAP_PROP_BRIGHTNESS, 150)   # Dial back from 200
+        camera.set(cv2.CAP_PROP_CONTRAST, 160)
+        camera.set(cv2.CAP_PROP_SATURATION, 130)
+        camera.set(cv2.CAP_PROP_SHARPNESS, 255)
+        camera.set(cv2.CAP_PROP_AUTO_EXPOSURE, 1)
         camera.set(cv2.CAP_PROP_AUTOFOCUS, 1)
         
         # Verify actual settings
@@ -301,6 +301,12 @@ def face_data():
     if servo_tracker and servo_tracker.is_connected and face_info:
         h, w = frame.shape[:2]
         face = face_info[0]  # Track first face
+        
+        # DEBUG
+        if servo_tracker.update_count % 50 == 0:
+            print(f"FACE DATA | Detected {len(face_info)} face(s) | "
+                  f"Center: ({face['center_x']}, {face['center_y']}) | "
+                  f"Size: {face['width']}x{face['height']}")
         
         servo_tracker.update_face_position(
             face['center_x'],
