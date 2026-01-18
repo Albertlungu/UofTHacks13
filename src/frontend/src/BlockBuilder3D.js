@@ -18,6 +18,7 @@ const BlockBuilder3D = () => {
     // Three.js refs
     const sceneRef = useRef(null);
     const cameraRef = useRef(null);
+    const projectionCameraRef = useRef(null); // Screen-aligned camera for hand projection
     const rendererRef = useRef(null);
     const gridGroupRef = useRef(null);
     const blocksRef = useRef(new Map()); // Map of "x,y,z" -> block mesh
@@ -47,9 +48,9 @@ const BlockBuilder3D = () => {
         const scene = new THREE.Scene();
         sceneRef.current = scene;
 
-        // Camera
+        // Main camera (for viewing the scene at an angle)
         const camera = new THREE.PerspectiveCamera(
-            75,
+            60, // Adjusted to match typical webcam FOV (55-60 degrees)
             window.innerWidth / window.innerHeight,
             0.1,
             1000
@@ -57,6 +58,18 @@ const BlockBuilder3D = () => {
         camera.position.set(25, 25, 25);
         camera.lookAt(0, 0, 0);
         cameraRef.current = camera;
+
+        // Projection camera (screen-aligned for hand tracking)
+        // This camera looks straight at the scene from the front, matching the user's view
+        const projectionCamera = new THREE.PerspectiveCamera(
+            60, // Match main camera FOV
+            window.innerWidth / window.innerHeight,
+            0.1,
+            1000
+        );
+        projectionCamera.position.set(0, 0, 50); // Positioned in front, looking at origin
+        projectionCamera.lookAt(0, 0, 0);
+        projectionCameraRef.current = projectionCamera;
 
         // Renderer
         const renderer = new THREE.WebGLRenderer({
@@ -152,8 +165,13 @@ const BlockBuilder3D = () => {
 
         // Handle window resize
         const handleResize = () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
+            const aspect = window.innerWidth / window.innerHeight;
+            camera.aspect = aspect;
             camera.updateProjectionMatrix();
+
+            projectionCamera.aspect = aspect;
+            projectionCamera.updateProjectionMatrix();
+
             renderer.setSize(window.innerWidth, window.innerHeight);
 
             const canvas = overlayCanvasRef.current;
@@ -451,7 +469,7 @@ const BlockBuilder3D = () => {
                 const worldPos = screenToWorld(
                     indexTip.x,
                     indexTip.y,
-                    indexTip.z
+                    rightHand
                 );
 
                 // Start timer if just started pinching
@@ -488,7 +506,7 @@ const BlockBuilder3D = () => {
             const worldPos = screenToWorld(
                 indexTip.x,
                 indexTip.y,
-                indexTip.z
+                leftHand
             );
 
             // Start timer if just started pinching
@@ -522,32 +540,84 @@ const BlockBuilder3D = () => {
         }
     };
 
-    const screenToWorld = (normalizedX, normalizedY, depth = 0) => {
+    const calculateHandSize = (landmarks) => {
+        // Calculate hand size using wrist (0) to middle finger tip (12) distance in screen space
+        const wrist = landmarks[0];
+        const middleTip = landmarks[12];
+
+        const dx = middleTip.x - wrist.x;
+        const dy = middleTip.y - wrist.y;
+
+        // Return distance in normalized coordinates (0-1 range)
+        return Math.sqrt(dx * dx + dy * dy);
+    };
+
+    // Function to remap MediaPipe coordinates to Visible Screen NDC
+    const getVisibleNDC = (mpX, mpY) => {
+        const video = videoRef.current;
+        if (!video || !video.videoWidth || !video.videoHeight) {
+            return { x: 0, y: 0 };
+        }
+
+        const videoAspect = video.videoWidth / video.videoHeight;
+        const screenAspect = window.innerWidth / window.innerHeight;
+
+        let scaleX = 1, scaleY = 1;
+        let offsetX = 0, offsetY = 0;
+
+        // Logic for 'object-fit: cover'
+        if (screenAspect > videoAspect) {
+            // Screen is wider: Top/Bottom of video are cropped
+            // We need to "stretch" the Y coordinate to match the visible area
+            const scale = screenAspect / videoAspect;
+            scaleY = scale;
+            offsetY = (1 - 1 / scale) / 2;
+        } else {
+            // Screen is taller: Sides of video are cropped
+            const scale = videoAspect / screenAspect;
+            scaleX = scale;
+            offsetX = (1 - 1 / scale) / 2;
+        }
+
+        // 1. Remap Raw MediaPipe coords to Visible 0..1 range
+        // We subtract the hidden offset and scale up the remaining visible part
+        const visibleX = (mpX - offsetX) * scaleX;
+        const visibleY = (mpY - offsetY) * scaleY;
+
+        // 2. Flip X for Mirror Effect (video CSS has scaleX(-1))
+        const mirroredX = 1 - visibleX;
+
+        // 3. Convert to Three.js NDC (-1 to +1)
+        const ndcX = (mirroredX * 2) - 1;
+        const ndcY = -(visibleY * 2) + 1; // Note the negative sign for Y!
+
+        return { x: ndcX, y: ndcY };
+    };
+
+    const screenToWorld = (normalizedX, normalizedY, hand = null) => {
         // Convert normalized screen coords (0-1) to 3D world position
-        // Mirror X coordinate (camera is mirrored)
-        const x = 1 - normalizedX;
-        const y = normalizedY;
+        // Uses "ghost zone" removal and plane raycasting for solid alignment
 
-        // Convert to NDC (-1 to 1)
-        const ndcX = x * 2 - 1;
-        const ndcY = -(y * 2 - 1);
+        // 1. Get visible NDC coordinates (handles object-fit: cover cropping)
+        const ndc = getVisibleNDC(normalizedX, normalizedY);
 
-        // Create raycaster from camera through point
+        // 2. Create raycaster from the ACTUAL camera users look through
         const raycaster = raycasterRef.current;
-        raycaster.setFromCamera(
-            new THREE.Vector2(ndcX, ndcY),
-            cameraRef.current
-        );
+        const camera = cameraRef.current;
+        raycaster.setFromCamera(new THREE.Vector2(ndc.x, ndc.y), camera);
 
-        // Use the camera's direction and a distance based on depth
-        // depth comes from the hand's z coordinate (MediaPipe depth)
-        // Map depth to distance from camera (closer hand = closer in 3D space)
-        const distance = 30 - (depth * 30); // Scale depth to reasonable distance
+        // 3. Raycast to an interaction plane at Y=0 (grid center height)
+        // This creates a mathematically solid tracking surface
+        const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
+        const target = new THREE.Vector3();
+        raycaster.ray.intersectPlane(plane, target);
 
-        const worldPos = new THREE.Vector3();
-        raycaster.ray.at(distance, worldPos);
+        if (target) {
+            return target;
+        }
 
-        return worldPos;
+        // Fallback if ray doesn't hit plane (shouldn't happen with proper camera setup)
+        return new THREE.Vector3(0, 0, 0);
     };
 
     const snapToGrid = (position) => {
@@ -665,25 +735,31 @@ const BlockBuilder3D = () => {
 
     const handleSingleFistRotate = (hand) => {
         const palm = hand.landmarks[9];
-        const worldPos = screenToWorld(palm.x, palm.y);
+        // Use screen-space coordinates directly instead of converting to world space
+        const screenPos = { x: palm.x, y: palm.y };
 
         if (prevFistPosRef.current) {
-            const deltaX = worldPos.x - prevFistPosRef.current.x;
-            const deltaY = worldPos.y - prevFistPosRef.current.y;
+            // Calculate delta in normalized screen space (0-1)
+            const deltaX = screenPos.x - prevFistPosRef.current.x;
+            const deltaY = screenPos.y - prevFistPosRef.current.y;
 
-            gridGroupRef.current.rotation.y -= deltaX * 0.05;
-            gridGroupRef.current.rotation.x -= deltaY * 0.05;
+            // Map screen motion to rotation:
+            // - Horizontal hand motion (deltaX) -> Y-axis rotation (turning left/right)
+            // - Vertical hand motion (deltaY) -> X-axis rotation (tilting up/down)
+            // Multiply by larger factor since we're in normalized coords (0-1 range)
+            gridGroupRef.current.rotation.y -= deltaX * 3.0;
+            gridGroupRef.current.rotation.x += deltaY * 3.0;  // Note: + because screen Y goes down
         }
 
-        prevFistPosRef.current = worldPos;
+        prevFistPosRef.current = screenPos;
     };
 
     const handleTwoFistPan = (leftHand, rightHand) => {
         const leftPalm = leftHand.landmarks[9];
         const rightPalm = rightHand.landmarks[9];
 
-        const leftWorld = screenToWorld(leftPalm.x, leftPalm.y);
-        const rightWorld = screenToWorld(rightPalm.x, rightPalm.y);
+        const leftWorld = screenToWorld(leftPalm.x, leftPalm.y, leftHand);
+        const rightWorld = screenToWorld(rightPalm.x, rightPalm.y, rightHand);
 
         const centerX = (leftWorld.x + rightWorld.x) / 2;
         const centerY = (leftWorld.y + rightWorld.y) / 2;
