@@ -305,7 +305,7 @@ function Scene({ avatarState, faceData }) {
     useEffect(() => {
         if (faceData) {
             // Normalize face position to -1 to 1 range
-            const normX = (faceData.center_x - 640) / 640;
+            const normX = -(faceData.center_x - 640) / 640;
             const normY = -(faceData.center_y - 360) / 360;
 
             // Avatar follows face position smoothly (stays near face, slightly offset)
