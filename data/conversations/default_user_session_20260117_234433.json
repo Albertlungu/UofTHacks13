@@ -1,0 +1,13 @@
+{
+  "user_id": "default_user",
+  "exchange_count": 1,
+  "last_analysis_at": 0,
+  "exchanges": [
+    {
+      "timestamp": "2026-01-17T23:44:54.753725",
+      "user_text": "So if I start speaking right now, I think this should work.",
+      "ai_response": "Yeah, give it a go! What are you testing out?",
+      "exchange_number": 1
+    }
+  ]
+}

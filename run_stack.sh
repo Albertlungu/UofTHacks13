@@ -50,9 +50,14 @@ echo "Starting identity API (MongoDB-backed)..."
 python3 identity_server.py &
 AUTH_PID=$!
 
-echo "Starting core API..."
-python3 main.py &
-CORE_PID=$!
+CAMERA_PID=""
+if lsof -iTCP:5000 -sTCP:LISTEN >/dev/null 2>&1; then
+  echo "Camera API already running on port 5000. Skipping launch."
+else
+  echo "Starting camera API (face tracking)..."
+  python3 src/camera/facial_analysis/camera_with_faces.py &
+  CAMERA_PID=$!
+fi
 
 HAND_PID=""
 if lsof -iTCP:8765 -sTCP:LISTEN >/dev/null 2>&1; then
@@ -76,7 +81,7 @@ echo ""
 echo "=========================================="
 echo "Services running"
 echo "Frontend: http://localhost:3000"
-echo "Core API:  http://localhost:5000"
+echo "Camera API: http://localhost:5000"
 echo "Auth API:  http://localhost:5001"
 echo "Hand WS:   ws://localhost:8765"
 echo "Press Ctrl+C to stop"
@@ -87,7 +92,10 @@ echo ""
 cleanup() {
   echo ""
   echo "Stopping services..."
-  kill $FRONTEND_PID $CORE_PID $AUTH_PID 2>/dev/null || true
+  kill $FRONTEND_PID $AUTH_PID 2>/dev/null || true
+  if [ -n "$CAMERA_PID" ]; then
+    kill $CAMERA_PID 2>/dev/null || true
+  fi
   if [ -n "$HAND_PID" ]; then
     kill $HAND_PID 2>/dev/null || true
   fi
@@ -96,4 +104,4 @@ cleanup() {
 }
 
 trap cleanup SIGINT SIGTERM
-wait $FRONTEND_PID $CORE_PID $AUTH_PID
+wait $FRONTEND_PID $AUTH_PID

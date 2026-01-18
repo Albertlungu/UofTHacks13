@@ -1,0 +1,12 @@
+[
+    {
+        "timestamp": "2026-01-17T23:44:49.960598",
+        "user": "So if I start speaking right now, I think this should work."
+    },
+    {
+        "timestamp": "2026-01-17T23:44:54.753019",
+        "companion": "Yeah, give it a go! What are you testing out?",
+        "thinking_time": 4.4504313468933105,
+        "total_time": 4.452109098434448
+    }
+]

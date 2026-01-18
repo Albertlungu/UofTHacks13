@@ -510,6 +510,28 @@ export default function Page() {
 
             <Card>
               <CardHeader>
+                <CardTitle>Avatar system</CardTitle>
+                <CardDescription>
+                  3D avatar synchronized with face tracking and speaking status.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="rounded-md border border-border bg-muted/30 p-4 text-sm text-muted-foreground">
+                  Launch the avatar overlay view for the live camera feed.
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Button
+                  type="button"
+                  onClick={() => window.open("/avatar", "_blank", "noopener,noreferrer")}
+                >
+                  Open avatar view
+                </Button>
+              </CardFooter>
+            </Card>
+
+            <Card>
+              <CardHeader>
                 <CardTitle>3D hand tracking</CardTitle>
                 <CardDescription>
                   Launch the immersive 3D workspace powered by the hand tracking feed.
