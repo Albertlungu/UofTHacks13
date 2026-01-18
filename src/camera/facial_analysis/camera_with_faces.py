@@ -14,11 +14,11 @@ from facial_analysis.face_detector import FacialAnalyzer
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 # Import servo tracker
-servo_tracker = None
+stepper_tracker = None
 try:
-    from hardware.servo_tracker import ServoTracker
+    from hardware.servo_tracker import StepperTracker
 except ImportError:
-    ServoTracker = None
+    StepperTracker = None
 
 app = Flask(__name__)
 CORS(app)
@@ -280,8 +280,8 @@ def video_feed():
 
 @app.route('/face_data')
 def face_data():
-    """Fast face data endpoint with servo tracking"""
-    global servo_tracker
+    """Fast face data endpoint with stepper tracking"""
+    global stepper_tracker
     
     with frame_lock:
         if latest_frame is None:
@@ -290,28 +290,24 @@ def face_data():
     
     face_info = face_analyzer.get_face_info(frame)
     
-    # Update servo if face detected and tracker is connected
-    if servo_tracker and servo_tracker.is_connected and face_info:
+    # Update stepper if face detected and tracker is connected
+    if stepper_tracker and stepper_tracker.is_connected and face_info:
+        # Get first detected face
+        face = face_info[0]  # ✅ FIXED: Get first face from list
         h, w = frame.shape[:2]
-        servo_tracker.update_face_position(
-            w - face['center_x'],  # MIRROR X - flip horizontally
+        
+        stepper_tracker.update_face_position(
+            w - face['center_x'],  # Mirror X coordinate
             face['center_y'],
             w,
             h
         )
         
         # DEBUG
-        if servo_tracker.update_count % 50 == 0:
+        if stepper_tracker.update_count % 50 == 0:
             print(f"FACE DATA | Detected {len(face_info)} face(s) | "
                   f"Center: ({face['center_x']}, {face['center_y']}) | "
                   f"Size: {face['width']}x{face['height']}")
-        
-        servo_tracker.update_face_position(
-            face['center_x'],
-            face['center_y'],
-            w,
-            h
-        )
     
     return jsonify({
         'faces': face_info,
@@ -344,24 +340,24 @@ def health():
 
 @app.route('/servo/enable', methods=['POST'])
 def servo_enable():
-    if servo_tracker:
-        servo_tracker.start_tracking()
+    if stepper_tracker:  # Changed
+        stepper_tracker.start_tracking()  # Changed
         return jsonify({'status': 'tracking'})
-    return jsonify({'error': 'Servo not initialized'}), 500
+    return jsonify({'error': 'Stepper not initialized'}), 500
 
 @app.route('/servo/disable', methods=['POST'])
 def servo_disable():
-    if servo_tracker:
-        servo_tracker.stop_tracking()
+    if stepper_tracker:  # Changed
+        stepper_tracker.stop_tracking()  # Changed
         return jsonify({'status': 'stopped'})
-    return jsonify({'error': 'Servo not initialized'}), 500
+    return jsonify({'error': 'Stepper not initialized'}), 500
 
 @app.route('/servo/center', methods=['POST'])
 def servo_center():
-    if servo_tracker:
-        servo_tracker.center_servos()
+    if stepper_tracker:  # Changed
+        stepper_tracker.center_servos()  # Changed
         return jsonify({'status': 'centered'})
-    return jsonify({'error': 'Servo not initialized'}), 500
+    return jsonify({'error': 'Stepper not initialized'}), 500
 
 if __name__ == '__main__':
     print("\n" + "="*50)
@@ -379,36 +375,36 @@ if __name__ == '__main__':
     
     print()
     
-    # Initialize servo tracker
-    if ServoTracker:
+    # Initialize stepper tracker
+    if StepperTracker:  # Changed
         try:
             import serial.tools.list_ports
             
-            servo_port = None
+            stepper_port = None  # Changed
             # Auto-detect Arduino
             for port in serial.tools.list_ports.comports():
                 if 'Arduino' in port.description or 'CH340' in port.description:
-                    servo_port = port.device
-                    print(f"✓ Found Arduino on {servo_port}")
+                    stepper_port = port.device  # Changed
+                    print(f"✓ Found Arduino on {stepper_port}")
                     break
             
             # Fallback to COM12 if auto-detect fails
-            if not servo_port:
-                servo_port = 'COM12'
-                print(f"⚠ Using default port {servo_port}")
+            if not stepper_port:  # Changed
+                stepper_port = 'COM12'  # Changed
+                print(f"⚠ Using default port {stepper_port}")
             
-            servo_tracker = ServoTracker(port=servo_port)
-            if servo_tracker.connect():
-                servo_tracker.start_tracking()
-                print("✓ Servo tracking active\n")
+            stepper_tracker = StepperTracker(port=stepper_port)  # Changed
+            if stepper_tracker.connect():  # Changed
+                stepper_tracker.start_tracking()  # Changed
+                print("✓ Stepper tracking active\n")
             else:
-                servo_tracker = None
-                print("⚠ Servo connection failed, continuing without tracking\n")
+                stepper_tracker = None  # Changed
+                print("⚠ Stepper connection failed, continuing without tracking\n")
         except Exception as e:
-            print(f"⚠ Servo initialization error: {e}\n")
-            servo_tracker = None
+            print(f"⚠ Stepper initialization error: {e}\n")
+            stepper_tracker = None  # Changed
     else:
-        print("⚠ ServoTracker not available\n")
+        print("⚠ StepperTracker not available\n")
     
     start_camera_thread()
     time.sleep(2)  # Allow camera to stabilize
@@ -420,9 +416,9 @@ if __name__ == '__main__':
         app.run(host='0.0.0.0', port=5000, debug=False, threaded=True)
     finally:
         print("\n● Shutting down...")
-        if servo_tracker:
-            servo_tracker.stop_tracking()
-            servo_tracker.disconnect()
+        if stepper_tracker:  # Changed
+            stepper_tracker.stop_tracking()  # Changed
+            stepper_tracker.disconnect()  # Changed
         speech_detector.stop()
         stop_camera_thread()
         print("✓ Complete")
