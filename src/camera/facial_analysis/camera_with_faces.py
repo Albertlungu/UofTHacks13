@@ -40,24 +40,25 @@ frame_buffer = deque(maxlen=3)
 buffer_lock = threading.Lock()
 
 class CameraThread(threading.Thread):
-    """HIGH PERFORMANCE camera thread with frame buffering"""
+    """HIGH PERFORMANCE camera thread with frame buffering and face tracking"""
     def __init__(self):
         super().__init__(daemon=True)
         self.face_analyzer = FacialAnalyzer()
         self.frame_count = 0
+        self.face_check_interval = 3  # Check faces every 3 frames for performance
         
     def run(self):
-        global camera, latest_frame, camera_running, frame_buffer
+        global camera, latest_frame, camera_running, frame_buffer, stepper_tracker
         
         # Try multiple camera backends for best performance
         for backend in [cv2.CAP_DSHOW, cv2.CAP_MSMF, cv2.CAP_ANY]:
             camera = cv2.VideoCapture(1, backend)
             if camera.isOpened():
-                print(f"âœ“ Camera opened with backend: {backend}")
+                print(f"✓ Camera opened with backend: {backend}")
                 break
         
         if not camera.isOpened():
-            print("âœ— Failed to open camera")
+            print("✗ Failed to open camera")
             return
         
         # NATURAL settings - no processing
@@ -68,16 +69,16 @@ class CameraThread(threading.Thread):
         camera.set(cv2.CAP_PROP_BUFFERSIZE, 1)
         
         # Disable ALL processing - raw camera feed
-        camera.set(cv2.CAP_PROP_AUTO_EXPOSURE, 3)   # Auto mode
-        camera.set(cv2.CAP_PROP_AUTOFOCUS, 1)       # Autofocus on
-        camera.set(cv2.CAP_PROP_AUTO_WB, 1)         # Auto white balance
+        camera.set(cv2.CAP_PROP_AUTO_EXPOSURE, 3)
+        camera.set(cv2.CAP_PROP_AUTOFOCUS, 1)
+        camera.set(cv2.CAP_PROP_AUTO_WB, 1)
         
         # Verify actual settings
         actual_width = int(camera.get(cv2.CAP_PROP_FRAME_WIDTH))
         actual_height = int(camera.get(cv2.CAP_PROP_FRAME_HEIGHT))
         actual_fps = int(camera.get(cv2.CAP_PROP_FPS))
         
-        print(f"âœ“ Camera: {actual_width}x{actual_height} @ {actual_fps}fps")
+        print(f"✓ Camera: {actual_width}x{actual_height} @ {actual_fps}fps")
         
         # Warm up camera
         for _ in range(10):
@@ -100,6 +101,25 @@ class CameraThread(threading.Thread):
                 with buffer_lock:
                     frame_buffer.append(frame.copy())
                 
+                # ✅ FACE TRACKING - Check every N frames for performance
+                if self.frame_count % self.face_check_interval == 0:
+                    if stepper_tracker and stepper_tracker.is_connected and stepper_tracker.tracking_enabled:
+                        # Detect faces
+                        face_info = self.face_analyzer.get_face_info(frame)
+                        
+                        if face_info:
+                            # Get first face
+                            face = face_info[0]
+                            h, w = frame.shape[:2]
+                            
+                            # Update stepper position
+                            stepper_tracker.update_face_position(
+                                w - face['center_x'],  # Mirror X
+                                face['center_y'],
+                                w,
+                                h
+                            )
+                
                 # FPS monitoring
                 fps_counter += 1
                 if time.time() - last_time > 5.0:
@@ -109,13 +129,11 @@ class CameraThread(threading.Thread):
                     fps_counter = 0
                     
             else:
-                print("âœ— Frame read failed")
+                print("✗ Frame read failed")
                 time.sleep(0.01)
-            
-            # No sleep - run as fast as possible
         
         camera.release()
-        print("â— Camera released")
+        print("● Camera released")
 
 def start_camera_thread():
     global camera_thread, camera_running
@@ -285,16 +303,25 @@ def face_data():
     
     with frame_lock:
         if latest_frame is None:
+            print("DEBUG: No frame available")
             return jsonify({'error': 'No frame available'}), 503
         frame = latest_frame.copy()
     
     face_info = face_analyzer.get_face_info(frame)
     
+    print(f"DEBUG: Detected {len(face_info)} faces")  # ✅ ADD THIS
+    print(f"DEBUG: stepper_tracker exists: {stepper_tracker is not None}")  # ✅ ADD THIS
+    if stepper_tracker:
+        print(f"DEBUG: stepper_tracker connected: {stepper_tracker.is_connected}")  # ✅ ADD THIS
+        print(f"DEBUG: stepper_tracker tracking enabled: {stepper_tracker.tracking_enabled}")  # ✅ ADD THIS
+    
     # Update stepper if face detected and tracker is connected
     if stepper_tracker and stepper_tracker.is_connected and face_info:
         # Get first detected face
-        face = face_info[0]  # ✅ FIXED: Get first face from list
+        face = face_info[0]
         h, w = frame.shape[:2]
+        
+        print(f"DEBUG: Sending to stepper - Face at ({face['center_x']}, {face['center_y']}) in {w}x{h} frame")  # ✅ ADD THIS
         
         stepper_tracker.update_face_position(
             w - face['center_x'],  # Mirror X coordinate
