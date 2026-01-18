@@ -52,7 +52,7 @@ class CameraThread(threading.Thread):
         
         # Try multiple camera backends for best performance
         for backend in [cv2.CAP_DSHOW, cv2.CAP_MSMF, cv2.CAP_ANY]:
-            camera = cv2.VideoCapture(1, backend)
+            camera = cv2.VideoCapture(0, backend)
             if camera.isOpened():
                 print(f"✓ Camera opened with backend: {backend}")
                 break

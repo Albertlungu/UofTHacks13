@@ -491,7 +491,14 @@ function App() {
                             pointerEvents: "none",
                         }}
                     >
-                        <Canvas shadows>
+                        <Canvas
+                            shadows
+                            gl={{ alpha: true, antialias: true }}
+                            onCreated={({ gl }) => {
+                                gl.setClearColor(0x000000, 0);
+                            }}
+                            style={{ background: "transparent" }}
+                        >
                             <Scene
                                 avatarState={avatarState}
                                 faceData={faceData}
