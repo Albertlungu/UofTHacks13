@@ -1,0 +1,20 @@
+[
+    {
+        "timestamp": "2026-01-18T06:53:30.220640",
+        "user": "No problem. What's up?"
+    },
+    {
+        "timestamp": "2026-01-18T06:53:34.018856",
+        "companion": "Not much, just hanging out. How's your 3D modeling project coming along?",
+        "thinking_time": 3.7953813076019287,
+        "total_time": 3.795880079269409
+    },
+    {
+        "timestamp": "2026-01-18T06:53:41.076911",
+        "user": "Guys, how much time does it normally take for the little hose to load to instant?"
+    },
+    {
+        "timestamp": "2026-01-18T06:53:47.548531",
+        "user": "It's been loaded like the past 20 seconds."
+    }
+]

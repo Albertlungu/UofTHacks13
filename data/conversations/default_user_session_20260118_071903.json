@@ -1,0 +1,31 @@
+{
+  "user_id": "default_user",
+  "exchange_count": 4,
+  "last_analysis_at": 0,
+  "exchanges": [
+    {
+      "timestamp": "2026-01-18T07:19:43.039010",
+      "user_text": "The first one is at 9 o'clock.",
+      "ai_response": "Got it, what's happening at nine? Is it something fun or more of a work thing?",
+      "exchange_number": 1
+    },
+    {
+      "timestamp": "2026-01-18T07:20:25.985089",
+      "user_text": "I'm going to change the text a little bit.",
+      "ai_response": "Cool, what are you changing it to?",
+      "exchange_number": 2
+    },
+    {
+      "timestamp": "2026-01-18T07:20:35.375282",
+      "user_text": "Yeah, that's the last one. Oh, that's a nice one.",
+      "ai_response": "Ah, sounds like you've got it all sorted out. Are you feeling good about the changes?",
+      "exchange_number": 3
+    },
+    {
+      "timestamp": "2026-01-18T07:22:21.451574",
+      "user_text": "I don't see the tags on my hands, so yeah, I'll just...",
+      "ai_response": "Oh, that's weird, especially if you were expecting them. Maybe the visibility settings are off or something like that? What were you doing before this?",
+      "exchange_number": 4
+    }
+  ]
+}

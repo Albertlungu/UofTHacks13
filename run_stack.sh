@@ -43,7 +43,13 @@ echo "Checking MongoDB..."
 if ! pgrep -x "mongod" > /dev/null; then
   echo "Starting MongoDB..."
   mkdir -p ./data/db
-  mongod --dbpath ./data/db --fork --logpath ./data/mongodb.log
+  # macOS doesn't support --fork, so start in background with &
+  mongod --dbpath ./data/db --logpath ./data/mongodb.log &
+  MONGO_PID=$!
+  sleep 2
+  echo "MongoDB started (PID: $MONGO_PID)"
+else
+  echo "MongoDB already running"
 fi
 
 echo "Starting identity API (MongoDB-backed)..."
@@ -59,6 +65,10 @@ else
   CAMERA_PID=$!
 fi
 
+echo "Starting visual memory image server..."
+python3 src/api/image_server.py &
+IMAGE_PID=$!
+
 HAND_PID=""
 if lsof -iTCP:8765 -sTCP:LISTEN >/dev/null 2>&1; then
   echo "Hand tracker already running on port 8765. Skipping launch."
@@ -70,9 +80,8 @@ fi
 
 echo "Starting frontend..."
 cd src/frontend
-if [ ! -d "node_modules" ]; then
-  npm install
-fi
+echo "Installing/updating frontend dependencies..."
+npm install -q
 npm run dev &
 FRONTEND_PID=$!
 cd "$ROOT_DIR"
@@ -80,10 +89,11 @@ cd "$ROOT_DIR"
 echo ""
 echo "=========================================="
 echo "Services running"
-echo "Frontend: http://localhost:3000"
-echo "Camera API: http://localhost:5000"
-echo "Auth API:  http://localhost:5001"
-echo "Hand WS:   ws://localhost:8765"
+echo "Frontend:    http://localhost:3000"
+echo "Core API:    http://localhost:5000"
+echo "Auth API:    http://localhost:5001"
+echo "Image API:   http://localhost:5002"
+echo "Hand WS:     ws://localhost:8765"
 echo "Press Ctrl+C to stop"
 echo "=========================================="
 
@@ -92,16 +102,17 @@ echo ""
 cleanup() {
   echo ""
   echo "Stopping services..."
-  kill $FRONTEND_PID $AUTH_PID 2>/dev/null || true
-  if [ -n "$CAMERA_PID" ]; then
-    kill $CAMERA_PID 2>/dev/null || true
-  fi
+  kill $FRONTEND_PID $CORE_PID $AUTH_PID $IMAGE_PID 2>/dev/null || true
   if [ -n "$HAND_PID" ]; then
     kill $HAND_PID 2>/dev/null || true
+  fi
+  if [ -n "$MONGO_PID" ]; then
+    echo "Stopping MongoDB..."
+    kill $MONGO_PID 2>/dev/null || true
   fi
   echo "Done."
   exit 0
 }
 
 trap cleanup SIGINT SIGTERM
-wait $FRONTEND_PID $AUTH_PID
+wait $FRONTEND_PID $CORE_PID $AUTH_PID $IMAGE_PID

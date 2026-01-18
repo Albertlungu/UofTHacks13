@@ -1,0 +1,13 @@
+{
+  "user_id": "default_user",
+  "exchange_count": 1,
+  "last_analysis_at": 0,
+  "exchanges": [
+    {
+      "timestamp": "2026-01-18T06:53:34.019022",
+      "user_text": "No problem. What's up?",
+      "ai_response": "Not much, just hanging out. How's your 3D modeling project coming along?",
+      "exchange_number": 1
+    }
+  ]
+}

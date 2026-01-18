@@ -1,0 +1,19 @@
+{
+  "user_id": "default_user",
+  "exchange_count": 2,
+  "last_analysis_at": 0,
+  "exchanges": [
+    {
+      "timestamp": "2026-01-18T02:23:59.565467",
+      "user_text": "And then it talks back and we kind of like we",
+      "ai_response": "It sounds like you're working on something where your 3D model can interact with you. Are you working on adding voice interaction features?",
+      "exchange_number": 1
+    },
+    {
+      "timestamp": "2026-01-18T02:24:03.071205",
+      "user_text": "what I can see happening.",
+      "ai_response": "Gotcha! So you're thinking ahead to how it might all come together. What part are you most excited to work on?",
+      "exchange_number": 2
+    }
+  ]
+}
