@@ -14,11 +14,11 @@ from facial_analysis.face_detector import FacialAnalyzer
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 # Import servo tracker
-stepper_tracker = None
+servo_tracker = None
 try:
-    from hardware.servo_tracker import StepperTracker
+    from hardware.servo_tracker import ServoTracker
 except ImportError:
-    StepperTracker = None
+    ServoTracker = None
 
 app = Flask(__name__)
 CORS(app)
@@ -40,25 +40,24 @@ frame_buffer = deque(maxlen=3)
 buffer_lock = threading.Lock()
 
 class CameraThread(threading.Thread):
-    """HIGH PERFORMANCE camera thread with frame buffering and face tracking"""
+    """HIGH PERFORMANCE camera thread with frame buffering"""
     def __init__(self):
         super().__init__(daemon=True)
         self.face_analyzer = FacialAnalyzer()
         self.frame_count = 0
-        self.face_check_interval = 3  # Check faces every 3 frames for performance
         
     def run(self):
-        global camera, latest_frame, camera_running, frame_buffer, stepper_tracker
+        global camera, latest_frame, camera_running, frame_buffer
         
         # Try multiple camera backends for best performance
         for backend in [cv2.CAP_DSHOW, cv2.CAP_MSMF, cv2.CAP_ANY]:
-            camera = cv2.VideoCapture(0, backend)
+            camera = cv2.VideoCapture(1, backend)
             if camera.isOpened():
-                print(f"✓ Camera opened with backend: {backend}")
+                print(f"âœ“ Camera opened with backend: {backend}")
                 break
         
         if not camera.isOpened():
-            print("✗ Failed to open camera")
+            print("âœ— Failed to open camera")
             return
         
         # NATURAL settings - no processing
@@ -69,16 +68,16 @@ class CameraThread(threading.Thread):
         camera.set(cv2.CAP_PROP_BUFFERSIZE, 1)
         
         # Disable ALL processing - raw camera feed
-        camera.set(cv2.CAP_PROP_AUTO_EXPOSURE, 3)
-        camera.set(cv2.CAP_PROP_AUTOFOCUS, 1)
-        camera.set(cv2.CAP_PROP_AUTO_WB, 1)
+        camera.set(cv2.CAP_PROP_AUTO_EXPOSURE, 3)   # Auto mode
+        camera.set(cv2.CAP_PROP_AUTOFOCUS, 1)       # Autofocus on
+        camera.set(cv2.CAP_PROP_AUTO_WB, 1)         # Auto white balance
         
         # Verify actual settings
         actual_width = int(camera.get(cv2.CAP_PROP_FRAME_WIDTH))
         actual_height = int(camera.get(cv2.CAP_PROP_FRAME_HEIGHT))
         actual_fps = int(camera.get(cv2.CAP_PROP_FPS))
         
-        print(f"✓ Camera: {actual_width}x{actual_height} @ {actual_fps}fps")
+        print(f"âœ“ Camera: {actual_width}x{actual_height} @ {actual_fps}fps")
         
         # Warm up camera
         for _ in range(10):
@@ -101,25 +100,6 @@ class CameraThread(threading.Thread):
                 with buffer_lock:
                     frame_buffer.append(frame.copy())
                 
-                # ✅ FACE TRACKING - Check every N frames for performance
-                if self.frame_count % self.face_check_interval == 0:
-                    if stepper_tracker and stepper_tracker.is_connected and stepper_tracker.tracking_enabled:
-                        # Detect faces
-                        face_info = self.face_analyzer.get_face_info(frame)
-                        
-                        if face_info:
-                            # Get first face
-                            face = face_info[0]
-                            h, w = frame.shape[:2]
-                            
-                            # Update stepper position
-                            stepper_tracker.update_face_position(
-                                w - face['center_x'],  # Mirror X
-                                face['center_y'],
-                                w,
-                                h
-                            )
-                
                 # FPS monitoring
                 fps_counter += 1
                 if time.time() - last_time > 5.0:
@@ -129,11 +109,13 @@ class CameraThread(threading.Thread):
                     fps_counter = 0
                     
             else:
-                print("✗ Frame read failed")
+                print("âœ— Frame read failed")
                 time.sleep(0.01)
+            
+            # No sleep - run as fast as possible
         
         camera.release()
-        print("● Camera released")
+        print("â— Camera released")
 
 def start_camera_thread():
     global camera_thread, camera_running
@@ -298,43 +280,36 @@ def video_feed():
 
 @app.route('/face_data')
 def face_data():
-    """Fast face data endpoint with stepper tracking"""
-    global stepper_tracker
+    """Fast face data endpoint with servo tracking"""
+    global servo_tracker
     
     with frame_lock:
         if latest_frame is None:
-            print("DEBUG: No frame available")
             return jsonify({'error': 'No frame available'}), 503
         frame = latest_frame.copy()
     
     face_info = face_analyzer.get_face_info(frame)
     
-    print(f"DEBUG: Detected {len(face_info)} faces")  # ✅ ADD THIS
-    print(f"DEBUG: stepper_tracker exists: {stepper_tracker is not None}")  # ✅ ADD THIS
-    if stepper_tracker:
-        print(f"DEBUG: stepper_tracker connected: {stepper_tracker.is_connected}")  # ✅ ADD THIS
-        print(f"DEBUG: stepper_tracker tracking enabled: {stepper_tracker.tracking_enabled}")  # ✅ ADD THIS
-    
-    # Update stepper if face detected and tracker is connected
-    if stepper_tracker and stepper_tracker.is_connected and face_info:
-        # Get first detected face
-        face = face_info[0]
+    # Update servo if face detected and tracker is connected
+    if servo_tracker and servo_tracker.is_connected and face_info:
         h, w = frame.shape[:2]
         
-        print(f"DEBUG: Sending to stepper - Face at ({face['center_x']}, {face['center_y']}) in {w}x{h} frame")  # ✅ ADD THIS
+        # Get the first (largest) face
+        face = face_info[0]
         
-        stepper_tracker.update_face_position(
-            w - face['center_x'],  # Mirror X coordinate
+        # DEBUG - print every 50 updates
+        if servo_tracker.update_count % 50 == 0:
+            print(f"FACE DATA | Detected {len(face_info)} face(s) | "
+                  f"Center: ({face['center_x']}, {face['center_y']}) | "
+                  f"Size: {face['width']}x{face['height']}")
+        
+        # Update servo position (MIRROR X for natural tracking)
+        servo_tracker.update_face_position(
+            w - face['center_x'],  # Flip X coordinate horizontally
             face['center_y'],
             w,
             h
         )
-        
-        # DEBUG
-        if stepper_tracker.update_count % 50 == 0:
-            print(f"FACE DATA | Detected {len(face_info)} face(s) | "
-                  f"Center: ({face['center_x']}, {face['center_y']}) | "
-                  f"Size: {face['width']}x{face['height']}")
     
     return jsonify({
         'faces': face_info,
@@ -367,24 +342,24 @@ def health():
 
 @app.route('/servo/enable', methods=['POST'])
 def servo_enable():
-    if stepper_tracker:  # Changed
-        stepper_tracker.start_tracking()  # Changed
+    if servo_tracker:
+        servo_tracker.start_tracking()
         return jsonify({'status': 'tracking'})
-    return jsonify({'error': 'Stepper not initialized'}), 500
+    return jsonify({'error': 'Servo not initialized'}), 500
 
 @app.route('/servo/disable', methods=['POST'])
 def servo_disable():
-    if stepper_tracker:  # Changed
-        stepper_tracker.stop_tracking()  # Changed
+    if servo_tracker:
+        servo_tracker.stop_tracking()
         return jsonify({'status': 'stopped'})
-    return jsonify({'error': 'Stepper not initialized'}), 500
+    return jsonify({'error': 'Servo not initialized'}), 500
 
 @app.route('/servo/center', methods=['POST'])
 def servo_center():
-    if stepper_tracker:  # Changed
-        stepper_tracker.center_servos()  # Changed
+    if servo_tracker:
+        servo_tracker.center_servos()
         return jsonify({'status': 'centered'})
-    return jsonify({'error': 'Stepper not initialized'}), 500
+    return jsonify({'error': 'Servo not initialized'}), 500
 
 if __name__ == '__main__':
     print("\n" + "="*50)
@@ -402,36 +377,36 @@ if __name__ == '__main__':
     
     print()
     
-    # Initialize stepper tracker
-    if StepperTracker:  # Changed
+    # Initialize servo tracker
+    if ServoTracker:
         try:
             import serial.tools.list_ports
             
-            stepper_port = None  # Changed
+            servo_port = None
             # Auto-detect Arduino
             for port in serial.tools.list_ports.comports():
                 if 'Arduino' in port.description or 'CH340' in port.description:
-                    stepper_port = port.device  # Changed
-                    print(f"✓ Found Arduino on {stepper_port}")
+                    servo_port = port.device
+                    print(f"âœ“ Found Arduino on {servo_port}")
                     break
             
             # Fallback to COM12 if auto-detect fails
-            if not stepper_port:  # Changed
-                stepper_port = 'COM12'  # Changed
-                print(f"⚠ Using default port {stepper_port}")
+            if not servo_port:
+                servo_port = 'COM12'
+                print(f"âš  Using default port {servo_port}")
             
-            stepper_tracker = StepperTracker(port=stepper_port)  # Changed
-            if stepper_tracker.connect():  # Changed
-                stepper_tracker.start_tracking()  # Changed
-                print("✓ Stepper tracking active\n")
+            servo_tracker = ServoTracker(port=servo_port)
+            if servo_tracker.connect():
+                servo_tracker.start_tracking()
+                print("âœ“ Servo tracking active\n")
             else:
-                stepper_tracker = None  # Changed
-                print("⚠ Stepper connection failed, continuing without tracking\n")
+                servo_tracker = None
+                print("âš  Servo connection failed, continuing without tracking\n")
         except Exception as e:
-            print(f"⚠ Stepper initialization error: {e}\n")
-            stepper_tracker = None  # Changed
+            print(f"âš  Servo initialization error: {e}\n")
+            servo_tracker = None
     else:
-        print("⚠ StepperTracker not available\n")
+        print("âš  ServoTracker not available\n")
     
     start_camera_thread()
     time.sleep(2)  # Allow camera to stabilize
@@ -442,10 +417,10 @@ if __name__ == '__main__':
         # Production mode - no debug, no reloader
         app.run(host='0.0.0.0', port=5000, debug=False, threaded=True)
     finally:
-        print("\n● Shutting down...")
-        if stepper_tracker:  # Changed
-            stepper_tracker.stop_tracking()  # Changed
-            stepper_tracker.disconnect()  # Changed
+        print("\nâ— Shutting down...")
+        if servo_tracker:
+            servo_tracker.stop_tracking()
+            servo_tracker.disconnect()
         speech_detector.stop()
         stop_camera_thread()
         print("âœ“ Complete")

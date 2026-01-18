@@ -1,7 +1,7 @@
 """
-Stepper Motor Face Tracking Controller
+Servo Motor Face Tracking Controller
 Connects to Arduino Uno R4 via serial
-Tracks face position and adjusts stepper motor pan
+Tracks face position and adjusts pan/tilt servos
 """
 
 import serial
@@ -10,10 +10,10 @@ import time
 import threading
 from typing import Optional, Tuple
 
-class StepperTracker:  # Changed class name
+class ServoTracker:
     def __init__(self, port: str = 'COM12', baudrate: int = 115200):
         """
-        Initialize stepper motor tracker connected to Arduino Uno R4
+        Initialize servo tracker connected to Arduino Uno R4
         
         Args:
             port: Serial port (e.g., 'COM12' on Windows, '/dev/ttyACM0' on Linux)
@@ -26,26 +26,21 @@ class StepperTracker:  # Changed class name
         self.tracking_enabled = False
         
         # Servo angle limits
-        self.pan_min = 0
-        self.pan_max = 180
-        self.pan_center = 90
+        self.pan_min = 0      # Left limit
+        self.pan_max = 180    # Right limit
+        self.pan_center = 90  # Center position
         
         # Current servo positions
         self.current_pan = 90
         
         # Smoothing for servo movement
-        self.pan_smoothing = 0.3
-        
-        # ✅ ADD THESE - Command throttling for stepper
-        self.last_command_time = 0
-        self.min_command_interval = 0.5  # Minimum 500ms between commands
-        self.movement_threshold = 3  # Only move if angle changes by 3+ degrees
+        self.pan_smoothing = 0.5  # Increased for more responsive
         
         # Debug
         self.last_pan = 90
         self.update_count = 0
         
-        print("✓ StepperTracker initialized")
+        print("âœ“ ServoTracker initialized")
     
     def connect(self) -> bool:
         """Connect to Arduino via serial"""
@@ -53,10 +48,10 @@ class StepperTracker:  # Changed class name
             self.serial_conn = serial.Serial(self.port, self.baudrate, timeout=1)
             time.sleep(2)  # Wait for Arduino to initialize
             self.is_connected = True
-            print(f"✓ Connected to {self.port} @ {self.baudrate} baud")
+            print(f"âœ“ Connected to {self.port} @ {self.baudrate} baud")
             return True
         except Exception as e:
-            print(f"✗ Failed to connect to {self.port}: {e}")
+            print(f"âœ— Failed to connect to {self.port}: {e}")
             return False
     
     def disconnect(self):
@@ -64,30 +59,28 @@ class StepperTracker:  # Changed class name
         if self.serial_conn and self.serial_conn.is_open:
             self.serial_conn.close()
             self.is_connected = False
-            print("● Disconnected from servo tracker")
+            print("â— Disconnected from servo tracker")
     
     def start_tracking(self):
         """Start continuous tracking"""
         if not self.is_connected:
-            print("✗ Not connected to Arduino")
+            print("âœ— Not connected to Arduino")
             return
         
         self.tracking_enabled = True
-        print("✓ Tracking enabled")
+        print("âœ“ Tracking enabled")
     
     def stop_tracking(self):
         """Stop tracking and center servos"""
         self.tracking_enabled = False
         self.center_servos()
-        print("● Tracking disabled")
+        print("â— Tracking disabled")
     
     def update_face_position(self, face_center_x: int, face_center_y: int, 
-                    frame_width: int, frame_height: int):
+                        frame_width: int, frame_height: int):
         """Update servo position based on face X location (pan only)"""
         if not self.tracking_enabled or not self.is_connected:
             return
-        
-        import time  # ✅ ADD THIS
         
         self.update_count += 1
         
@@ -105,31 +98,19 @@ class StepperTracker:  # Changed class name
             target_pan * self.pan_smoothing
         )
         
-        # ✅ ADD THROTTLING - Only send if enough time passed AND significant movement
-        current_time = time.time()
-        angle_delta = abs(self.current_pan - self.last_pan)
-        time_since_last = current_time - self.last_command_time
+        # DEBUG: Print every 10 updates
+        if self.update_count % 10 == 0:
+            print(f"SERVO DEBUG | Face X: {face_center_x:4d}/{frame_width} | "
+                  f"Norm: {norm_x:6.2f} | Target: {target_pan:3.0f}Â° | "
+                  f"Current: {self.current_pan:3d}Â° | Delta: {self.current_pan - self.last_pan:+3d}Â°")
         
-        if time_since_last >= self.min_command_interval and angle_delta >= self.movement_threshold:
-            # DEBUG: Print every update that actually sends
-            print(f"SERVO UPDATE | Face X: {face_center_x:4d}/{frame_width} | "
-                f"Norm: {norm_x:6.2f} | Target: {target_pan:3.0f}° | "
-                f"Current: {self.current_pan:3d}° | Delta: {angle_delta:+3d}° | "
-                f"Sending command...")
-            
-            # Send to Arduino
-            self._send_servo_command(self.current_pan)
-            self.last_pan = self.current_pan
-            self.last_command_time = current_time
-        else:
-            # Skip this update
-            if self.update_count % 30 == 0:  # Print occasionally why we're skipping
-                print(f"SKIP | Time since last: {time_since_last:.2f}s | Angle delta: {angle_delta}° (need {self.movement_threshold}°)")
+        # Send to Arduino
+        self._send_servo_command(self.current_pan)
+        self.last_pan = self.current_pan
     
     def _send_servo_command(self, pan: int):
         """Send servo angle to Arduino via serial"""
         if not self.is_connected:
-            print("DEBUG: Not connected, skipping command")  # ✅ ADD THIS
             return
         
         try:
@@ -137,24 +118,24 @@ class StepperTracker:  # Changed class name
             command = f"PAN:{pan}\n"
             self.serial_conn.write(command.encode())
             # DEBUG: uncomment to see every command
-            print(f"  → Sent: {command.strip()}")  # ✅ UNCOMMENT THIS LINE
+            # print(f"  â†’ Sent: {command.strip()}")
         except Exception as e:
-            print(f"✗ Serial write error: {e}")
+            print(f"âœ— Serial write error: {e}")
             self.is_connected = False
     
     def center_servos(self):
         """Center servo to neutral position"""
         self.current_pan = self.pan_center
         self._send_servo_command(self.pan_center)
-        print(f"● Servo centered to 90°")
+        print(f"â— Servo centered to 90Â°")
         
     def set_servo_limits(self, pan_min: int, pan_max: int):
         """Adjust servo angle limits"""
         self.pan_min = pan_min
         self.pan_max = pan_max
-        print(f"✓ Servo limits updated: Pan({pan_min}-{pan_max})")
+        print(f"âœ“ Servo limits updated: Pan({pan_min}-{pan_max})")
     
     def set_smoothing(self, pan_smoothing: float):
         """Adjust tracking smoothness (0.0-1.0, higher = more responsive)"""
         self.pan_smoothing = 0.1
-        print(f"✓ Smoothing updated: {self.pan_smoothing}")
+        print(f"âœ“ Smoothing updated: {self.pan_smoothing}")

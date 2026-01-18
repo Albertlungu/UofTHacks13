@@ -1,49 +1,37 @@
 /*
-Arduino Uno R4 Minima - Stepper Motor Face Tracking Controller
-SEED Studio Gear Stepper Motor Driver Pack
-4-wire stepper control for pan (left/right tracking)
+Arduino Uno R4 Minima - Servo Motor Face Tracking Controller
+Single servo on Pin 9 for pan (left/right tracking)
+Receives pan angle via serial and controls servo
 
 Wiring:
-- IN1 → Pin 8
-- IN2 → Pin 9
-- IN3 → Pin 10
-- IN4 → Pin 11
-- VCC → Arduino 5V
-- GND → Arduino GND
-- VM → External 5-12V supply
+- Servo data pin → Pin 9 (PWM)
+- Servo 5V → Arduino 5V
+- Servo GND → Arduino GND
 */
 
-#include <Stepper.h>
+#include <Servo.h>
 
-// Stepper motor specs (28BYJ-48)
-const int STEPS_PER_REV = 2048;  // Steps per revolution (with half-step)
+// Pin definition
+const int SERVO_PIN = 9;  // PWM pin for servo
 
-// Pin definitions (IN1, IN2, IN3, IN4)
-const int IN1 = 8;
-const int IN2 = 9;
-const int IN3 = 10;
-const int IN4 = 11;
+// Servo object
+Servo panServo;
 
-// Create stepper object (note pin order for ULN2003 driver)
-Stepper stepper(STEPS_PER_REV, IN1, IN3, IN2, IN4);
-
-// Position tracking
-int currentAngle = 90;        // Current angle (0-180 range)
-long currentSteps = 0;        // Current step position
-const float STEPS_PER_DEGREE = STEPS_PER_REV / 360.0;  // ~5.69 steps per degree
+// Current angle
+int currentAngle = 90;
 
 void setup() {
   // Initialize serial
   Serial.begin(115200);
   
-  // Set stepper speed (RPM)
-  stepper.setSpeed(10);  // 10 RPM - adjust for smoothness vs speed
+  // Attach servo
+  panServo.attach(SERVO_PIN);
   
-  // Center position
+  // Center servo
+  panServo.write(90);
   currentAngle = 90;
-  currentSteps = 0;
   
-  Serial.println("✓ Arduino Stepper Controller Ready - Pins 8-11");
+  Serial.println("✓ Arduino Servo Controller Ready - Pin 9");
   delay(1000);
 }
 
@@ -64,36 +52,22 @@ void parseAndExecute(String command) {
   Expected format: "PAN:90"
   */
   
-  int targetAngle = -1;
+  int angle = -1;
   
   // Parse angle value
   int panIndex = command.indexOf("PAN:");
   if (panIndex != -1) {
     String angleStr = command.substring(panIndex + 4);
-    targetAngle = angleStr.toInt();
+    angle = angleStr.toInt();
   }
   
-  // Validate and move stepper
-  if (targetAngle >= 0 && targetAngle <= 180) {
-    moveToAngle(targetAngle);
+  // Apply servo command
+  if (angle >= 0 && angle <= 180) {
+    panServo.write(angle);
+    currentAngle = angle;
   }
   
   // Send acknowledgment
   Serial.print("OK:PAN:");
   Serial.println(currentAngle);
-}
-
-void moveToAngle(int targetAngle) {
-  // Calculate step difference
-  int angleDelta = targetAngle - currentAngle;
-  long stepsToMove = (long)(angleDelta * STEPS_PER_DEGREE);
-  
-  // Move stepper
-  if (stepsToMove != 0) {
-    stepper.step(stepsToMove);
-    
-    // Update position
-    currentAngle = targetAngle;
-    currentSteps += stepsToMove;
-  }
 }
