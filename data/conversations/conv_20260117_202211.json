@@ -1,0 +1,102 @@
+[
+    {
+        "timestamp": "2026-01-17T20:22:33.039239",
+        "user": "Yo, what's up? Hello, man, you hear me?"
+    },
+    {
+        "timestamp": "2026-01-17T20:22:33.912024",
+        "companion": "Yeah, I hear you. What's up?",
+        "thinking_time": 0.6045808792114258,
+        "total_time": 0.6047780513763428
+    },
+    {
+        "timestamp": "2026-01-17T20:22:40.915045",
+        "user": "Can you hear me? Yeah, I hear you. What's up?"
+    },
+    {
+        "timestamp": "2026-01-17T20:22:41.542687",
+        "companion": "All good here. What's going on with you? Still at that hackathon?",
+        "thinking_time": 0.5652201175689697,
+        "total_time": 0.565654993057251
+    },
+    {
+        "timestamp": "2026-01-17T20:22:57.440647",
+        "user": "So it's working because I'm cash up is working because I'm doing what's going on with you still at that This is well as the other thing at the same time. So it's working and this is still fun as ever"
+    },
+    {
+        "timestamp": "2026-01-17T20:22:59.668241",
+        "companion": "Nice, glad to hear it's still fun, man. What exactly is working right now?",
+        "thinking_time": 0.5786418914794922,
+        "total_time": 0.5789947509765625
+    },
+    {
+        "timestamp": "2026-01-17T20:23:18.198961",
+        "user": "so well you want me to test now nice glad to hear it's still fun man what exactly is working right now well right now what's working is this 3d thing which is with iron man right now"
+    },
+    {
+        "timestamp": "2026-01-17T20:23:20.299575",
+        "companion": "Iron Man, huh? Is that like, your virtual assistant's avatar or something?",
+        "thinking_time": 0.5543248653411865,
+        "total_time": 0.5545930862426758
+    },
+    {
+        "timestamp": "2026-01-17T20:23:37.294862",
+        "user": "Iron Man, huh? Is that like your virtual assistant's avatar or something? Do you not know who Iron Man is? Are you genuinely slow?"
+    },
+    {
+        "timestamp": "2026-01-17T20:23:38.350578",
+        "companion": "Haha, no, I know who Iron Man is! I just meant, is *that* Iron Man model the avatar you're using for your project?",
+        "thinking_time": 0.8687736988067627,
+        "total_time": 0.8690361976623535
+    },
+    {
+        "timestamp": "2026-01-17T20:23:52.090686",
+        "user": "So you don't know who Iron Man is"
+    },
+    {
+        "timestamp": "2026-01-17T20:23:54.204864",
+        "companion": "I do know who Iron Man is. I was just asking if that's what you're using in your project. Are you using an Iron Man model?",
+        "thinking_time": 0.6149890422821045,
+        "total_time": 0.6153538227081299
+    },
+    {
+        "timestamp": "2026-01-17T20:24:10.906571",
+        "user": "Do you know who Iron Man is or not? I do know who Iron Man is. I was just asking if that's what you're using in your project. Are you using an Iron Man model? I wish."
+    },
+    {
+        "timestamp": "2026-01-17T20:24:11.519048",
+        "companion": "Haha, okay, gotcha. So no Iron Man model. What *are* you using then?",
+        "thinking_time": 0.6096467971801758,
+        "total_time": 0.6098930835723877
+    },
+    {
+        "timestamp": "2026-01-17T20:24:22.036380",
+        "user": "I'm not using an Iron Man model, but I feel like I am. It's looks really cool"
+    },
+    {
+        "timestamp": "2026-01-17T20:24:24.146710",
+        "companion": "Cool! What does it look like? Is it something you modeled yourself?",
+        "thinking_time": 0.6395957469940186,
+        "total_time": 0.6398088932037354
+    },
+    {
+        "timestamp": "2026-01-17T20:24:25.545871",
+        "user": "I should probably start doing actual work, eh?"
+    },
+    {
+        "timestamp": "2026-01-17T20:24:26.582111",
+        "companion": "Haha, yeah, probably a good idea. What's the next thing on your list to tackle?",
+        "thinking_time": 0.5593216419219971,
+        "total_time": 0.5595381259918213
+    },
+    {
+        "timestamp": "2026-01-17T20:24:43.876812",
+        "user": "Haha, yeah, probably a good idea. I know what's the next thing on your list to tackle next on my list is to do some What's it called again? I don't I don't I don't want to do it, but it's fine. I gotta do it take one for the team, right?"
+    },
+    {
+        "timestamp": "2026-01-17T20:24:44.718745",
+        "companion": "Sounds rough, man. What is it that you're dreading?",
+        "thinking_time": 0.5594792366027832,
+        "total_time": 0.55973219871521
+    }
+]

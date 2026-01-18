@@ -1,0 +1,25 @@
+{
+  "user_id": "default_user",
+  "exchange_count": 3,
+  "last_analysis_at": 0,
+  "exchanges": [
+    {
+      "timestamp": "2026-01-17T20:18:11.505145",
+      "user_text": "Yeah, that's because I didn't.",
+      "ai_response": "Didn't what?",
+      "exchange_number": 1
+    },
+    {
+      "timestamp": "2026-01-17T20:18:15.356662",
+      "user_text": "He's supposed to run one. Didn't what?",
+      "ai_response": "Oh, gotcha. Didn't run one. So what happened?",
+      "exchange_number": 2
+    },
+    {
+      "timestamp": "2026-01-17T20:18:24.394971",
+      "user_text": "Fuck you. Oh, gotcha. Didn't run one. So what happened? Fuck you.",
+      "ai_response": "Whoa, okay. What's going on, man? Is everything alright?",
+      "exchange_number": 3
+    }
+  ]
+}

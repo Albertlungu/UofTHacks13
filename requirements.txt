@@ -32,6 +32,9 @@ pydub==0.25.1
 opencv-python==4.9.0.80
 mediapipe==0.10.2
 
+# WebSocket (for hand tracking streaming)
+websockets>=13.0,<15.1
+
 # Web (for UI)
 flask==3.0.0
 flask-cors==4.0.0

@@ -1,0 +1,92 @@
+[
+    {
+        "timestamp": "2026-01-17T20:26:52.914987",
+        "user": "start recording? How are we going to start recording already?"
+    },
+    {
+        "timestamp": "2026-01-17T20:26:54.147797",
+        "companion": "Woah, hold on. What's up? Recording what, exactly? And for what?",
+        "thinking_time": 0.7349660396575928,
+        "total_time": 0.7352640628814697
+    },
+    {
+        "timestamp": "2026-01-17T20:27:07.778831",
+        "user": "Oh my gosh, what's up recording what exactly and for what like it actually"
+    },
+    {
+        "timestamp": "2026-01-17T20:27:09.654271",
+        "companion": "Haha, yeah, I know, I know. I'm just messin' with ya. So, what's the deal? What are we recording?",
+        "thinking_time": 0.6419122219085693,
+        "total_time": 0.6421201229095459
+    },
+    {
+        "timestamp": "2026-01-17T20:27:11.353019",
+        "user": "And now the rotation works much better."
+    },
+    {
+        "timestamp": "2026-01-17T20:27:12.132681",
+        "companion": "Cool, so the 3D model is rotating smoothly now? Nice!",
+        "thinking_time": 0.5976057052612305,
+        "total_time": 0.5978310108184814
+    },
+    {
+        "timestamp": "2026-01-17T20:27:24.693112",
+        "user": "Yeah, that's much better. Cool, so the 3D model is rotating smoothly now. How'd you guys exist there? Because I told you like once and you just remember it. That's amazing, isn't it?"
+    },
+    {
+        "timestamp": "2026-01-17T20:27:25.669125",
+        "companion": "Right? It's kinda wild. So, what's next on the 3D model project?",
+        "thinking_time": 0.5466008186340332,
+        "total_time": 0.5469069480895996
+    },
+    {
+        "timestamp": "2026-01-17T20:27:36.523567",
+        "user": "Wow, nice answer, right. Thank you for telling me the direction."
+    },
+    {
+        "timestamp": "2026-01-17T20:27:37.259087",
+        "companion": "No problem! Just trying to be helpful. What direction are you thinking of going in?",
+        "thinking_time": 0.5476739406585693,
+        "total_time": 0.5479118824005127
+    },
+    {
+        "timestamp": "2026-01-17T20:27:46.870117",
+        "user": "I already know existed No problem just trying to be helpful thinking of going in do you know what sarcasm is"
+    },
+    {
+        "timestamp": "2026-01-17T20:27:48.928764",
+        "companion": "Haha, yeah, I know what sarcasm is. You think I'm just a bot or somethin'? ;)",
+        "thinking_time": 0.6342241764068604,
+        "total_time": 0.6344749927520752
+    },
+    {
+        "timestamp": "2026-01-17T20:27:58.051682",
+        "user": "So, so do you know what's for chasm is?"
+    },
+    {
+        "timestamp": "2026-01-17T20:27:59.008735",
+        "companion": "Yep! It's when you say one thing but mean the opposite, usually to be funny or make a point. Why do you ask?",
+        "thinking_time": 0.6493921279907227,
+        "total_time": 0.6495828628540039
+    },
+    {
+        "timestamp": "2026-01-17T20:28:10.444254",
+        "user": "I don't you didn't we say anything right there. Yep. It's when you say one thing But mean the opposite usually to be funny or make a point"
+    },
+    {
+        "timestamp": "2026-01-17T20:28:12.624354",
+        "companion": "Okay... so, was I being sarcastic and missed it? Or are *you* being sarcastic right now? ;)",
+        "thinking_time": 0.6606860160827637,
+        "total_time": 0.6609201431274414
+    },
+    {
+        "timestamp": "2026-01-17T20:28:28.086640",
+        "user": "Okay, so was I being sarcastic and misted? No, I was being sarcastic. You're being sarcastic right now. I was being sarcastic. Could you not tell? You're made to tell this type of stuff."
+    },
+    {
+        "timestamp": "2026-01-17T20:28:29.183913",
+        "companion": "Gotcha. I'm still learning to pick up on sarcasm, so sometimes it slips by me. My bad! What's up?",
+        "thinking_time": 0.6230430603027344,
+        "total_time": 0.6232640743255615
+    }
+]

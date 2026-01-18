@@ -1,0 +1,32 @@
+[
+    {
+        "timestamp": "2026-01-17T20:18:10.677596",
+        "user": "Yeah, that's because I didn't."
+    },
+    {
+        "timestamp": "2026-01-17T20:18:11.504819",
+        "companion": "Didn't what?",
+        "thinking_time": 0.6586189270019531,
+        "total_time": 0.6588399410247803
+    },
+    {
+        "timestamp": "2026-01-17T20:18:14.378764",
+        "user": "He's supposed to run one. Didn't what?"
+    },
+    {
+        "timestamp": "2026-01-17T20:18:15.356461",
+        "companion": "Oh, gotcha. Didn't run one. So what happened?",
+        "thinking_time": 0.48062586784362793,
+        "total_time": 0.4808540344238281
+    },
+    {
+        "timestamp": "2026-01-17T20:18:23.615039",
+        "user": "Fuck you. Oh, gotcha. Didn't run one. So what happened? Fuck you."
+    },
+    {
+        "timestamp": "2026-01-17T20:18:24.394654",
+        "companion": "Whoa, okay. What's going on, man? Is everything alright?",
+        "thinking_time": 0.46103811264038086,
+        "total_time": 0.4612717628479004
+    }
+]

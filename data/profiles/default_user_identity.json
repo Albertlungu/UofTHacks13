@@ -2,25 +2,28 @@
   "user_id": "default_user",
   "communication_style": {
     "sentence_length": {
-      "avg_words": 9,
-      "preference": "short",
+      "avg_words": "9.6",
+      "preference": "medium",
       "examples": [
-        "Yeah, I'm ready",
-        "to I'll check, please."
+        "Why am I denied the access to view frickin local holster?",
+        "Clearing your cache is just deleting some temporary files your browser saves."
       ]
     },
     "vocabulary": {
-      "level": "casual",
+      "level": "mixed",
       "common_words": [
-        "yeah",
-        "I'm",
-        "that's",
-        "just"
+        "I",
+        "to",
+        "the",
+        "is",
+        "your"
       ],
       "technical_terms": [
-        "Hackathon",
-        "IB",
-        "IBDP"
+        "local holster",
+        "local hosts",
+        "cache",
+        "browser",
+        "MPM install"
       ],
       "formality_score": "3"
     },
@@ -31,15 +34,15 @@
     },
     "expressiveness": {
       "level": "moderate",
-      "uses_emphasis": "false",
+      "uses_emphasis": "true",
       "uses_qualifiers": [
+        "probably",
         "just",
-        "right now",
-        "I mean"
+        "for sure"
       ]
     },
     "filler_words": [],
-    "last_updated": "2026-01-17T11:50:17.496947",
+    "last_updated": "2026-01-17T20:48:26.707226",
     "confidence": 0.8999999999999999,
     "sample_size": 5
   },
@@ -68,6 +71,31 @@
         "id": "belief_1768666963",
         "first_mentioned": "2026-01-17T11:22:43.084477",
         "mention_count": 2
+      },
+      {
+        "category": "technology",
+        "topic": "3D modeling",
+        "stance": "The user finds their 3D modeling work to be fun and working well.",
+        "confidence": "8",
+        "supporting_quotes": [
+          "So it's working and this is still fun as ever",
+          "right now what's working is this 3d thing which is with iron man right now"
+        ],
+        "id": "belief_1768699491",
+        "first_mentioned": "2026-01-17T20:24:51.518820",
+        "mention_count": 1
+      },
+      {
+        "category": "pop culture",
+        "topic": "Iron Man",
+        "stance": "The user believes that everyone should know who Iron Man is.",
+        "confidence": "9",
+        "supporting_quotes": [
+          "Do you not know who Iron Man is? Are you genuinely slow?"
+        ],
+        "id": "belief_1768699491",
+        "first_mentioned": "2026-01-17T20:24:51.518823",
+        "mention_count": 1
       }
     ],
     "values": [
@@ -78,19 +106,37 @@
         ],
         "strength": "7",
         "id": "value_1768666963"
+      },
+      {
+        "value": "Fun",
+        "evidence": [
+          "So it's working and this is still fun as ever"
+        ],
+        "strength": "7",
+        "id": "value_1768699491"
+      },
+      {
+        "value": "Teamwork",
+        "evidence": [
+          "I gotta do it take one for the team, right?"
+        ],
+        "strength": "6",
+        "id": "value_1768699491"
       }
     ],
     "decision_patterns": {
       "risk_tolerance": "moderate",
       "speed_vs_quality": "balanced",
-      "examples": []
+      "examples": [
+        "Willing to delay less enjoyable tasks but acknowledges the need to complete them."
+      ]
     },
     "preferences": {
-      "work_style": "Intense, focused (implied by hackathon participation)",
-      "communication": "Informal, conversational",
-      "problem_solving": "Collaborative (implied by hackathon setting)"
+      "work_style": "Prefers engaging and enjoyable tasks, but understands the need to complete less desirable ones.",
+      "communication": "Casual and informal, uses slang.",
+      "problem_solving": "Seems to be experimenting and iterating, enjoying the process."
     },
-    "last_updated": "2026-01-17T11:22:43.084449"
+    "last_updated": "2026-01-17T20:24:51.519168"
   },
   "thought_patterns": {
     "cognitive_style": {},
@@ -114,12 +160,66 @@
         "reference_count": 1
       },
       {
+        "category": "project",
+        "fact": "The user is working on a project.",
+        "source_quote": "I was gonna hack it on yeah, yeah, yeah, it's coming on pretty well and you're part of it actually so it's pretty cool",
+        "relevance_score": "9",
+        "id": "fact_1768690447",
+        "timestamp": "2026-01-17T17:54:07.355785",
+        "reference_count": 1
+      },
+      {
+        "category": "work",
+        "fact": "The user needs to start doing actual work.",
+        "source_quote": "I should probably start doing actual work, eh?",
+        "relevance_score": "9",
+        "id": "fact_1768699488",
+        "timestamp": "2026-01-17T20:24:48.895468",
+        "reference_count": 1
+      },
+      {
+        "category": "work",
+        "fact": "The user has a task they don't want to do but have to do it.",
+        "source_quote": "I know what's the next thing on your list to tackle next on my list is to do some What's it called again? I don't I don't I don't want to do it, but it's fine. I gotta do it take one for the team, right?",
+        "relevance_score": "9",
+        "id": "fact_1768699488",
+        "timestamp": "2026-01-17T20:24:48.895468",
+        "reference_count": 1
+      },
+      {
+        "category": "project",
+        "fact": "The user is working on a 3D model.",
+        "source_quote": "Cool, so the 3D model is rotating smoothly now.",
+        "relevance_score": "9",
+        "id": "fact_1768699661",
+        "timestamp": "2026-01-17T20:27:41.454236",
+        "reference_count": 1
+      },
+      {
         "category": "life",
         "fact": "The user is tired.",
         "source_quote": "I'm just very tired.",
         "relevance_score": "8",
         "id": "fact_1768668112",
         "timestamp": "2026-01-17T11:41:52.001053",
+        "reference_count": 1
+      },
+      {
+        "category": "project",
+        "fact": "The user is testing something.",
+        "source_quote": "so well you want me to test now",
+        "relevance_score": "8",
+        "id": "fact_1768699421",
+        "timestamp": "2026-01-17T20:23:41.795958",
+        "reference_count": 1
+      },
+      {
+        "category": "project",
+        "fact": "The user was having trouble with the rotation of the 3D model.",
+        "source_quote": "And now the rotation works much better.",
+        "relevance_score": "8",
+        "id": "fact_1768699661",
+        "timestamp": "2026-01-17T20:27:41.454236",
         "reference_count": 1
       },
       {
@@ -211,6 +311,33 @@
         "id": "fact_1768668619",
         "timestamp": "2026-01-17T11:50:19.227593",
         "reference_count": 1
+      },
+      {
+        "category": "project",
+        "fact": "The user is working on a 3D project involving Iron Man.",
+        "source_quote": "right now what's working is this 3d thing which is with iron man right now",
+        "relevance_score": "10",
+        "id": "fact_1768699421",
+        "timestamp": "2026-01-17T20:23:41.795958",
+        "reference_count": 1
+      },
+      {
+        "category": "project",
+        "fact": "The user is denied access to view local holster.",
+        "source_quote": "Why am I denied the access to view frickin local holster?",
+        "relevance_score": "10",
+        "id": "fact_1768700908",
+        "timestamp": "2026-01-17T20:48:28.586201",
+        "reference_count": 1
+      },
+      {
+        "category": "project",
+        "fact": "The user has run 'MPM install'.",
+        "source_quote": "Yeah, I ran MPM install.",
+        "relevance_score": "10",
+        "id": "fact_1768700908",
+        "timestamp": "2026-01-17T20:48:28.586201",
+        "reference_count": 1
       }
     ],
     "people_mentioned": [
@@ -219,6 +346,18 @@
         "relationship": "friend",
         "context": "The user mistakenly picked up their friend's iPhone.",
         "first_mentioned": "2026-01-17T11:22:01.460154"
+      },
+      {
+        "name": "Iron Man",
+        "relationship": "subject of a 3D project",
+        "context": "The user is working on a 3D project involving Iron Man.",
+        "first_mentioned": "2026-01-17T20:23:41.795958"
+      },
+      {
+        "name": "He",
+        "relationship": "unclear",
+        "context": "Gave the user access denied to local hosts.",
+        "first_mentioned": "2026-01-17T20:48:28.586201"
       }
     ],
     "goals": [
@@ -233,6 +372,24 @@
         "status": "in_progress",
         "priority": "medium",
         "mentioned_at": "2026-01-17T11:42:54.899666"
+      },
+      {
+        "goal": "To record something.",
+        "status": "in_progress",
+        "priority": "medium",
+        "mentioned_at": "2026-01-17T20:27:41.454236"
+      },
+      {
+        "goal": "To make a 3D model rotate smoothly.",
+        "status": "completed",
+        "priority": "medium",
+        "mentioned_at": "2026-01-17T20:27:41.454236"
+      },
+      {
+        "goal": "To view local holster",
+        "status": "blocked",
+        "priority": "high",
+        "mentioned_at": "2026-01-17T20:48:28.586201"
       }
     ],
     "interests": [
@@ -271,6 +428,24 @@
         "strength": "7",
         "evidence": "The user is currently in the IBDP program and wanted to talk about it.",
         "evidence_count": 1
+      },
+      {
+        "topic": "3D projects",
+        "strength": "7",
+        "evidence": "The user is actively working on a 3D project.",
+        "evidence_count": 1
+      },
+      {
+        "topic": "Iron Man",
+        "strength": "5",
+        "evidence": "The user knows who Iron Man is and expresses a wish to use an Iron Man model.",
+        "evidence_count": 1
+      },
+      {
+        "topic": "3D modeling",
+        "strength": "7",
+        "evidence": "The user is working on a 3D model and is concerned with its rotation.",
+        "evidence_count": 1
       }
     ],
     "experiences": [
@@ -279,10 +454,19 @@
         "description": "The user is experiencing sleep deprivation due to the hackathon.",
         "source_quote": "I haven't slept a wink",
         "relevance_score": "9"
+      },
+      {
+        "type": "success",
+        "description": "The 3D model's rotation is now working much better.",
+        "source_quote": "And now the rotation works much better."
+      },
+      {
+        "type": "challenge",
+        "description": "The user is experiencing access denied to local holster."
       }
     ],
     "recent_topics": [],
-    "last_updated": "2026-01-17T11:50:19.229094"
+    "last_updated": "2026-01-17T20:48:28.586508"
   },
-  "total_exchanges_analyzed": 7
+  "total_exchanges_analyzed": 9
 }

@@ -102,23 +102,33 @@ def main():
         print(f"{Fore.GREEN}System initialized successfully!{Style.RESET_ALL}")
         print_instructions()
 
-        # Report profile status
-        maturity = manager.identity_manager.identity_profile.profile_maturity
-        if maturity != 'nascent':
-            print(
-                f"{Fore.GREEN}[PROFILE LOADED]{Style.RESET_ALL} Identity profile maturity: {maturity.upper()}"
-            )
-            comm_style = manager.identity_manager.identity_profile.communication_style
-            if comm_style.confidence > 0:
-                print(f"  - Communication style confidence: {comm_style.confidence:.2f}")
-        else:
-            print(
-                f"{Fore.YELLOW}[LEARNING MODE]{Style.RESET_ALL} First ~10 exchanges"
-            )
-            print(
-                "  The system is learning your identity patterns and communication style"
-            )
-            print("  Please speak naturally - the AI is adapting to you!")
+        # Check calibration status
+        # NOTE: Calibration system is currently disabled
+        # if manager.audio_manager.user_profile.is_calibrated:
+        #     print(
+        #         f"{Fore.GREEN}[PROFILE LOADED]{Style.RESET_ALL} Using your saved speech profile"
+        #     )
+        #     print(
+        #         f"  - Speaking rate: {manager.audio_manager.user_profile.words_per_minute:.1f} WPM"
+        #     )
+        #     print(
+        #         f"  - Pause threshold: {manager.audio_manager.user_profile.silence_threshold:.2f}s"
+        #     )
+        #
+        #     if manager.audio_manager.user_profile.style_summary:
+        #         print(f"  - Style profile: {Fore.GREEN}Available{Style.RESET_ALL}")
+        #     else:
+        #         print(
+        #             f"  - Style profile: {Fore.YELLOW}Will be generated{Style.RESET_ALL}"
+        #         )
+        # else:
+        #     print(
+        #         f"{Fore.YELLOW}[CALIBRATION MODE]{Style.RESET_ALL} First 45-60 seconds"
+        #     )
+        #     print(
+        #         "  The system will learn your speech patterns and communication style"
+        #     )
+        #    print("  Please speak naturally - the AI is adapting to you!")
 
         print(f"\n{Fore.GREEN}Starting conversation system...{Style.RESET_ALL}\n")
 
