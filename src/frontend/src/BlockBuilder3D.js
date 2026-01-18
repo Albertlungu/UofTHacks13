@@ -24,7 +24,6 @@ const BlockBuilder3D = () => {
     const blocksRef = useRef(new Map()); // Map of "x,y,z" -> block mesh
     const hoverBlockRef = useRef(null);
     const raycasterRef = useRef(new THREE.Raycaster());
-    const recenterButtonRef = useRef(null);
 
     // Gesture state
     const prevLeftPinchRef = useRef(false);
@@ -32,7 +31,6 @@ const BlockBuilder3D = () => {
     const prevFistPosRef = useRef(null);
     const twoFistsPanRef = useRef(null);
     const twoHandsZoomRef = useRef(null);
-    const buttonPinchCooldownRef = useRef(false);
 
     // Hover hold timers
     const rightPinchHoldStartRef = useRef(null);
@@ -442,28 +440,7 @@ const BlockBuilder3D = () => {
             prevFistPosRef.current = null;
         }
 
-        // Check if pinching near re-center button
-        const isNearButton =
-            rightHand &&
-            rightHand.is_pinching &&
-            checkButtonHover(rightHand.landmarks[8].x, rightHand.landmarks[8].y);
-
-        if (isNearButton) {
-            console.log("Hand near re-center button!");
-            if (!buttonPinchCooldownRef.current) {
-                console.log("Activating re-center");
-                recenterCamera();
-                buttonPinchCooldownRef.current = true;
-                setTimeout(() => {
-                    buttonPinchCooldownRef.current = false;
-                }, 1000);
-            }
-            highlightButton(true);
-            removeHoverBlock();
-        } else {
-            highlightButton(false);
-
-            // RIGHT HAND PINCH: Add block (3 second hold)
+        // RIGHT HAND PINCH: Add block (3 second hold)
             if (rightHand && rightHand.is_pinching) {
                 const indexTip = rightHand.landmarks[8];
                 const worldPos = screenToWorld(
@@ -498,7 +475,6 @@ const BlockBuilder3D = () => {
                 rightPinchHoldStartRef.current = null;
                 hoverProgressRef.current = 0;
             }
-        }
 
         // LEFT HAND PINCH: Remove block (3 second hold)
         if (leftHand && leftHand.is_pinching) {
@@ -601,9 +577,9 @@ const BlockBuilder3D = () => {
         // 1. Get visible NDC coordinates (handles object-fit: cover cropping)
         const ndc = getVisibleNDC(normalizedX, normalizedY);
 
-        // 2. Create raycaster from the ACTUAL camera users look through
+        // 2. Create raycaster from the screen-aligned projection camera for accurate hand mapping
         const raycaster = raycasterRef.current;
-        const camera = cameraRef.current;
+        const camera = projectionCameraRef.current;  // Use projection camera, not the angled viewing camera
         raycaster.setFromCamera(new THREE.Vector2(ndc.x, ndc.y), camera);
 
         // 3. Raycast to an interaction plane at Y=0 (grid center height)
@@ -801,50 +777,6 @@ const BlockBuilder3D = () => {
         twoHandsZoomRef.current = distance;
     };
 
-    const checkButtonHover = (normalizedX, normalizedY) => {
-        // Button is at top-left of screen: x=0.1, y=0.1 (in normalized coords)
-        const buttonX = 0.1;
-        const buttonY = 0.1;
-        const buttonRadius = 0.05; // 5% of screen width/height
-
-        const distance = Math.sqrt(
-            (normalizedX - buttonX) ** 2 + (normalizedY - buttonY) ** 2
-        );
-
-        return distance < buttonRadius;
-    };
-
-    const highlightButton = (isHighlighted) => {
-        // Update button DOM element (handled in JSX)
-        if (recenterButtonRef.current) {
-            recenterButtonRef.current.style.backgroundColor = isHighlighted
-                ? "rgba(255, 68, 68, 0.9)"
-                : "rgba(68, 68, 255, 0.8)";
-            recenterButtonRef.current.style.transform = isHighlighted
-                ? "scale(1.1)"
-                : "scale(1)";
-        }
-    };
-
-    const recenterCamera = () => {
-        console.log("Re-centering camera and grid");
-
-        // Reset grid rotation
-        gridGroupRef.current.rotation.set(0, 0, 0);
-
-        // Reset camera position
-        cameraRef.current.position.set(25, 25, 25);
-        cameraRef.current.lookAt(0, 0, 0);
-
-        // Flash button green
-        if (recenterButtonRef.current) {
-            recenterButtonRef.current.style.backgroundColor = "rgba(0, 255, 0, 0.9)";
-            setTimeout(() => {
-                recenterButtonRef.current.style.backgroundColor = "rgba(68, 68, 255, 0.8)";
-            }, 200);
-        }
-    };
-
     return (
         <div
             style={{
@@ -902,34 +834,6 @@ const BlockBuilder3D = () => {
                     pointerEvents: "none",
                 }}
             />
-
-            <button
-                ref={recenterButtonRef}
-                style={{
-                    position: "absolute",
-                    top: 20,
-                    left: 20,
-                    width: "80px",
-                    height: "80px",
-                    borderRadius: "50%",
-                    backgroundColor: "rgba(68, 68, 255, 0.8)",
-                    border: "3px solid white",
-                    color: "white",
-                    fontFamily: "monospace",
-                    fontSize: "12px",
-                    fontWeight: "bold",
-                    cursor: "pointer",
-                    zIndex: 5,
-                    transition: "all 0.2s ease",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    textAlign: "center",
-                    pointerEvents: "none",
-                }}
-            >
-                PINCH TO RECENTER
-            </button>
 
             <div
                 style={{

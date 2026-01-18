@@ -1,0 +1,25 @@
+{
+  "user_id": "default_user",
+  "exchange_count": 3,
+  "last_analysis_at": 0,
+  "exchanges": [
+    {
+      "timestamp": "2026-01-18T06:45:49.551016",
+      "user_text": "All right, general image for that looks like Paris please.",
+      "ai_response": "Oh, Paris vibes! I'm picturing the Eiffel Tower, some classic cobblestone streets, and maybe a cute little caf\u00e9 with outdoor seating. You thinking along those lines too?",
+      "exchange_number": 1
+    },
+    {
+      "timestamp": "2026-01-18T06:46:27.827229",
+      "user_text": "Oh, yeah. Crap, we need the only issue credits.",
+      "ai_response": "Ah, gotcha. Yeah, sometimes these things sneak up on us. You think you'll have enough to get what you need?",
+      "exchange_number": 2
+    },
+    {
+      "timestamp": "2026-01-18T06:46:32.632508",
+      "user_text": "for image generation.",
+      "ai_response": "Right, makes sense. Image generation can be a bit of a credit hog. Do you have a plan for getting more, or are you still figuring it out?",
+      "exchange_number": 3
+    }
+  ]
+}

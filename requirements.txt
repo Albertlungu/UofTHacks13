@@ -34,13 +34,16 @@ pydub==0.25.1
 
 # Computer Vision (for camera tracking)
 opencv-python==4.9.0.80
+<<<<<<< HEAD
 mediapipe
+=======
+mediapipe==0.10.14
+>>>>>>> a5a420a (FEAT: Add image gen capabilities)
 
 # WebSocket (for hand tracking streaming)
 websockets>=13.0,<15.1
 
 # Web (for UI)
-flask==3.0.0
 flask-cors==4.0.0
 
 # Utilities

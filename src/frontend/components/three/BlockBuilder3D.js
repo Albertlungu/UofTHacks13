@@ -53,7 +53,7 @@ const BlockBuilder3D = () => {
             60, // Adjusted to match typical webcam FOV (55-60 degrees)
             window.innerWidth / window.innerHeight,
             0.1,
-            1000
+            1000,
         );
         camera.position.set(25, 25, 25);
         camera.lookAt(0, 0, 0);
@@ -65,7 +65,7 @@ const BlockBuilder3D = () => {
             60, // Match main camera FOV
             window.innerWidth / window.innerHeight,
             0.1,
-            1000
+            1000,
         );
         projectionCamera.position.set(0, 0, 50); // Positioned in front, looking at origin
         projectionCamera.lookAt(0, 0, 0);
@@ -147,7 +147,11 @@ const BlockBuilder3D = () => {
         ws.onmessage = (event) => {
             try {
                 const handData = JSON.parse(event.data);
-                console.log("Received hand data:", handData.hands?.length || 0, "hands");
+                console.log(
+                    "Received hand data:",
+                    handData.hands?.length || 0,
+                    "hands",
+                );
                 handleHandData(handData);
             } catch (err) {
                 console.error("Error parsing hand data:", err, event.data);
@@ -156,7 +160,9 @@ const BlockBuilder3D = () => {
 
         ws.onerror = (error) => {
             console.error("✗ WebSocket error:", error);
-            console.error("Make sure the Python backend is running: python run_hand_tracker.py");
+            console.error(
+                "Make sure the Python backend is running: python run_hand_tracker.py",
+            );
         };
 
         ws.onclose = () => {
@@ -228,7 +234,7 @@ const BlockBuilder3D = () => {
             }
             xyGeometry.setAttribute(
                 "position",
-                new THREE.Float32BufferAttribute(xyVertices, 3)
+                new THREE.Float32BufferAttribute(xyVertices, 3),
             );
             parent.add(new THREE.LineSegments(xyGeometry, gridMaterial));
 
@@ -241,7 +247,7 @@ const BlockBuilder3D = () => {
             }
             xzGeometry.setAttribute(
                 "position",
-                new THREE.Float32BufferAttribute(xzVertices, 3)
+                new THREE.Float32BufferAttribute(xzVertices, 3),
             );
             parent.add(new THREE.LineSegments(xzGeometry, gridMaterial));
 
@@ -254,7 +260,7 @@ const BlockBuilder3D = () => {
             }
             yzGeometry.setAttribute(
                 "position",
-                new THREE.Float32BufferAttribute(yzVertices, 3)
+                new THREE.Float32BufferAttribute(yzVertices, 3),
             );
             parent.add(new THREE.LineSegments(yzGeometry, gridMaterial));
         }
@@ -263,7 +269,7 @@ const BlockBuilder3D = () => {
         const boxGeometry = new THREE.BoxGeometry(
             TOTAL_SIZE,
             TOTAL_SIZE,
-            TOTAL_SIZE
+            TOTAL_SIZE,
         );
         const boxEdges = new THREE.EdgesGeometry(boxGeometry);
         const boxLines = new THREE.LineSegments(
@@ -273,12 +279,12 @@ const BlockBuilder3D = () => {
                 linewidth: 3,
                 opacity: 1.0,
                 transparent: false,
-            })
+            }),
         );
         parent.add(boxLines);
 
         console.log(
-            `Grid created: ${GRID_SIZE}x${GRID_SIZE}x${GRID_SIZE} (${TOTAL_SIZE}x${TOTAL_SIZE}x${TOTAL_SIZE} units)`
+            `Grid created: ${GRID_SIZE}x${GRID_SIZE}x${GRID_SIZE} (${TOTAL_SIZE}x${TOTAL_SIZE}x${TOTAL_SIZE} units)`,
         );
     };
 
@@ -379,7 +385,11 @@ const BlockBuilder3D = () => {
         ];
 
         ctx.lineWidth = 3;
-        ctx.strokeStyle = hand.is_fist ? "#ffff00" : hand.is_pinching ? "#ff0000" : "#00ff00";
+        ctx.strokeStyle = hand.is_fist
+            ? "#ffff00"
+            : hand.is_pinching
+              ? "#ff0000"
+              : "#00ff00";
         connections.forEach(([start, end]) => {
             const startLm = hand.landmarks[start];
             const endLm = hand.landmarks[end];
@@ -395,7 +405,7 @@ const BlockBuilder3D = () => {
         ctx.fillText(
             `${hand.handedness} - Pinch: ${hand.is_pinching} | Fist: ${hand.is_fist}`,
             10,
-            hand.handedness === "Left" ? 30 : 60
+            hand.handedness === "Left" ? 30 : 60,
         );
     };
 
@@ -405,8 +415,12 @@ const BlockBuilder3D = () => {
         // Debug logging
         if (leftHand || rightHand) {
             console.log("Gestures detected:", {
-                leftHand: leftHand ? { pinch: leftHand.is_pinching, fist: leftHand.is_fist } : null,
-                rightHand: rightHand ? { pinch: rightHand.is_pinching, fist: rightHand.is_fist } : null,
+                leftHand: leftHand
+                    ? { pinch: leftHand.is_pinching, fist: leftHand.is_fist }
+                    : null,
+                rightHand: rightHand
+                    ? { pinch: rightHand.is_pinching, fist: rightHand.is_fist }
+                    : null,
             });
         }
 
@@ -434,7 +448,10 @@ const BlockBuilder3D = () => {
         twoFistsPanRef.current = null;
 
         // SINGLE FIST: Rotate grid
-        if ((leftHand && leftHand.is_fist) || (rightHand && rightHand.is_fist)) {
+        if (
+            (leftHand && leftHand.is_fist) ||
+            (rightHand && rightHand.is_fist)
+        ) {
             const fistHand = leftHand?.is_fist ? leftHand : rightHand;
             console.log("Single fist rotate gesture detected");
             handleSingleFistRotate(fistHand);
@@ -446,7 +463,10 @@ const BlockBuilder3D = () => {
         const isNearButton =
             rightHand &&
             rightHand.is_pinching &&
-            checkButtonHover(rightHand.landmarks[8].x, rightHand.landmarks[8].y);
+            checkButtonHover(
+                rightHand.landmarks[8].x,
+                rightHand.landmarks[8].y,
+            );
 
         if (isNearButton) {
             console.log("Hand near re-center button!");
@@ -469,21 +489,24 @@ const BlockBuilder3D = () => {
                 const worldPos = screenToWorld(
                     indexTip.x,
                     indexTip.y,
-                    rightHand
+                    rightHand,
                 );
 
                 // Start timer if just started pinching
                 if (!rightPinchHoldStartRef.current) {
                     rightPinchHoldStartRef.current = Date.now();
-                    console.log("Right hand pinch started - hold for 3s to place");
+                    console.log(
+                        "Right hand pinch started - hold for 3s to place",
+                    );
                 }
 
                 // Calculate hold progress
-                const holdTime = (Date.now() - rightPinchHoldStartRef.current) / 1000;
+                const holdTime =
+                    (Date.now() - rightPinchHoldStartRef.current) / 1000;
                 hoverProgressRef.current = Math.min(holdTime / 3.0, 1.0);
 
                 // Show green hover with progress
-                showHoverBlock(worldPos, 'green', hoverProgressRef.current);
+                showHoverBlock(worldPos, "green", hoverProgressRef.current);
 
                 // Place block after 3 seconds
                 if (holdTime >= 3.0 && !prevRightPinchRef.current) {
@@ -503,11 +526,7 @@ const BlockBuilder3D = () => {
         // LEFT HAND PINCH: Remove block (3 second hold)
         if (leftHand && leftHand.is_pinching) {
             const indexTip = leftHand.landmarks[8];
-            const worldPos = screenToWorld(
-                indexTip.x,
-                indexTip.y,
-                leftHand
-            );
+            const worldPos = screenToWorld(indexTip.x, indexTip.y, leftHand);
 
             // Start timer if just started pinching
             if (!leftPinchHoldStartRef.current) {
@@ -516,11 +535,12 @@ const BlockBuilder3D = () => {
             }
 
             // Calculate hold progress
-            const holdTime = (Date.now() - leftPinchHoldStartRef.current) / 1000;
+            const holdTime =
+                (Date.now() - leftPinchHoldStartRef.current) / 1000;
             const progress = Math.min(holdTime / 3.0, 1.0);
 
             // Show red hover with progress
-            showHoverBlock(worldPos, 'red', progress);
+            showHoverBlock(worldPos, "red", progress);
 
             // Delete block after 3 seconds
             if (holdTime >= 3.0 && !prevLeftPinchRef.current) {
@@ -535,7 +555,10 @@ const BlockBuilder3D = () => {
         }
 
         // Remove hover if no pinching happening
-        if ((!rightHand || !rightHand.is_pinching) && (!leftHand || !leftHand.is_pinching)) {
+        if (
+            (!rightHand || !rightHand.is_pinching) &&
+            (!leftHand || !leftHand.is_pinching)
+        ) {
             removeHoverBlock();
         }
     };
@@ -562,8 +585,10 @@ const BlockBuilder3D = () => {
         const videoAspect = video.videoWidth / video.videoHeight;
         const screenAspect = window.innerWidth / window.innerHeight;
 
-        let scaleX = 1, scaleY = 1;
-        let offsetX = 0, offsetY = 0;
+        let scaleX = 1,
+            scaleY = 1;
+        let offsetX = 0,
+            offsetY = 0;
 
         // Logic for 'object-fit: cover'
         if (screenAspect > videoAspect) {
@@ -588,7 +613,7 @@ const BlockBuilder3D = () => {
         const mirroredX = 1 - visibleX;
 
         // 3. Convert to Three.js NDC (-1 to +1)
-        const ndcX = (mirroredX * 2) - 1;
+        const ndcX = mirroredX * 2 - 1;
         const ndcY = -(visibleY * 2) + 1; // Note the negative sign for Y!
 
         return { x: ndcX, y: ndcY };
@@ -628,9 +653,18 @@ const BlockBuilder3D = () => {
         let z = Math.round(position.z / BLOCK_SIZE) * BLOCK_SIZE;
 
         // Clamp to grid bounds
-        x = Math.max(-halfSize + BLOCK_SIZE / 2, Math.min(halfSize - BLOCK_SIZE / 2, x));
-        y = Math.max(-halfSize + BLOCK_SIZE / 2, Math.min(halfSize - BLOCK_SIZE / 2, y));
-        z = Math.max(-halfSize + BLOCK_SIZE / 2, Math.min(halfSize - BLOCK_SIZE / 2, z));
+        x = Math.max(
+            -halfSize + BLOCK_SIZE / 2,
+            Math.min(halfSize - BLOCK_SIZE / 2, x),
+        );
+        y = Math.max(
+            -halfSize + BLOCK_SIZE / 2,
+            Math.min(halfSize - BLOCK_SIZE / 2, y),
+        );
+        z = Math.max(
+            -halfSize + BLOCK_SIZE / 2,
+            Math.min(halfSize - BLOCK_SIZE / 2, z),
+        );
 
         return new THREE.Vector3(x, y, z);
     };
@@ -652,7 +686,7 @@ const BlockBuilder3D = () => {
         const geometry = new THREE.BoxGeometry(
             BLOCK_SIZE * 0.9,
             BLOCK_SIZE * 0.9,
-            BLOCK_SIZE * 0.9
+            BLOCK_SIZE * 0.9,
         );
         const material = new THREE.MeshStandardMaterial({
             color: 0x00ff00,
@@ -666,7 +700,7 @@ const BlockBuilder3D = () => {
         const edges = new THREE.EdgesGeometry(geometry);
         const edgeLines = new THREE.LineSegments(
             edges,
-            new THREE.LineBasicMaterial({ color: 0x000000, linewidth: 2 })
+            new THREE.LineBasicMaterial({ color: 0x000000, linewidth: 2 }),
         );
 
         const blockGroup = new THREE.Group();
@@ -694,14 +728,14 @@ const BlockBuilder3D = () => {
         setBlockCount(blocksRef.current.size);
     };
 
-    const showHoverBlock = (worldPos, color = 'green', progress = 0) => {
+    const showHoverBlock = (worldPos, color = "green", progress = 0) => {
         const snapped = snapToGrid(worldPos);
 
         if (!hoverBlockRef.current) {
             const geometry = new THREE.BoxGeometry(
                 BLOCK_SIZE * 0.9,
                 BLOCK_SIZE * 0.9,
-                BLOCK_SIZE * 0.9
+                BLOCK_SIZE * 0.9,
             );
             const material = new THREE.MeshBasicMaterial({
                 color: 0x00ff00,
@@ -713,14 +747,14 @@ const BlockBuilder3D = () => {
         }
 
         // Update color based on hover type
-        const hexColor = color === 'red' ? 0xff0000 : 0x00ff00;
+        const hexColor = color === "red" ? 0xff0000 : 0x00ff00;
         hoverBlockRef.current.material.color.setHex(hexColor);
 
         // Update opacity based on progress (0.3 to 0.8)
-        hoverBlockRef.current.material.opacity = 0.3 + (progress * 0.5);
+        hoverBlockRef.current.material.opacity = 0.3 + progress * 0.5;
 
         // Scale up slightly as progress increases
-        const scale = 0.9 + (progress * 0.1);
+        const scale = 0.9 + progress * 0.1;
         hoverBlockRef.current.scale.set(scale, scale, scale);
 
         hoverBlockRef.current.position.copy(snapped);
@@ -748,7 +782,7 @@ const BlockBuilder3D = () => {
             // - Vertical hand motion (deltaY) -> X-axis rotation (tilting up/down)
             // Multiply by larger factor since we're in normalized coords (0-1 range)
             gridGroupRef.current.rotation.y -= deltaX * 3.0;
-            gridGroupRef.current.rotation.x += deltaY * 3.0;  // Note: + because screen Y goes down
+            gridGroupRef.current.rotation.x += deltaY * 3.0; // Note: + because screen Y goes down
         }
 
         prevFistPosRef.current = screenPos;
@@ -781,7 +815,7 @@ const BlockBuilder3D = () => {
 
         const distance = Math.sqrt(
             (leftIndex.x - rightIndex.x) ** 2 +
-                (leftIndex.y - rightIndex.y) ** 2
+                (leftIndex.y - rightIndex.y) ** 2,
         );
 
         if (twoHandsZoomRef.current !== null) {
@@ -794,7 +828,7 @@ const BlockBuilder3D = () => {
             // REVERSED: Hands apart (positive delta) = zoom IN (move camera closer)
             cameraRef.current.position.addScaledVector(
                 direction,
-                delta * zoomSpeed  // Removed the negative sign
+                delta * zoomSpeed, // Removed the negative sign
             );
         }
 
@@ -808,7 +842,7 @@ const BlockBuilder3D = () => {
         const buttonRadius = 0.05; // 5% of screen width/height
 
         const distance = Math.sqrt(
-            (normalizedX - buttonX) ** 2 + (normalizedY - buttonY) ** 2
+            (normalizedX - buttonX) ** 2 + (normalizedY - buttonY) ** 2,
         );
 
         return distance < buttonRadius;
@@ -838,9 +872,11 @@ const BlockBuilder3D = () => {
 
         // Flash button green
         if (recenterButtonRef.current) {
-            recenterButtonRef.current.style.backgroundColor = "rgba(0, 255, 0, 0.9)";
+            recenterButtonRef.current.style.backgroundColor =
+                "rgba(0, 255, 0, 0.9)";
             setTimeout(() => {
-                recenterButtonRef.current.style.backgroundColor = "rgba(68, 68, 255, 0.8)";
+                recenterButtonRef.current.style.backgroundColor =
+                    "rgba(68, 68, 255, 0.8)";
             }, 200);
         }
     };
@@ -902,34 +938,6 @@ const BlockBuilder3D = () => {
                     pointerEvents: "none",
                 }}
             />
-
-            <button
-                ref={recenterButtonRef}
-                style={{
-                    position: "absolute",
-                    top: 20,
-                    left: 20,
-                    width: "80px",
-                    height: "80px",
-                    borderRadius: "50%",
-                    backgroundColor: "rgba(68, 68, 255, 0.8)",
-                    border: "3px solid white",
-                    color: "white",
-                    fontFamily: "monospace",
-                    fontSize: "12px",
-                    fontWeight: "bold",
-                    cursor: "pointer",
-                    zIndex: 5,
-                    transition: "all 0.2s ease",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    textAlign: "center",
-                    pointerEvents: "none",
-                }}
-            >
-                PINCH TO RECENTER
-            </button>
 
             <div
                 style={{

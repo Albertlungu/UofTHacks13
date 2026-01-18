@@ -1,0 +1,342 @@
+[
+    {
+        "timestamp": "2026-01-18T06:53:20.050319",
+        "user": "Thank you."
+    },
+    {
+        "timestamp": "2026-01-18T06:53:24.058740",
+        "companion": "No problem! What's up?",
+        "thinking_time": 3.8096020221710205,
+        "total_time": 3.8099889755249023
+    },
+    {
+        "timestamp": "2026-01-18T06:53:30.209596",
+        "user": "No problem. What's up?"
+    },
+    {
+        "timestamp": "2026-01-18T06:53:36.464632",
+        "companion": "Hey! Not much, just hanging out. How's your project going with the 3D model and virtual assistant? Getting any closer to recording something?",
+        "thinking_time": 6.132388114929199,
+        "total_time": 6.13299822807312
+    },
+    {
+        "timestamp": "2026-01-18T06:53:41.068355",
+        "user": "Guys, how much time does it normally take for the little gross to load it to instant?"
+    },
+    {
+        "timestamp": "2026-01-18T06:53:47.530830",
+        "user": "and load effect the past 20 seconds."
+    },
+    {
+        "timestamp": "2026-01-18T06:54:11.854783",
+        "companion": "[Error: HTTPSConnectionPool(host='app.backboard.io', port=443): Read timed out. (read timeout=30)]",
+        "thinking_time": 30.445409059524536,
+        "total_time": 30.445690155029297
+    },
+    {
+        "timestamp": "2026-01-18T06:54:16.087202",
+        "companion": "Hmm, I'm not sure what you mean by \"little gross\" and \"load it to instant.\" Could you clarify what you're referring to? Are you talking about something related to your 3D modeling project?",
+        "thinking_time": 3.422774076461792,
+        "total_time": 3.423090934753418
+    },
+    {
+        "timestamp": "2026-01-18T06:55:50.422706",
+        "user": "I Don't look backwards and amplitude"
+    },
+    {
+        "timestamp": "2026-01-18T06:55:57.440862",
+        "companion": "Alright, sounds like you're working on something with filters or effects, right? If it's part of the 3D modeling project, maybe tweaking some settings could help?",
+        "thinking_time": 5.625452041625977,
+        "total_time": 5.625649929046631
+    },
+    {
+        "timestamp": "2026-01-18T06:56:01.704855",
+        "user": "We can see a media pipe, that's a part of a tech stack."
+    },
+    {
+        "timestamp": "2026-01-18T06:56:05.794840",
+        "companion": "Ah, got it! MediaPipe's a part of what you're using. It's pretty solid for things like face and hand tracking. How's it fitting in with the rest of your setup?",
+        "thinking_time": 3.9155259132385254,
+        "total_time": 3.9159419536590576
+    },
+    {
+        "timestamp": "2026-01-18T06:56:07.155391",
+        "user": "Is that the first one?"
+    },
+    {
+        "timestamp": "2026-01-18T06:56:10.889527",
+        "companion": "The first part of your tech stack? If MediaPipe\u2019s just been recently added, it might be one of the newer elements. Did you start with something else before?",
+        "thinking_time": 3.463576078414917,
+        "total_time": 3.463942050933838
+    },
+    {
+        "timestamp": "2026-01-18T06:56:19.130411",
+        "user": "That's on your head, my mind works on mine. Wait, can I just show our video as we done my 9th button like 9? It's in February, it's in like 8 o'clock."
+    },
+    {
+        "timestamp": "2026-01-18T06:56:24.368449",
+        "companion": "Oh, sounds like you're talking about a video you worked on or something you've got scheduled? If it's related to your project, maybe it\u2019s a demo or a showcase of sorts? What\u2019s the button thing about?",
+        "thinking_time": 4.870917797088623,
+        "total_time": 4.871270179748535
+    },
+    {
+        "timestamp": "2026-01-18T06:56:36.391499",
+        "user": "video. It was submitted. And that post has a YouTube link."
+    },
+    {
+        "timestamp": "2026-01-18T06:56:41.925641",
+        "companion": "Oh nice! So the video was already submitted and you've got it up on YouTube, right? That's awesome. Is it live already, or going live in February?",
+        "thinking_time": 5.327597141265869,
+        "total_time": 5.327824115753174
+    },
+    {
+        "timestamp": "2026-01-18T06:59:11.697946",
+        "user": "This video is broken. This video. What video is your book? It's a new plastic bag. This video clearly does not... It's a new plastic bag. Oh, yeah, it is. Yes, sir. Yes, sir."
+    },
+    {
+        "timestamp": "2026-01-18T06:59:15.968686",
+        "companion": "Wait, what? I think I'm missing something here. Sounds like the video and the plastic bag are getting mixed up. What\u2019s going on?",
+        "thinking_time": 3.7952628135681152,
+        "total_time": 3.79567289352417
+    },
+    {
+        "timestamp": "2026-01-18T06:59:27.140874",
+        "user": "Hey, wait what? I think I'm missing something here sounds like the video and the plastic bag are getting mixed up. What's going on?"
+    },
+    {
+        "timestamp": "2026-01-18T06:59:31.173429",
+        "companion": "Yeah, sounds like a bit of a mix-up. Did the video cut out or something? Maybe we can sort it out. What's the plastic bag about, by the way?",
+        "thinking_time": 3.8923490047454834,
+        "total_time": 3.8927807807922363
+    },
+    {
+        "timestamp": "2026-01-18T07:00:13.125453",
+        "user": "I don't know how much more you're waiting for what it's doing now."
+    },
+    {
+        "timestamp": "2026-01-18T07:00:16.975345",
+        "companion": "It\u2019s all good, no pressure. Just fill me in when you can. If you need help untangling things, let me know!",
+        "thinking_time": 3.3624181747436523,
+        "total_time": 3.3627052307128906
+    },
+    {
+        "timestamp": "2026-01-18T07:00:23.502039",
+        "user": "It's all good, no pressure, just fill me in when you can."
+    },
+    {
+        "timestamp": "2026-01-18T07:00:26.271695",
+        "companion": "Got it, I\u2019ll be here when you're ready to chat about it!",
+        "thinking_time": 2.589193105697632,
+        "total_time": 2.589353084564209
+    },
+    {
+        "timestamp": "2026-01-18T07:01:21.072678",
+        "user": "When you happen to add a few, you don't have any. No!"
+    },
+    {
+        "timestamp": "2026-01-18T07:01:26.721207",
+        "companion": "Wait, what? That sounds like a riddle or something. What are you talking about?",
+        "thinking_time": 5.630695104598999,
+        "total_time": 5.630889177322388
+    },
+    {
+        "timestamp": "2026-01-18T07:01:33.810550",
+        "user": "We're discussing, yeah. We're just going to do the other side. What? We're going to do the other side."
+    },
+    {
+        "timestamp": "2026-01-18T07:01:37.254767",
+        "companion": "Oh, okay. Sounds like you're working on something and switching gears? What's the project you're tackling?",
+        "thinking_time": 3.089956760406494,
+        "total_time": 3.0901832580566406
+    },
+    {
+        "timestamp": "2026-01-18T07:05:14.766657",
+        "user": "I mean, the timeline works, but we don't know."
+    },
+    {
+        "timestamp": "2026-01-18T07:05:18.996443",
+        "companion": "Yeah, sometimes it's like that with projects. You plan everything and then just have to wait and see how it plays out. Anything specific you're not sure about?",
+        "thinking_time": 3.796935796737671,
+        "total_time": 3.797524929046631
+    },
+    {
+        "timestamp": "2026-01-18T07:06:13.656783",
+        "user": "Bye."
+    },
+    {
+        "timestamp": "2026-01-18T07:06:17.212916",
+        "companion": "Alright, take care!",
+        "thinking_time": 3.1231627464294434,
+        "total_time": 3.1237680912017822
+    },
+    {
+        "timestamp": "2026-01-18T07:07:00.525499",
+        "user": "Okay, so this is like 50 seconds, like 40 seconds."
+    },
+    {
+        "timestamp": "2026-01-18T07:07:03.804827",
+        "companion": "Gotcha, sounds like you're timing something pretty precisely. Got a video or something you're working on?",
+        "thinking_time": 2.903895854949951,
+        "total_time": 2.9041748046875
+    },
+    {
+        "timestamp": "2026-01-18T07:07:06.028388",
+        "user": "That's just up to hate. I don't know if we're gonna do anything else. Maybe I could, maybe we're..."
+    },
+    {
+        "timestamp": "2026-01-18T07:07:09.980900",
+        "companion": "Ah, sounds like you're still deciding. Sometimes it's best to just roll with whatever feels right. Feel like doing something different or sticking with the plan?",
+        "thinking_time": 3.53828501701355,
+        "total_time": 3.5385310649871826
+    },
+    {
+        "timestamp": "2026-01-18T07:07:20.390953",
+        "user": "I don't feel like I need to put any of that stuff here. Realistically. Like the demo and whatnot? The demo, yeah. But like, that stuff is like the insane edits."
+    },
+    {
+        "timestamp": "2026-01-18T07:07:23.512804",
+        "companion": "Makes sense. Keeping it simple for the demo and saving the crazy edits for later sounds practical. What's the demo about?",
+        "thinking_time": 2.9795219898223877,
+        "total_time": 2.979896068572998
+    },
+    {
+        "timestamp": "2026-01-18T07:07:58.469859",
+        "user": "or either way."
+    },
+    {
+        "timestamp": "2026-01-18T07:08:02.074317",
+        "companion": "True, sometimes it works out whether you go all in or keep it simple. Whatever feels right.",
+        "thinking_time": 3.2488961219787598,
+        "total_time": 3.2491719722747803
+    },
+    {
+        "timestamp": "2026-01-18T07:08:50.081193",
+        "user": "We're organizing. Longer video is pretty short. No, the whole point is we're short. But then we go on to video. Short video. Thank you for watching. Find like it here at the site of the video in Southern Hollywood. So, what's up? How are you? I can email you. I'm just like finishing the schedule. Get the upload right there. Yeah."
+    },
+    {
+        "timestamp": "2026-01-18T07:08:55.774904",
+        "companion": "Wow, you\u2019ve got a lot going on! Sounds like a busy day with the video stuff and organizing. Everything going smoothly with the schedule?",
+        "thinking_time": 5.651417016983032,
+        "total_time": 5.651814937591553
+    },
+    {
+        "timestamp": "2026-01-18T07:09:47.887148",
+        "user": "Um, no, that's a good question."
+    },
+    {
+        "timestamp": "2026-01-18T07:09:51.351952",
+        "companion": "Oh, what's on your mind?",
+        "thinking_time": 3.306952953338623,
+        "total_time": 3.3073878288269043
+    },
+    {
+        "timestamp": "2026-01-18T07:10:37.554338",
+        "user": "I don't know. Should we take a big picture of the local? Yeah, yeah, maybe it's a local. Let's look at it."
+    },
+    {
+        "timestamp": "2026-01-18T07:10:41.759970",
+        "companion": "Yeah, that sounds fun! Taking a big picture could be cool to get a fresh perspective on the local scene. ",
+        "thinking_time": 3.8697867393493652,
+        "total_time": 3.870455741882324
+    },
+    {
+        "timestamp": "2026-01-18T07:11:24.619773",
+        "user": "You're not going to put it in the box."
+    },
+    {
+        "timestamp": "2026-01-18T07:11:28.329665",
+        "companion": "Nah, I wouldn't do that. It's more about capturing the vibe, you know?",
+        "thinking_time": 3.6246566772460938,
+        "total_time": 3.625154733657837
+    },
+    {
+        "timestamp": "2026-01-18T07:15:02.139499",
+        "user": "at least where we're doing the end of the video. So, we'll be watching the video. Of course, I'll be a part of it."
+    },
+    {
+        "timestamp": "2026-01-18T07:15:06.688713",
+        "companion": "Oh, that sounds fun! You gonna be on camera or more behind the scenes?",
+        "thinking_time": 4.46026086807251,
+        "total_time": 4.460852861404419
+    },
+    {
+        "timestamp": "2026-01-18T07:16:12.403193",
+        "user": "So Steve, if you want to just take my computer and you can light them all up. Sure."
+    },
+    {
+        "timestamp": "2026-01-18T07:16:16.911858",
+        "companion": "Wait, what are you talking about lighting up? Is this something to do with your project or maybe a cool light setup?",
+        "thinking_time": 4.2008888721466064,
+        "total_time": 4.201150178909302
+    },
+    {
+        "timestamp": "2026-01-18T07:16:19.245619",
+        "user": "I'm gonna put some stuff here and then demo."
+    },
+    {
+        "timestamp": "2026-01-18T07:16:22.517133",
+        "companion": "Ah, got it. Keeping it simple with the demo makes sense. When's it happening? ",
+        "thinking_time": 3.263460874557495,
+        "total_time": 3.2639379501342773
+    },
+    {
+        "timestamp": "2026-01-18T07:16:32.245376",
+        "user": "Wait, and do we speak, is it like, do we speak through the demo or is it just... We shouldn't speak through the demo, I don't think it's necessary, but if we want to..."
+    },
+    {
+        "timestamp": "2026-01-18T07:16:36.539326",
+        "companion": "Yeah, if you think the demo's straightforward, maybe just let the visuals do the talking. But if you feel explaining a bit would help, you could add a quick intro or commentary. What do you think?",
+        "thinking_time": 4.191792964935303,
+        "total_time": 4.192155838012695
+    },
+    {
+        "timestamp": "2026-01-18T07:16:51.361197",
+        "user": "So I'm guessing we really just showed our code, and like, not our code, like, what it does. All you want to do is just show it in action. Okay, and then we want to, we can put the voice of, like, we can put my voice, like, the one that generates everything."
+    },
+    {
+        "timestamp": "2026-01-18T07:16:58.792654",
+        "companion": "Yeah, exactly. Show what the code does in action, maybe with some cool visuals. And then throwing in your voice could really bring it all together. Makes it more engaging, you know?",
+        "thinking_time": 7.326387882232666,
+        "total_time": 7.326765060424805
+    },
+    {
+        "timestamp": "2026-01-18T07:27:14.434404",
+        "user": "15 minute recording once"
+    },
+    {
+        "timestamp": "2026-01-18T07:27:20.955865",
+        "companion": "Alright, so you're gonna do a 15-minute recording? What are you working on this time? Something for the 3D modeling project?",
+        "thinking_time": 5.200546026229858,
+        "total_time": 5.201222896575928
+    },
+    {
+        "timestamp": "2026-01-18T07:28:06.110920",
+        "user": "Could you clarify the 3D project you're working on? No, I can't. Sorry."
+    },
+    {
+        "timestamp": "2026-01-18T07:28:10.539703",
+        "companion": "Haha, fair enough! If you ever feel like sharing more or want to bounce ideas around, I'm here. ",
+        "thinking_time": 3.9286680221557617,
+        "total_time": 3.9289681911468506
+    },
+    {
+        "timestamp": "2026-01-18T07:29:34.314744",
+        "user": "It seems like you're repeating yourself. Would you like to focus on something specific about the animal?"
+    },
+    {
+        "timestamp": "2026-01-18T07:29:39.222809",
+        "companion": "Oh, my bad if it sounded that way! What exactly are you curious about when it comes to the animal? ",
+        "thinking_time": 4.482897996902466,
+        "total_time": 4.483177185058594
+    },
+    {
+        "timestamp": "2026-01-18T07:29:48.388671",
+        "user": "I was just still alive in general. Okay, then why'd you say you fixed me your bus?"
+    },
+    {
+        "timestamp": "2026-01-18T07:29:52.632682",
+        "companion": "Wait, what? That sounds kinda mixed up. Are you talking about fixing something or was that like a random thought?",
+        "thinking_time": 3.7792859077453613,
+        "total_time": 3.7798421382904053
+    }
+]

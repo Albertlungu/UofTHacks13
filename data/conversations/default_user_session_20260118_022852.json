@@ -1,0 +1,13 @@
+{
+  "user_id": "default_user",
+  "exchange_count": 1,
+  "last_analysis_at": 0,
+  "exchanges": [
+    {
+      "timestamp": "2026-01-18T02:29:07.678065",
+      "user_text": "reduction is composed of a major premise, a minor premise, and a conclusion.",
+      "ai_response": "Yeah, pretty much. It's like breaking down an argument into its basic parts. Have you been diving into some logic or philosophy lately?",
+      "exchange_number": 1
+    }
+  ]
+}

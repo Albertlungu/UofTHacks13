@@ -1,0 +1,22 @@
+[
+    {
+        "timestamp": "2026-01-18T02:23:54.279045",
+        "user": "And then it talks back and we kind of like we"
+    },
+    {
+        "timestamp": "2026-01-18T02:23:58.392371",
+        "user": "what I can see happening."
+    },
+    {
+        "timestamp": "2026-01-18T02:23:59.564717",
+        "companion": "It sounds like you're working on something where your 3D model can interact with you. Are you working on adding voice interaction features?",
+        "thinking_time": 3.988654136657715,
+        "total_time": 3.9901018142700195
+    },
+    {
+        "timestamp": "2026-01-18T02:24:03.070390",
+        "companion": "Gotcha! So you're thinking ahead to how it might all come together. What part are you most excited to work on?",
+        "thinking_time": 3.500338077545166,
+        "total_time": 3.5009877681732178
+    }
+]

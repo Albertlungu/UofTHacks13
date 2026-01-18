@@ -1,0 +1,42 @@
+[
+    {
+        "timestamp": "2026-01-18T07:19:37.595942",
+        "user": "The first one is at 9 o'clock."
+    },
+    {
+        "timestamp": "2026-01-18T07:19:43.038164",
+        "companion": "Got it, what's happening at nine? Is it something fun or more of a work thing?",
+        "thinking_time": 5.1425371170043945,
+        "total_time": 5.1429197788238525
+    },
+    {
+        "timestamp": "2026-01-18T07:20:21.996734",
+        "user": "I'm going to change the text a little bit."
+    },
+    {
+        "timestamp": "2026-01-18T07:20:25.984800",
+        "companion": "Cool, what are you changing it to?",
+        "thinking_time": 3.760706663131714,
+        "total_time": 3.7609689235687256
+    },
+    {
+        "timestamp": "2026-01-18T07:20:31.552456",
+        "user": "Yeah, that's the last one. Oh, that's a nice one."
+    },
+    {
+        "timestamp": "2026-01-18T07:20:35.375020",
+        "companion": "Ah, sounds like you've got it all sorted out. Are you feeling good about the changes?",
+        "thinking_time": 3.58735728263855,
+        "total_time": 3.5875320434570312
+    },
+    {
+        "timestamp": "2026-01-18T07:22:17.389651",
+        "user": "I don't see the tags on my hands, so yeah, I'll just..."
+    },
+    {
+        "timestamp": "2026-01-18T07:22:21.450951",
+        "companion": "Oh, that's weird, especially if you were expecting them. Maybe the visibility settings are off or something like that? What were you doing before this?",
+        "thinking_time": 3.730067014694214,
+        "total_time": 3.730484962463379
+    }
+]

@@ -1,0 +1,32 @@
+[
+    {
+        "timestamp": "2026-01-18T06:45:44.891033",
+        "user": "All right, general image for that looks like Paris please."
+    },
+    {
+        "timestamp": "2026-01-18T06:45:49.550722",
+        "companion": "Oh, Paris vibes! I'm picturing the Eiffel Tower, some classic cobblestone streets, and maybe a cute little caf\u00e9 with outdoor seating. You thinking along those lines too?",
+        "thinking_time": 4.2474682331085205,
+        "total_time": 4.247885704040527
+    },
+    {
+        "timestamp": "2026-01-18T06:46:23.665578",
+        "user": "Oh, yeah. Crap, we need the only issue credits."
+    },
+    {
+        "timestamp": "2026-01-18T06:46:27.826961",
+        "companion": "Ah, gotcha. Yeah, sometimes these things sneak up on us. You think you'll have enough to get what you need?",
+        "thinking_time": 3.749791145324707,
+        "total_time": 3.7500851154327393
+    },
+    {
+        "timestamp": "2026-01-18T06:46:28.232670",
+        "user": "for image generation."
+    },
+    {
+        "timestamp": "2026-01-18T06:46:32.632249",
+        "companion": "Right, makes sense. Image generation can be a bit of a credit hog. Do you have a plan for getting more, or are you still figuring it out?",
+        "thinking_time": 3.963776111602783,
+        "total_time": 3.964031934738159
+    }
+]

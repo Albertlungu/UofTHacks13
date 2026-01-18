@@ -1,0 +1,211 @@
+{
+  "user_id": "default_user",
+  "exchange_count": 34,
+  "last_analysis_at": 0,
+  "exchanges": [
+    {
+      "timestamp": "2026-01-18T06:53:24.058957",
+      "user_text": "Thank you.",
+      "ai_response": "No problem! What's up?",
+      "exchange_number": 1
+    },
+    {
+      "timestamp": "2026-01-18T06:53:36.464811",
+      "user_text": "No problem. What's up?",
+      "ai_response": "Hey! Not much, just hanging out. How's your project going with the 3D model and virtual assistant? Getting any closer to recording something?",
+      "exchange_number": 2
+    },
+    {
+      "timestamp": "2026-01-18T06:54:11.855128",
+      "user_text": "Guys, how much time does it normally take for the little gross to load it to instant?",
+      "ai_response": "[Error: HTTPSConnectionPool(host='app.backboard.io', port=443): Read timed out. (read timeout=30)]",
+      "exchange_number": 3
+    },
+    {
+      "timestamp": "2026-01-18T06:54:16.087415",
+      "user_text": "and load effect the past 20 seconds.",
+      "ai_response": "Hmm, I'm not sure what you mean by \"little gross\" and \"load it to instant.\" Could you clarify what you're referring to? Are you talking about something related to your 3D modeling project?",
+      "exchange_number": 4
+    },
+    {
+      "timestamp": "2026-01-18T06:55:57.441091",
+      "user_text": "I Don't look backwards and amplitude",
+      "ai_response": "Alright, sounds like you're working on something with filters or effects, right? If it's part of the 3D modeling project, maybe tweaking some settings could help?",
+      "exchange_number": 5
+    },
+    {
+      "timestamp": "2026-01-18T06:56:05.795236",
+      "user_text": "We can see a media pipe, that's a part of a tech stack.",
+      "ai_response": "Ah, got it! MediaPipe's a part of what you're using. It's pretty solid for things like face and hand tracking. How's it fitting in with the rest of your setup?",
+      "exchange_number": 6
+    },
+    {
+      "timestamp": "2026-01-18T06:56:10.889782",
+      "user_text": "Is that the first one?",
+      "ai_response": "The first part of your tech stack? If MediaPipe\u2019s just been recently added, it might be one of the newer elements. Did you start with something else before?",
+      "exchange_number": 7
+    },
+    {
+      "timestamp": "2026-01-18T06:56:24.368820",
+      "user_text": "That's on your head, my mind works on mine. Wait, can I just show our video as we done my 9th button like 9? It's in February, it's in like 8 o'clock.",
+      "ai_response": "Oh, sounds like you're talking about a video you worked on or something you've got scheduled? If it's related to your project, maybe it\u2019s a demo or a showcase of sorts? What\u2019s the button thing about?",
+      "exchange_number": 8
+    },
+    {
+      "timestamp": "2026-01-18T06:56:41.925919",
+      "user_text": "video. It was submitted. And that post has a YouTube link.",
+      "ai_response": "Oh nice! So the video was already submitted and you've got it up on YouTube, right? That's awesome. Is it live already, or going live in February?",
+      "exchange_number": 9
+    },
+    {
+      "timestamp": "2026-01-18T06:59:15.969137",
+      "user_text": "This video is broken. This video. What video is your book? It's a new plastic bag. This video clearly does not... It's a new plastic bag. Oh, yeah, it is. Yes, sir. Yes, sir.",
+      "ai_response": "Wait, what? I think I'm missing something here. Sounds like the video and the plastic bag are getting mixed up. What\u2019s going on?",
+      "exchange_number": 10
+    },
+    {
+      "timestamp": "2026-01-18T06:59:31.174064",
+      "user_text": "Hey, wait what? I think I'm missing something here sounds like the video and the plastic bag are getting mixed up. What's going on?",
+      "ai_response": "Yeah, sounds like a bit of a mix-up. Did the video cut out or something? Maybe we can sort it out. What's the plastic bag about, by the way?",
+      "exchange_number": 11
+    },
+    {
+      "timestamp": "2026-01-18T07:00:16.975869",
+      "user_text": "I don't know how much more you're waiting for what it's doing now.",
+      "ai_response": "It\u2019s all good, no pressure. Just fill me in when you can. If you need help untangling things, let me know!",
+      "exchange_number": 12
+    },
+    {
+      "timestamp": "2026-01-18T07:00:26.272097",
+      "user_text": "It's all good, no pressure, just fill me in when you can.",
+      "ai_response": "Got it, I\u2019ll be here when you're ready to chat about it!",
+      "exchange_number": 13
+    },
+    {
+      "timestamp": "2026-01-18T07:01:26.721509",
+      "user_text": "When you happen to add a few, you don't have any. No!",
+      "ai_response": "Wait, what? That sounds like a riddle or something. What are you talking about?",
+      "exchange_number": 14
+    },
+    {
+      "timestamp": "2026-01-18T07:01:37.255119",
+      "user_text": "We're discussing, yeah. We're just going to do the other side. What? We're going to do the other side.",
+      "ai_response": "Oh, okay. Sounds like you're working on something and switching gears? What's the project you're tackling?",
+      "exchange_number": 15
+    },
+    {
+      "timestamp": "2026-01-18T07:05:18.997144",
+      "user_text": "I mean, the timeline works, but we don't know.",
+      "ai_response": "Yeah, sometimes it's like that with projects. You plan everything and then just have to wait and see how it plays out. Anything specific you're not sure about?",
+      "exchange_number": 16
+    },
+    {
+      "timestamp": "2026-01-18T07:06:17.213649",
+      "user_text": "Bye.",
+      "ai_response": "Alright, take care!",
+      "exchange_number": 17
+    },
+    {
+      "timestamp": "2026-01-18T07:07:03.805228",
+      "user_text": "Okay, so this is like 50 seconds, like 40 seconds.",
+      "ai_response": "Gotcha, sounds like you're timing something pretty precisely. Got a video or something you're working on?",
+      "exchange_number": 18
+    },
+    {
+      "timestamp": "2026-01-18T07:07:09.981958",
+      "user_text": "That's just up to hate. I don't know if we're gonna do anything else. Maybe I could, maybe we're...",
+      "ai_response": "Ah, sounds like you're still deciding. Sometimes it's best to just roll with whatever feels right. Feel like doing something different or sticking with the plan?",
+      "exchange_number": 19
+    },
+    {
+      "timestamp": "2026-01-18T07:07:23.513602",
+      "user_text": "I don't feel like I need to put any of that stuff here. Realistically. Like the demo and whatnot? The demo, yeah. But like, that stuff is like the insane edits.",
+      "ai_response": "Makes sense. Keeping it simple for the demo and saving the crazy edits for later sounds practical. What's the demo about?",
+      "exchange_number": 20
+    },
+    {
+      "timestamp": "2026-01-18T07:08:02.075400",
+      "user_text": "or either way.",
+      "ai_response": "True, sometimes it works out whether you go all in or keep it simple. Whatever feels right.",
+      "exchange_number": 21
+    },
+    {
+      "timestamp": "2026-01-18T07:08:55.775825",
+      "user_text": "We're organizing. Longer video is pretty short. No, the whole point is we're short. But then we go on to video. Short video. Thank you for watching. Find like it here at the site of the video in Southern Hollywood. So, what's up? How are you? I can email you. I'm just like finishing the schedule. Get the upload right there. Yeah.",
+      "ai_response": "Wow, you\u2019ve got a lot going on! Sounds like a busy day with the video stuff and organizing. Everything going smoothly with the schedule?",
+      "exchange_number": 22
+    },
+    {
+      "timestamp": "2026-01-18T07:09:51.353098",
+      "user_text": "Um, no, that's a good question.",
+      "ai_response": "Oh, what's on your mind?",
+      "exchange_number": 23
+    },
+    {
+      "timestamp": "2026-01-18T07:10:41.761203",
+      "user_text": "I don't know. Should we take a big picture of the local? Yeah, yeah, maybe it's a local. Let's look at it.",
+      "ai_response": "Yeah, that sounds fun! Taking a big picture could be cool to get a fresh perspective on the local scene. ",
+      "exchange_number": 24
+    },
+    {
+      "timestamp": "2026-01-18T07:11:28.330958",
+      "user_text": "You're not going to put it in the box.",
+      "ai_response": "Nah, I wouldn't do that. It's more about capturing the vibe, you know?",
+      "exchange_number": 25
+    },
+    {
+      "timestamp": "2026-01-18T07:15:06.690166",
+      "user_text": "at least where we're doing the end of the video. So, we'll be watching the video. Of course, I'll be a part of it.",
+      "ai_response": "Oh, that sounds fun! You gonna be on camera or more behind the scenes?",
+      "exchange_number": 26
+    },
+    {
+      "timestamp": "2026-01-18T07:16:16.912398",
+      "user_text": "So Steve, if you want to just take my computer and you can light them all up. Sure.",
+      "ai_response": "Wait, what are you talking about lighting up? Is this something to do with your project or maybe a cool light setup?",
+      "exchange_number": 27
+    },
+    {
+      "timestamp": "2026-01-18T07:16:22.517578",
+      "user_text": "I'm gonna put some stuff here and then demo.",
+      "ai_response": "Ah, got it. Keeping it simple with the demo makes sense. When's it happening? ",
+      "exchange_number": 28
+    },
+    {
+      "timestamp": "2026-01-18T07:16:36.540331",
+      "user_text": "Wait, and do we speak, is it like, do we speak through the demo or is it just... We shouldn't speak through the demo, I don't think it's necessary, but if we want to...",
+      "ai_response": "Yeah, if you think the demo's straightforward, maybe just let the visuals do the talking. But if you feel explaining a bit would help, you could add a quick intro or commentary. What do you think?",
+      "exchange_number": 29
+    },
+    {
+      "timestamp": "2026-01-18T07:16:58.793351",
+      "user_text": "So I'm guessing we really just showed our code, and like, not our code, like, what it does. All you want to do is just show it in action. Okay, and then we want to, we can put the voice of, like, we can put my voice, like, the one that generates everything.",
+      "ai_response": "Yeah, exactly. Show what the code does in action, maybe with some cool visuals. And then throwing in your voice could really bring it all together. Makes it more engaging, you know?",
+      "exchange_number": 30
+    },
+    {
+      "timestamp": "2026-01-18T07:27:20.956927",
+      "user_text": "15 minute recording once",
+      "ai_response": "Alright, so you're gonna do a 15-minute recording? What are you working on this time? Something for the 3D modeling project?",
+      "exchange_number": 31
+    },
+    {
+      "timestamp": "2026-01-18T07:28:10.540590",
+      "user_text": "Could you clarify the 3D project you're working on? No, I can't. Sorry.",
+      "ai_response": "Haha, fair enough! If you ever feel like sharing more or want to bounce ideas around, I'm here. ",
+      "exchange_number": 32
+    },
+    {
+      "timestamp": "2026-01-18T07:29:39.223633",
+      "user_text": "It seems like you're repeating yourself. Would you like to focus on something specific about the animal?",
+      "ai_response": "Oh, my bad if it sounded that way! What exactly are you curious about when it comes to the animal? ",
+      "exchange_number": 33
+    },
+    {
+      "timestamp": "2026-01-18T07:29:52.633537",
+      "user_text": "I was just still alive in general. Okay, then why'd you say you fixed me your bus?",
+      "ai_response": "Wait, what? That sounds kinda mixed up. Are you talking about fixing something or was that like a random thought?",
+      "exchange_number": 34
+    }
+  ]
+}

@@ -114,6 +114,23 @@ echo "  - Voice conversation active"
 echo ""
 sleep 2
 
+# Start image API server in new iTerm tab
+echo "Starting visual memory image server..."
+osascript <<EOF
+tell application "iTerm"
+    tell current window
+        create tab with default profile
+        tell current session
+            write text "cd \"$SCRIPT_DIR\" && source venv/bin/activate && python src/api/image_server.py"
+        end tell
+    end tell
+end tell
+EOF
+echo "Image server launched in new tab"
+echo "  - Image API on http://localhost:5001"
+echo ""
+sleep 2
+
 # Start hand tracker in new iTerm tab (requires camera 1)
 if [ $NUM_CAMERAS -ge 2 ]; then
     echo "Starting hand tracker (3D builder backend) on camera 1..."
@@ -159,6 +176,7 @@ if [ $NUM_CAMERAS -ge 1 ]; then
     echo "  - Camera (Center Stage): http://localhost:5000"
 fi
 echo "  - 3D Builder (Frontend): http://localhost:3000"
+echo "  - Visual Memory API: http://localhost:5001"
 echo "  - Audio Conversation: Running in separate tab"
 if [ $NUM_CAMERAS -ge 2 ]; then
     echo "  - Hand Tracker: Running in separate tab"
@@ -166,6 +184,7 @@ fi
 echo ""
 echo "  Each service is running in its own iTerm tab."
 echo "  Close individual tabs to stop specific services."
+echo "  Images generated during conversation will appear as cube textures!"
 echo "=========================================="
 echo ""
 

@@ -19,6 +19,7 @@ from src.ai.conversation_tracker import ConversationTracker
 from src.ai.gemini_companion import GeminiCompanion
 from src.ai.backboard_companion import BackboardCompanion  # NEW: Multi-model AI
 from src.ai.interjection_analyzer import InterjectionAnalyzer  # NEW: Conversational interjections
+from src.ai.gemini_image_generator import GeminiImageGenerator  # NEW: Visual memory collage
 from src.audio.audio_stream_manager import AudioStreamManager
 from src.audio.tts_elevenlabs import ElevenLabsTTS
 from src.identity.identity_manager import IdentityManager
@@ -95,6 +96,10 @@ class ConversationManager:
         # Interjection Analyzer for conversational AI
         self.interjection_analyzer = InterjectionAnalyzer()
         logger.info("Interjection analyzer enabled - AI can now interrupt naturally")
+
+        # Image Generator for visual memory collage
+        self.image_generator = GeminiImageGenerator(api_key=gemini_api_key)
+        logger.info("Visual memory collage enabled - generating images for memorable topics")
 
         # Get initial identity profile prompt
         identity_prompt = self.identity_manager.get_system_prompt_additions()
@@ -418,6 +423,18 @@ class ConversationManager:
                         self.identity_manager.get_system_prompt_additions()
                     )
                     self.companion.update_identity_profile(identity_prompt)
+
+                # Generate image if topic is visually relevant (non-blocking)
+                try:
+                    image_path = self.image_generator.process_conversation_turn(
+                        user_message=user_utterance,
+                        ai_response=companion_response
+                    )
+                    if image_path:
+                        logger.info(f"[VISUAL MEMORY] Generated image: {image_path}")
+                        print(f"[VISUAL MEMORY] Created: {image_path}")
+                except Exception as e:
+                    logger.error(f"Error generating image: {e}")
 
                 # Send to TTS for audio output
                 print(f"\n[AI COMPANION]: {companion_response}\n")

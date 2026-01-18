@@ -2,31 +2,28 @@
   "user_id": "default_user",
   "communication_style": {
     "sentence_length": {
-      "avg_words": "14",
+      "avg_words": "15",
       "preference": "medium",
       "examples": [
-        "Okay, here we go.",
-        "What's the problem? What's the problem?"
+        "So I'm guessing we really just showed our code, and like, not our code, like, what it does.",
+        "So Steve, if you want to just take my computer and you can light them all up."
       ]
     },
     "vocabulary": {
-      "level": "mixed",
+      "level": "casual",
       "common_words": [
-        "okay",
-        "so",
         "like",
-        "that",
-        "one",
-        "camera",
-        "right"
+        "just",
+        "yeah",
+        "okay",
+        "so"
       ],
       "technical_terms": [
-        "UI",
-        "mode",
-        "tracking",
-        "feeds"
+        "demo",
+        "upload",
+        "code"
       ],
-      "formality_score": "3"
+      "formality_score": "2"
     },
     "humor_style": {
       "type": "none",
@@ -35,20 +32,18 @@
     },
     "expressiveness": {
       "level": "moderate",
-      "uses_emphasis": "true",
+      "uses_emphasis": "false",
       "uses_qualifiers": [
-        "like",
+        "maybe",
         "I think",
-        "though",
-        "probably",
-        "really",
-        "genuinely"
+        "if we want to"
       ]
     },
     "filler_words": [
+      "um",
       "like"
     ],
-    "last_updated": "2026-01-17T21:33:15.668487",
+    "last_updated": "2026-01-18T07:17:00.877553",
     "confidence": 1.0,
     "sample_size": 10
   },
@@ -126,6 +121,18 @@
         "id": "belief_1768703599",
         "first_mentioned": "2026-01-17T21:33:19.274388",
         "mention_count": 1
+      },
+      {
+        "category": "work",
+        "topic": "demo creation",
+        "stance": "Keeping a demo simple is practical.",
+        "confidence": "8",
+        "supporting_quotes": [
+          "Keeping it simple for the demo and saving the crazy edits for later sounds practical."
+        ],
+        "id": "belief_1768738047",
+        "first_mentioned": "2026-01-18T07:07:27.600566",
+        "mention_count": 1
       }
     ],
     "values": [
@@ -157,14 +164,16 @@
     "decision_patterns": {
       "risk_tolerance": "moderate",
       "speed_vs_quality": "balanced",
-      "examples": []
+      "examples": [
+        "Deciding whether to do more work or not, considering what 'feels right'."
+      ]
     },
     "preferences": {
-      "work_style": "collaborative",
-      "communication": "somewhat unclear, needs clarification",
-      "problem_solving": "exploratory, brainstorming"
+      "work_style": "Seems to be working on a project involving video editing and timelines.",
+      "communication": "Somewhat unclear and fragmented communication style.",
+      "problem_solving": "Appears to be working through issues as they arise, rather than having a fully defined plan."
     },
-    "last_updated": "2026-01-17T21:33:19.274759"
+    "last_updated": "2026-01-18T07:07:27.601352"
   },
   "thought_patterns": {
     "cognitive_style": {},
@@ -224,6 +233,15 @@
         "reference_count": 1
       },
       {
+        "category": "project",
+        "fact": "The video was filmed in Southern Hollywood.",
+        "source_quote": "Find like it here at the site of the video in Southern Hollywood.",
+        "relevance_score": "9",
+        "id": "fact_1768738292",
+        "timestamp": "2026-01-18T07:11:32.201159",
+        "reference_count": 1
+      },
+      {
         "category": "life",
         "fact": "The user is tired.",
         "source_quote": "I'm just very tired.",
@@ -248,6 +266,87 @@
         "relevance_score": "8",
         "id": "fact_1768699661",
         "timestamp": "2026-01-17T20:27:41.454236",
+        "reference_count": 1
+      },
+      {
+        "category": "project",
+        "fact": "The user has a video.",
+        "source_quote": "Wait, can I just show our video as we done my 9th button like 9?",
+        "relevance_score": "8",
+        "id": "fact_1768737560",
+        "timestamp": "2026-01-18T06:59:20.794941",
+        "reference_count": 1
+      },
+      {
+        "category": "project",
+        "fact": "The user submitted a video.",
+        "source_quote": "video. It was submitted.",
+        "relevance_score": "8",
+        "id": "fact_1768737560",
+        "timestamp": "2026-01-18T06:59:20.794941",
+        "reference_count": 1
+      },
+      {
+        "category": "project",
+        "fact": "The video post has a YouTube link.",
+        "source_quote": "And that post has a YouTube link.",
+        "relevance_score": "8",
+        "id": "fact_1768737560",
+        "timestamp": "2026-01-18T06:59:20.794941",
+        "reference_count": 1
+      },
+      {
+        "category": "project",
+        "fact": "The video is being uploaded.",
+        "source_quote": "Get the upload right there.",
+        "relevance_score": "8",
+        "id": "fact_1768738292",
+        "timestamp": "2026-01-18T07:11:32.201159",
+        "reference_count": 1
+      },
+      {
+        "category": "work",
+        "fact": "The user is finishing a schedule.",
+        "source_quote": "I'm just like finishing the schedule.",
+        "relevance_score": "8",
+        "id": "fact_1768738292",
+        "timestamp": "2026-01-18T07:11:32.201159",
+        "reference_count": 1
+      },
+      {
+        "category": "project",
+        "fact": "The user completed a '9th button' project.",
+        "source_quote": "Wait, can I just show our video as we done my 9th button like 9?",
+        "relevance_score": "7",
+        "id": "fact_1768737560",
+        "timestamp": "2026-01-18T06:59:20.794941",
+        "reference_count": 1
+      },
+      {
+        "category": "project",
+        "fact": "The '9th button' project was completed in February around 8 o'clock.",
+        "source_quote": "It's in February, it's in like 8 o'clock.",
+        "relevance_score": "7",
+        "id": "fact_1768737560",
+        "timestamp": "2026-01-18T06:59:20.794941",
+        "reference_count": 1
+      },
+      {
+        "category": "project",
+        "fact": "The user is involved in a discussion.",
+        "source_quote": "We're discussing, yeah.",
+        "relevance_score": "7",
+        "id": "fact_1768737700",
+        "timestamp": "2026-01-18T07:01:40.453364",
+        "reference_count": 1
+      },
+      {
+        "category": "project",
+        "fact": "The user is working on something with 'sides'.",
+        "source_quote": "We're just going to do the other side.",
+        "relevance_score": "7",
+        "id": "fact_1768737700",
+        "timestamp": "2026-01-18T07:01:40.453364",
         "reference_count": 1
       },
       {
@@ -420,6 +519,42 @@
         "id": "fact_1768703597",
         "timestamp": "2026-01-17T21:33:17.426379",
         "reference_count": 1
+      },
+      {
+        "category": "project",
+        "fact": "The user is working on a video.",
+        "source_quote": "Longer video is pretty short. No, the whole point is we're short. But then we go on to video. Short video.",
+        "relevance_score": "10",
+        "id": "fact_1768738292",
+        "timestamp": "2026-01-18T07:11:32.201159",
+        "reference_count": 1
+      },
+      {
+        "category": "project",
+        "fact": "The user is creating a video.",
+        "source_quote": "at least where we're doing the end of the video. So, we'll be watching the video. Of course, I'll be a part of it.",
+        "relevance_score": "10",
+        "id": "fact_1768738623",
+        "timestamp": "2026-01-18T07:17:03.339603",
+        "reference_count": 1
+      },
+      {
+        "category": "project",
+        "fact": "The user will be doing a demo.",
+        "source_quote": "I'm gonna put some stuff here and then demo.",
+        "relevance_score": "10",
+        "id": "fact_1768738623",
+        "timestamp": "2026-01-18T07:17:03.339603",
+        "reference_count": 1
+      },
+      {
+        "category": "project",
+        "fact": "The user's voice can be used to generate content.",
+        "source_quote": "we can put my voice, like, the one that generates everything.",
+        "relevance_score": "10",
+        "id": "fact_1768738623",
+        "timestamp": "2026-01-18T07:17:03.339603",
+        "reference_count": 1
       }
     ],
     "people_mentioned": [
@@ -446,6 +581,12 @@
         "relationship": "companions",
         "context": "User is directing them to come over to see something.",
         "first_mentioned": "2026-01-17T21:28:16.132929"
+      },
+      {
+        "name": "Steve",
+        "relationship": "colleague/associate",
+        "context": "Steve is asked to use the user's computer to light something up.",
+        "first_mentioned": "2026-01-18T07:17:03.339603"
       }
     ],
     "goals": [
@@ -484,6 +625,30 @@
         "status": "planning",
         "priority": "high",
         "mentioned_at": "2026-01-17T21:33:17.426379"
+      },
+      {
+        "goal": "Find out how long it takes for 'the little gross' to load to instant.",
+        "status": "planning",
+        "priority": "medium",
+        "mentioned_at": "2026-01-18T06:56:00.202302"
+      },
+      {
+        "goal": "Show a video related to a project.",
+        "status": "planning",
+        "priority": "medium",
+        "mentioned_at": "2026-01-18T06:59:20.794941"
+      },
+      {
+        "goal": "Upload a video.",
+        "status": "in_progress",
+        "priority": "medium",
+        "mentioned_at": "2026-01-18T07:11:32.201159"
+      },
+      {
+        "goal": "Complete the video project.",
+        "status": "in_progress",
+        "priority": "medium",
+        "mentioned_at": "2026-01-18T07:17:03.339603"
       }
     ],
     "interests": [
@@ -540,6 +705,12 @@
         "strength": "7",
         "evidence": "The user is working on a 3D model and is concerned with its rotation.",
         "evidence_count": 1
+      },
+      {
+        "topic": "Technology",
+        "strength": "3",
+        "evidence": "Mention of 'media pipe' and 'tech stack'.",
+        "evidence_count": 1
       }
     ],
     "experiences": [
@@ -569,10 +740,16 @@
         "description": "The user is encountering warnings and errors.",
         "source_quote": "so I'm getting warnings and errors.",
         "relevance_score": "10"
+      },
+      {
+        "type": "challenge",
+        "description": "The user's video is broken.",
+        "source_quote": "This video is broken.",
+        "relevance_score": "7"
       }
     ],
     "recent_topics": [],
-    "last_updated": "2026-01-17T21:33:17.426742"
+    "last_updated": "2026-01-18T07:17:03.339908"
   },
   "total_exchanges_analyzed": 4
 }
