@@ -43,6 +43,7 @@ class CameraThread(threading.Thread):
     """HIGH PERFORMANCE camera thread with frame buffering"""
     def __init__(self):
         super().__init__(daemon=True)
+        # Each thread gets its own face analyzer instance
         self.face_analyzer = FacialAnalyzer()
         self.frame_count = 0
         
@@ -90,6 +91,9 @@ class CameraThread(threading.Thread):
             success, frame = camera.read()
             
             if success:
+                # FLIP FRAME 180° (upside down camera)
+                frame = cv2.flip(frame, -1)  # -1 = flip both horizontally and vertically
+                
                 self.frame_count += 1
                 
                 # Store latest frame with minimal processing
@@ -229,7 +233,10 @@ def model_files(filename):
     return send_from_directory(models_path, filename, mimetype=mimetype)
 
 def generate_frames():
-    """RAW camera feed - NO PROCESSING"""
+    """RAW camera feed WITH face rectangles"""
+    # Create a separate face analyzer for this thread
+    video_face_analyzer = FacialAnalyzer()
+    
     last_frame_time = time.time()
     target_interval = 1.0 / 30.0  # 30 FPS target
     
@@ -241,10 +248,22 @@ def generate_frames():
                 continue
             frame = frame_buffer[-1].copy()
         
-        # Flip frame horizontally (mirror effect - natural for camera feed)
-        frame = cv2.flip(frame, 1)
+        # Frame already flipped in camera thread - no need to flip again
         
-        # NO FACE DETECTION HERE - just encode raw frame
+        # DRAW FACE RECTANGLES (using separate analyzer)
+        try:
+            faces = video_face_analyzer.detect_faces(frame)
+            for x, y, w, h, conf in faces:
+                # Draw green rectangle
+                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                
+                # Optional: Draw confidence score
+                label = f"{conf:.2f}"
+                cv2.putText(frame, label, (x, y - 10), 
+                           cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        except Exception as e:
+            # If face detection fails, just show raw frame
+            pass
         
         # Natural JPEG encoding
         encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 92]
@@ -281,14 +300,15 @@ def video_feed():
 @app.route('/face_data')
 def face_data():
     """Fast face data endpoint with servo tracking"""
-    global servo_tracker
+    global servo_tracker, camera_thread
     
     with frame_lock:
         if latest_frame is None:
             return jsonify({'error': 'No frame available'}), 503
         frame = latest_frame.copy()
     
-    face_info = face_analyzer.get_face_info(frame)
+    # Use camera thread's face analyzer to avoid MediaPipe conflicts
+    face_info = camera_thread.face_analyzer.get_face_info(frame)
     
     # Update servo if face detected and tracker is connected
     if servo_tracker and servo_tracker.is_connected and face_info:

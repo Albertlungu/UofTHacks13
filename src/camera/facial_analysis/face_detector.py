@@ -1,11 +1,15 @@
 import cv2
 import numpy as np
+import threading
 
 class FacialAnalyzer:
     def __init__(self):
         """Initialize face detection - EXACTLY like reference"""
         self.use_mediapipe = False
         self.face_detector = None
+        
+        # CRITICAL: MediaPipe is NOT thread-safe, need lock
+        self.mediapipe_lock = threading.Lock()
         
         try:
             import mediapipe as mp
@@ -27,11 +31,14 @@ class FacialAnalyzer:
         print("✓ Face detector initialized")
     
     def detect_faces_mediapipe(self, frame):
-        """EXACTLY like reference code - simple and direct"""
+        """Thread-safe MediaPipe detection with lock"""
         rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         h, w, c = frame.shape
         
-        results = self.face_detector.process(rgb_frame)
+        # CRITICAL: Lock MediaPipe to prevent concurrent access
+        with self.mediapipe_lock:
+            results = self.face_detector.process(rgb_frame)
+        
         faces = []
         
         if results.detections:

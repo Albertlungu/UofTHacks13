@@ -32,15 +32,17 @@ class ServoTracker:
         
         # Current servo positions
         self.current_pan = 90
+        self.target_pan = 90
         
-        # Smoothing for servo movement
-        self.pan_smoothing = 0.5  # Increased for more responsive
+        # IMPROVED: Smoothing and deadzone
+        self.pan_smoothing = 0.15  # Lower = smoother (0.1-0.3 recommended)
+        self.deadzone = 15  # Degrees - don't move if within this range of target
         
         # Debug
         self.last_pan = 90
         self.update_count = 0
         
-        print("âœ“ ServoTracker initialized")
+        print("✓ ServoTracker initialized")
     
     def connect(self) -> bool:
         """Connect to Arduino via serial"""
@@ -48,10 +50,10 @@ class ServoTracker:
             self.serial_conn = serial.Serial(self.port, self.baudrate, timeout=1)
             time.sleep(2)  # Wait for Arduino to initialize
             self.is_connected = True
-            print(f"âœ“ Connected to {self.port} @ {self.baudrate} baud")
+            print(f"✓ Connected to {self.port} @ {self.baudrate} baud")
             return True
         except Exception as e:
-            print(f"âœ— Failed to connect to {self.port}: {e}")
+            print(f"✗ Failed to connect to {self.port}: {e}")
             return False
     
     def disconnect(self):
@@ -59,22 +61,22 @@ class ServoTracker:
         if self.serial_conn and self.serial_conn.is_open:
             self.serial_conn.close()
             self.is_connected = False
-            print("â— Disconnected from servo tracker")
+            print("● Disconnected from servo tracker")
     
     def start_tracking(self):
         """Start continuous tracking"""
         if not self.is_connected:
-            print("âœ— Not connected to Arduino")
+            print("✗ Not connected to Arduino")
             return
         
         self.tracking_enabled = True
-        print("âœ“ Tracking enabled")
+        print("✓ Tracking enabled")
     
     def stop_tracking(self):
         """Stop tracking and center servos"""
         self.tracking_enabled = False
         self.center_servos()
-        print("â— Tracking disabled")
+        print("● Tracking disabled")
     
     def update_face_position(self, face_center_x: int, face_center_y: int, 
                         frame_width: int, frame_height: int):
@@ -89,24 +91,35 @@ class ServoTracker:
         norm_x = max(-1, min(1, norm_x))
         
         # Calculate target pan angle
-        target_pan = self.pan_center + (norm_x * 90)
-        target_pan = max(self.pan_min, min(self.pan_max, target_pan))
+        self.target_pan = self.pan_center + (norm_x * 90)
+        self.target_pan = max(self.pan_min, min(self.pan_max, self.target_pan))
         
-        # Apply smoothing
-        self.current_pan = int(
-            self.current_pan * (1 - self.pan_smoothing) + 
-            target_pan * self.pan_smoothing
-        )
+        # Apply deadzone - only move if target is far enough from current
+        pan_diff = abs(self.target_pan - self.current_pan)
         
-        # DEBUG: Print every 10 updates
-        if self.update_count % 10 == 0:
-            print(f"SERVO DEBUG | Face X: {face_center_x:4d}/{frame_width} | "
-                  f"Norm: {norm_x:6.2f} | Target: {target_pan:3.0f}Â° | "
-                  f"Current: {self.current_pan:3d}Â° | Delta: {self.current_pan - self.last_pan:+3d}Â°")
-        
-        # Send to Arduino
-        self._send_servo_command(self.current_pan)
-        self.last_pan = self.current_pan
+        if pan_diff > self.deadzone:
+            # Apply smoothing
+            self.current_pan = (
+                self.current_pan * (1 - self.pan_smoothing) + 
+                self.target_pan * self.pan_smoothing
+            )
+            
+            # Send to Arduino
+            pan_int = int(self.current_pan)
+            self._send_servo_command(pan_int)
+            
+            # DEBUG: Print every 10 updates
+            if self.update_count % 10 == 0:
+                print(f"SERVO | Face X: {face_center_x:4d}/{frame_width} | "
+                      f"Norm: {norm_x:6.2f} | Target: {self.target_pan:3.0f}° | "
+                      f"Current: {pan_int:3d}° | Diff: {pan_diff:5.1f}° | "
+                      f"{'MOVING' if pan_diff > self.deadzone else 'SETTLED'}")
+            
+            self.last_pan = pan_int
+        else:
+            # Within deadzone - settled on target
+            if self.update_count % 50 == 0:
+                print(f"SERVO | SETTLED at {int(self.current_pan)}° (target: {self.target_pan:.0f}°)")
     
     def _send_servo_command(self, pan: int):
         """Send servo angle to Arduino via serial"""
@@ -117,25 +130,29 @@ class ServoTracker:
             # Format: "PAN:90\n"
             command = f"PAN:{pan}\n"
             self.serial_conn.write(command.encode())
-            # DEBUG: uncomment to see every command
-            # print(f"  â†’ Sent: {command.strip()}")
         except Exception as e:
-            print(f"âœ— Serial write error: {e}")
+            print(f"✗ Serial write error: {e}")
             self.is_connected = False
     
     def center_servos(self):
         """Center servo to neutral position"""
         self.current_pan = self.pan_center
+        self.target_pan = self.pan_center
         self._send_servo_command(self.pan_center)
-        print(f"â— Servo centered to 90Â°")
+        print(f"● Servo centered to 90°")
         
     def set_servo_limits(self, pan_min: int, pan_max: int):
         """Adjust servo angle limits"""
         self.pan_min = pan_min
         self.pan_max = pan_max
-        print(f"âœ“ Servo limits updated: Pan({pan_min}-{pan_max})")
+        print(f"✓ Servo limits updated: Pan({pan_min}-{pan_max})")
     
     def set_smoothing(self, pan_smoothing: float):
         """Adjust tracking smoothness (0.0-1.0, higher = more responsive)"""
-        self.pan_smoothing = 0.1
-        print(f"âœ“ Smoothing updated: {self.pan_smoothing}")
+        self.pan_smoothing = max(0.05, min(0.5, pan_smoothing))
+        print(f"✓ Smoothing updated: {self.pan_smoothing}")
+    
+    def set_deadzone(self, deadzone: float):
+        """Adjust deadzone in degrees (how close to settle before stopping)"""
+        self.deadzone = max(5, min(30, deadzone))
+        print(f"✓ Deadzone updated: {self.deadzone}°")

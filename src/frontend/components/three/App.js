@@ -5,10 +5,10 @@ import * as THREE from "three";
 import BlockBuilder3D from "./BlockBuilder3D";
 
 // Avatar States: IDLE, LISTENING, THINKING, SPEAKING
-function Avatar3D({ state, position, scale = 2.0 }) {
+function Avatar3D({ state, position, scale = 0.8 }) {
     const group = useRef();
     const { scene, animations } = useGLTF(
-        "http://localhost:5000/assets/models/chibi.glb",
+        "http://localhost:5000/assets/models/droid.glb",
     );
     const { actions } = useAnimations(animations, group);
 
@@ -282,7 +282,7 @@ function AvatarWithErrorBoundary({ state, position }) {
     return (
         <Suspense fallback={<LoadingAvatar />}>
             <ErrorBoundary onError={() => setHasError(true)}>
-                <Avatar3D state={state} position={position} scale={2.0} />
+                <Avatar3D state={state} position={position} scale={0.8} />
             </ErrorBoundary>
         </Suspense>
     );
