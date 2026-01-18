@@ -1,0 +1,52 @@
+[
+    {
+        "timestamp": "2026-01-17T17:52:50.879662",
+        "user": "Yeah, I don't know man. I'm just here doing something. Yeah"
+    },
+    {
+        "timestamp": "2026-01-17T17:52:53.238277",
+        "companion": "Totally. Hackathons can be like that. What are you working on?",
+        "thinking_time": 0.8529391288757324,
+        "total_time": 0.853395938873291
+    },
+    {
+        "timestamp": "2026-01-17T17:52:56.749712",
+        "user": "Yeah, that's what I'm talking about. That's what I'm talking about."
+    },
+    {
+        "timestamp": "2026-01-17T17:52:57.575331",
+        "companion": "Haha, gotcha. Still, what's the *something* you're working on? AI app, right?",
+        "thinking_time": 0.6601617336273193,
+        "total_time": 0.660700798034668
+    },
+    {
+        "timestamp": "2026-01-17T17:53:13.278062",
+        "user": "I was gonna hack it on yeah, yeah, yeah, it's coming on pretty well and you're part of it actually so it's pretty cool"
+    },
+    {
+        "timestamp": "2026-01-17T17:53:15.049119",
+        "companion": "Oh, sweet! I'm part of it? How so?",
+        "thinking_time": 0.5236959457397461,
+        "total_time": 0.5241329669952393
+    },
+    {
+        "timestamp": "2026-01-17T17:53:27.102284",
+        "user": "well you're the AI that's part of it you are the main the main guy"
+    },
+    {
+        "timestamp": "2026-01-17T17:53:29.180415",
+        "companion": "Ah, I see! So, what's the app *do*?",
+        "thinking_time": 0.543485164642334,
+        "total_time": 0.5441799163818359
+    },
+    {
+        "timestamp": "2026-01-17T17:54:02.307695",
+        "user": "Wait so and also like how's it like you know when you like did the hand and the camera shut all that does that work with this? Okay"
+    },
+    {
+        "timestamp": "2026-01-17T17:54:04.516240",
+        "companion": "Are you asking if hand tracking and camera input can work with your app? Yeah, definitely! What are you thinking of doing with it?",
+        "thinking_time": 0.596127986907959,
+        "total_time": 0.5967750549316406
+    }
+]

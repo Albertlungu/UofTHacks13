@@ -1,4 +1,6 @@
 """
+./src/ai/conversation_tracker.py
+
 Conversation tracker for storing and managing user-AI exchanges.
 """
 
@@ -27,13 +29,15 @@ class ConversationTracker:
     at appropriate intervals.
     """
 
-    def __init__(self, user_id: str, conversation_dir: str = "./data/conversations"):
+    def __init__(
+        self, user_id: str, conversation_dir: str = "./data/conversations"
+    ) -> None:
         """
         Initialize conversation tracker.
 
         Args:
-            user_id: User identifier
-            conversation_dir: Directory to store conversation logs
+            user_id (str): User identifier
+            conversation_dir (str, optional): Directory to store conversation logs. Defaults to "./data/conversations".
         """
         self.user_id = user_id
         self.conversation_dir = conversation_dir
@@ -61,11 +65,11 @@ class ConversationTracker:
         Add a new conversation exchange.
 
         Args:
-            user_text: What the user said
-            ai_response: What the AI responded
+            user_text (str): What the user said
+            ai_response (str): What the AI responded
 
         Returns:
-            Current exchange number
+            int: Current exchange number
         """
         self.exchange_count += 1
 

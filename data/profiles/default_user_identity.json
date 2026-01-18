@@ -2,27 +2,27 @@
   "user_id": "default_user",
   "communication_style": {
     "sentence_length": {
-      "avg_words": 9,
-      "preference": "short",
+      "avg_words": 13.8,
+      "preference": "medium",
       "examples": [
-        "Yeah, I'm ready",
-        "to I'll check, please."
+        "Yeah, I don't know man. I'm just here doing something. Yeah",
+        "I was gonna hack it on yeah, yeah, yeah, it's coming on pretty well and you're part of it actually so it's pretty cool"
       ]
     },
     "vocabulary": {
       "level": "casual",
       "common_words": [
         "yeah",
-        "I'm",
-        "that's",
-        "just"
+        "man",
+        "like",
+        "cool",
+        "well"
       ],
       "technical_terms": [
-        "Hackathon",
-        "IB",
-        "IBDP"
+        "AI",
+        "hack"
       ],
-      "formality_score": "3"
+      "formality_score": "2"
     },
     "humor_style": {
       "type": "none",
@@ -31,15 +31,18 @@
     },
     "expressiveness": {
       "level": "moderate",
-      "uses_emphasis": "false",
+      "uses_emphasis": "true",
       "uses_qualifiers": [
-        "just",
-        "right now",
-        "I mean"
+        "pretty",
+        "actually"
       ]
     },
-    "filler_words": [],
-    "last_updated": "2026-01-17T11:50:17.496947",
+    "filler_words": [
+      "yeah",
+      "like",
+      "you know"
+    ],
+    "last_updated": "2026-01-17T17:54:06.431543",
     "confidence": 0.8999999999999999,
     "sample_size": 5
   },
@@ -111,6 +114,15 @@
         "relevance_score": "9",
         "id": "fact_1768668210",
         "timestamp": "2026-01-17T11:43:30.424106",
+        "reference_count": 1
+      },
+      {
+        "category": "project",
+        "fact": "The user is working on a project.",
+        "source_quote": "I was gonna hack it on yeah, yeah, yeah, it's coming on pretty well and you're part of it actually so it's pretty cool",
+        "relevance_score": "9",
+        "id": "fact_1768690447",
+        "timestamp": "2026-01-17T17:54:07.355785",
         "reference_count": 1
       },
       {
@@ -282,7 +294,7 @@
       }
     ],
     "recent_topics": [],
-    "last_updated": "2026-01-17T11:50:19.229094"
+    "last_updated": "2026-01-17T17:54:07.356433"
   },
-  "total_exchanges_analyzed": 7
+  "total_exchanges_analyzed": 5
 }

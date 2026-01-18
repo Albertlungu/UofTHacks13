@@ -1,0 +1,37 @@
+{
+  "user_id": "default_user",
+  "exchange_count": 5,
+  "last_analysis_at": 0,
+  "exchanges": [
+    {
+      "timestamp": "2026-01-17T17:52:53.238775",
+      "user_text": "Yeah, I don't know man. I'm just here doing something. Yeah",
+      "ai_response": "Totally. Hackathons can be like that. What are you working on?",
+      "exchange_number": 1
+    },
+    {
+      "timestamp": "2026-01-17T17:52:57.575974",
+      "user_text": "Yeah, that's what I'm talking about. That's what I'm talking about.",
+      "ai_response": "Haha, gotcha. Still, what's the *something* you're working on? AI app, right?",
+      "exchange_number": 2
+    },
+    {
+      "timestamp": "2026-01-17T17:53:15.049942",
+      "user_text": "I was gonna hack it on yeah, yeah, yeah, it's coming on pretty well and you're part of it actually so it's pretty cool",
+      "ai_response": "Oh, sweet! I'm part of it? How so?",
+      "exchange_number": 3
+    },
+    {
+      "timestamp": "2026-01-17T17:53:29.181397",
+      "user_text": "well you're the AI that's part of it you are the main the main guy",
+      "ai_response": "Ah, I see! So, what's the app *do*?",
+      "exchange_number": 4
+    },
+    {
+      "timestamp": "2026-01-17T17:54:04.517279",
+      "user_text": "Wait so and also like how's it like you know when you like did the hand and the camera shut all that does that work with this? Okay",
+      "ai_response": "Are you asking if hand tracking and camera input can work with your app? Yeah, definitely! What are you thinking of doing with it?",
+      "exchange_number": 5
+    }
+  ]
+}
