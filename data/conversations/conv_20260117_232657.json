@@ -1,0 +1,22 @@
+[
+    {
+        "timestamp": "2026-01-17T23:28:17.182583",
+        "user": "There we go. So I'm here right now. I am this is Albert and I'm actually over here. We're looking at a project right now, so I'm trying to get this to work."
+    },
+    {
+        "timestamp": "2026-01-17T23:28:17.816100",
+        "companion": "Cool, what's the project about?",
+        "thinking_time": 0.5051968097686768,
+        "total_time": 0.5055389404296875
+    },
+    {
+        "timestamp": "2026-01-17T23:28:19.111786",
+        "user": "Um"
+    },
+    {
+        "timestamp": "2026-01-17T23:28:20.835107",
+        "companion": "You still there?",
+        "thinking_time": 0.49696993827819824,
+        "total_time": 0.49823594093322754
+    }
+]

@@ -1,0 +1,26 @@
+[
+    {
+        "timestamp": "2026-01-17T22:36:24.676558",
+        "user": "Hello. Hello. Hello. Hello. I can't believe we were sent to this."
+    },
+    {
+        "timestamp": "2026-01-17T22:36:25.693757",
+        "user": "Hello."
+    },
+    {
+        "timestamp": "2026-01-17T22:36:28.356397",
+        "companion": "Hey! What's got you in disbelief? ",
+        "thinking_time": 3.610811233520508,
+        "total_time": 3.6120922565460205
+    },
+    {
+        "timestamp": "2026-01-17T22:36:31.190298",
+        "companion": "Hey there! How\u2019s it going? ",
+        "thinking_time": 2.82918381690979,
+        "total_time": 2.829792022705078
+    },
+    {
+        "timestamp": "2026-01-17T22:36:38.146203",
+        "user": "Hey, what's got you in disbelief? Hey there, how's it going?"
+    }
+]

@@ -1,4 +1,4 @@
-# Goonvengers AI Companion - System Architecture
+# shadow AI Companion - System Architecture
 
 ## Overview
 

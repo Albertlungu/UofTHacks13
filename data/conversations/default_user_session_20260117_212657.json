@@ -1,0 +1,37 @@
+{
+  "user_id": "default_user",
+  "exchange_count": 5,
+  "last_analysis_at": 0,
+  "exchanges": [
+    {
+      "timestamp": "2026-01-17T21:27:19.569797",
+      "user_text": "Okay, I have three companions",
+      "ai_response": "Cool, who are they? What are their names?",
+      "exchange_number": 1
+    },
+    {
+      "timestamp": "2026-01-17T21:27:32.530904",
+      "user_text": "Okay, so I'm gonna move this over here. Hey guys guys come here. So we got this stuff. This is the setup",
+      "ai_response": "Sounds like you're setting things up for the project? What's the plan?",
+      "exchange_number": 2
+    },
+    {
+      "timestamp": "2026-01-17T21:27:48.148372",
+      "user_text": "This one's here. Oh, did it work? Yup. So now we've got this is how it's going to be.",
+      "ai_response": "Nice, is that how the cameras will be set up for recording?",
+      "exchange_number": 3
+    },
+    {
+      "timestamp": "2026-01-17T21:27:59.702679",
+      "user_text": "Oh shit. So yeah, balance there, and this one's here. This one works. Fuck, this is the result of the thing. And this one, for some reason, is...",
+      "ai_response": "Something not working right? What's up with that last one?",
+      "exchange_number": 4
+    },
+    {
+      "timestamp": "2026-01-17T21:28:12.868771",
+      "user_text": "stop I guess. The server turned off. I think the server turned off. You had the server turned off. Yeah, check the platform. Check the terminal. The chances are like crashed. Nah, it's the terminal.",
+      "ai_response": "Ah gotcha, so just need to restart the server, right?",
+      "exchange_number": 5
+    }
+  ]
+}

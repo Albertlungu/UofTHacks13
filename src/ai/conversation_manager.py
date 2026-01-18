@@ -17,6 +17,8 @@ from loguru import logger
 
 from src.ai.conversation_tracker import ConversationTracker
 from src.ai.gemini_companion import GeminiCompanion
+from src.ai.backboard_companion import BackboardCompanion  # NEW: Multi-model AI
+from src.ai.interjection_analyzer import InterjectionAnalyzer  # NEW: Conversational interjections
 from src.audio.audio_stream_manager import AudioStreamManager
 from src.audio.tts_elevenlabs import ElevenLabsTTS
 from src.identity.identity_manager import IdentityManager
@@ -47,8 +49,13 @@ class ConversationManager:
         # Load API keys and configurations from .env file
         load_dotenv()
         gemini_api_key = os.getenv("GEMINI_API_KEY")
-        if not gemini_api_key:
-            raise ValueError("GEMINI_API_KEY not found in environment variables.")
+        backboard_api_key = os.getenv("BACKBOARD_API_KEY")
+
+        # Use Backboard.io if available, fallback to Gemini
+        self.use_backboard = backboard_api_key is not None
+
+        if not self.use_backboard and not gemini_api_key:
+            raise ValueError("Neither BACKBOARD_API_KEY nor GEMINI_API_KEY found in environment variables.")
 
         self.user_id = user_id
 
@@ -85,15 +92,28 @@ class ConversationManager:
             profile_dir="./data/profiles",
         )
 
+        # Interjection Analyzer for conversational AI
+        self.interjection_analyzer = InterjectionAnalyzer()
+        logger.info("Interjection analyzer enabled - AI can now interrupt naturally")
+
         # Get initial identity profile prompt
         identity_prompt = self.identity_manager.get_system_prompt_additions()
 
         # Main AI companion for generating thoughtful, context-aware responses
-        # Initialize with identity profile if available
-        self.companion = GeminiCompanion(
-            api_key=gemini_api_key,
-            identity_profile_prompt=identity_prompt if identity_prompt else None,
-        )
+        # Use Backboard.io for multi-model intelligence or fallback to Gemini
+        if self.use_backboard:
+            logger.info("Using Backboard.io multi-model AI system")
+            self.companion = BackboardCompanion(
+                api_key=backboard_api_key,
+                user_id=user_id,
+                identity_profile_prompt=identity_prompt if identity_prompt else None,
+            )
+        else:
+            logger.info("Using Gemini (Backboard.io not configured)")
+            self.companion = GeminiCompanion(
+                api_key=gemini_api_key,
+                identity_profile_prompt=identity_prompt if identity_prompt else None,
+            )
 
         # TTS for speaking responses
         elevenlabs_api_key = os.getenv("ELEVENLABS_API_KEY")
@@ -177,23 +197,44 @@ class ConversationManager:
             f"Partial transcript ({duration_seconds:.1f}s): {partial_text[:100]}..."
         )
 
-        # Ask AI if it should interrupt
-        should_interrupt, interruption_message = self.companion.should_interrupt_user(
+        # Phase 1: Check for quick interjections (new system)
+        interjection_type, interjection_response = self.interjection_analyzer.analyze(
             partial_text, duration_seconds
         )
 
-        if should_interrupt and interruption_message:
-            logger.info(f"AI interrupting user: {interruption_message}")
+        if interjection_type and interjection_response:
+            logger.info(f"[QUICK INTERJECTION] {interjection_type}: {interjection_response}")
 
-            # Stop user recording
+            # Stop user recording temporarily
             self.audio_manager.interrupt_user_recording()
 
-            # Speak the interruption
+            # Speak the quick interjection
             if self.tts:
-                self.tts.speak(interruption_message, block=False)
+                self.tts.speak(interjection_response, block=False)
 
             # Print to console
-            print(f"\n[AI INTERRUPTS]: {interruption_message}\n")
+            print(f"\n[AI INTERJECTS]: {interjection_response}\n")
+            return  # Don't check old system if we interjected
+
+        # Phase 4: Check for longer redirecting interruptions (old system)
+        # Only check if duration is long enough (10+ seconds)
+        if duration_seconds >= 10.0:
+            should_interrupt, interruption_message = self.companion.should_interrupt_user(
+                partial_text, duration_seconds
+            )
+
+            if should_interrupt and interruption_message:
+                logger.info(f"[REDIRECTING INTERRUPT] AI interrupting user: {interruption_message}")
+
+                # Stop user recording
+                self.audio_manager.interrupt_user_recording()
+
+                # Speak the interruption
+                if self.tts:
+                    self.tts.speak(interruption_message, block=False)
+
+                # Print to console
+                print(f"\n[AI INTERRUPTS]: {interruption_message}\n")
 
     def _on_transcription_received(self, text: str):
         """
@@ -328,6 +369,26 @@ class ConversationManager:
                     f"AI response generated in {total_time:.2f}s (thinking: {thinking_time:.2f}s)"
                 )
                 logger.info(f'AI Companion: "{companion_response}"')
+
+                # Show which model was used (if using Backboard.io)
+                if self.use_backboard:
+                    model_info = self.companion.get_current_model_info()
+                    logger.info(
+                        f"[MODEL INFO] Provider: {model_info['provider']}, "
+                        f"Model: {model_info['model_name']}, "
+                        f"Task: {model_info['task_type']}"
+                    )
+
+                    # Write model status for frontend visualization
+                    try:
+                        from src.ai.model_status_server import set_model_status
+                        set_model_status(
+                            provider=model_info['provider'],
+                            model_name=model_info['model_name'],
+                            task_type=model_info['task_type']
+                        )
+                    except Exception as e:
+                        logger.warning(f"Could not update model status: {e}")
 
                 self._log_to_conversation_file(
                     {
@@ -479,7 +540,7 @@ if __name__ == "__main__":
     signal.signal(signal.SIGTERM, signal_handler)
 
     print("\n" + "=" * 60)
-    print("GOONVENGERS CONVERSATION MANAGER - TEST MODE")
+    print("shadow CONVERSATION MANAGER - TEST MODE")
     print("=" * 60)
     print("\nStarting conversation system...")
     print("Speak into your microphone. The system will:")

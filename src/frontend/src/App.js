@@ -1,7 +1,10 @@
-import React, { useEffect, useState, useRef, Suspense } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { useGLTF, useAnimations, PerspectiveCamera } from '@react-three/drei';
-import * as THREE from 'three';
+import React, { useEffect, useState, useRef, Suspense } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { useGLTF, useAnimations, PerspectiveCamera } from "@react-three/drei";
+import * as THREE from "three";
+import { Badge } from "./components/ui/badge";
+import { Button } from "./components/ui/button";
+import { Eye, EyeOff, Activity } from "lucide-react";
 
 // Avatar States: IDLE, LISTENING, THINKING, SPEAKING
 function Avatar3D({ state, position, scale = 0.6 }) {
@@ -13,240 +16,240 @@ function Avatar3D({ state, position, scale = 0.6 }) {
   const positionRef = useRef(position);
   const timeOffsetRef = useRef(Math.random() * 1000); // Random start for variation
 
-  // Update refs
-  useEffect(() => {
-    stateRef.current = state;
-  }, [state]);
+    useEffect(() => {
+        stateRef.current = state;
+    }, [state]);
 
-  useEffect(() => {
-    positionRef.current = position;
-  }, [position]);
+    useEffect(() => {
+        if (!actions) return;
 
-    // Procedural animations and head rotation based on state
-  useFrame((frameState) => {
-    if (!group.current) return;
+        const actionKeys = Object.keys(actions);
+        if (actionKeys.length === 0) return;
 
-    const time = frameState.clock.elapsedTime + timeOffsetRef.current;
-    const currentState = stateRef.current;
-    const currentPosition = positionRef.current;
+        actionKeys.forEach((key) => {
+            if (actions[key]) actions[key].stop();
+        });
 
-    // Smooth position tracking - Three.js does ALL the smoothing now
-    if (currentPosition) {
-      const targetX = currentPosition.x * 2.0;  // INCREASED from 0.5 to 2.0
-      const targetY = currentPosition.y * 2.0;  // INCREASED from 0.5 to 2.0
-      
-      // Smooth lerp for stable movement
-      group.current.position.x = THREE.MathUtils.lerp(
-        group.current.position.x,
-        targetX,
-        0.12  // INCREASED from 0.08 for more responsive
-      );
-      group.current.position.y = THREE.MathUtils.lerp(  
-        group.current.position.y,
-        targetY,
-        0.12  // INCREASED from 0.08 for more responsive
-      );
-    } else {
-      // Return to center when no face
-      group.current.position.x = THREE.MathUtils.lerp(group.current.position.x, 0, 0.05);
-      group.current.position.y = THREE.MathUtils.lerp(group.current.position.y, 0, 0.05);
-    }
-
-    // Calculate head rotation based on face position (looking at user)
-    let headRotationY = 0;
-    let headRotationX = 0;
-
-    if (currentPosition) {
-      headRotationY = currentPosition.x * 0.9;  // More responsive
-      headRotationX = -currentPosition.y * 0.5;
-    }
-
-    if (currentState === 'IDLE') {
-      // IDLE: Gentle hovering motion for drone robot
-      const hover = Math.sin(time * 1.2) * 0.15;
-      group.current.position.y = hover;
-      
-      const sway = Math.sin(time * 0.5) * 0.05;
-      group.current.position.z = sway;
-      
-      const lookAround = Math.sin(time * 0.3) * 0.15;
-      group.current.rotation.y = headRotationY * 0.5 + lookAround;
-      group.current.rotation.x = headRotationX * 0.5;
-      
-      const lean = Math.cos(time * 0.4) * 0.05;
-      group.current.rotation.z = lean;
-      
-    } else if (currentState === 'LISTENING') {
-      // LISTENING: Attentive, engaged posture
-      group.current.position.z = 0.1 + Math.sin(time * 2) * 0.02;
-      
-      const attentiveNod = Math.sin(time * 1.8) * 0.12;
-      group.current.rotation.y = headRotationY * 0.85 + attentiveNod * 0.3;
-      group.current.rotation.x = headRotationX + attentiveNod;
-      
-      const engageTilt = Math.sin(time * 1.2) * 0.06;
-      group.current.rotation.z = engageTilt;
-      
-    } else if (currentState === 'THINKING') {
-      // THINKING: Contemplative, introspective motion
-      const contemplation = Math.sin(time * 0.6) * 0.12;
-      group.current.position.z = contemplation - 0.1;
-      
-      const thoughtfulTurn = Math.sin(time * 0.5) * 0.2;
-      group.current.rotation.y = headRotationY * 0.4 + thoughtfulTurn;
-      group.current.rotation.x = -0.25 + Math.sin(time * 0.4) * 0.1;
-      
-      const ponderTilt = Math.cos(time * 0.7) * 0.12;
-      group.current.rotation.z = ponderTilt;
-      
-    } else if (currentState === 'SPEAKING') {
-      // SPEAKING: Animated, engaging, expressive
-      const bounce = Math.sin(time * 3.2) * 0.08;
-      group.current.position.z = bounce + 0.05;
-      
-      const speechBob = Math.sin(time * 2.4) * 0.15;
-      const gestureRotation = Math.sin(time * 1.8 + Math.PI/4) * 0.12;
-      
-      group.current.rotation.y = headRotationY * 0.9 + gestureRotation;
-      group.current.rotation.x = headRotationX * 0.8 + speechBob * 0.15;
-      
-      const expressiveSway = Math.cos(time * 2.2) * 0.15;
-      group.current.rotation.z = expressiveSway;
-    }
-  });
-
-    // MUCH BRIGHTER lighting and material setup
-  useEffect(() => {
-    if (scene) {
-      scene.traverse((child) => {
-        if (child.isMesh) {
-          // Make materials much brighter
-          child.material.transparent = true;
-          child.material.opacity = 1.0;  // Full opacity
-          
-          // AGGRESSIVE brightness boost
-          if (child.material.emissive) {
-            child.material.emissive.setHex(0x444444);  // Self-emission glow
-            child.material.emissiveIntensity = 0.5;    // Strong self-emission
-          }
-          
-          // Boost metallic/roughness for better light reflection
-          if (child.material.metalness !== undefined) {
-            child.material.metalness = 0.3;
-          }
-          if (child.material.roughness !== undefined) {
-            child.material.roughness = 0.4;
-          }
+        if (animationChangeInterval.current) {
+            clearInterval(animationChangeInterval.current);
+            animationChangeInterval.current = null;
         }
-      });
-    }
-  }, [scene]);
 
-  return (
-    <group ref={group} position={[0, -0.8, 0]} scale={scale}>
-      <primitive object={scene} />
-      
-      {/* VERY BRIGHT LIGHTS - multiple sources */}
-      <pointLight position={[5, 4, 4]} intensity={3.5} color="#ffffff" />
-      <pointLight position={[-5, 4, 3]} intensity={3.0} color="#ffffff" />
-      <pointLight position={[0, 0, 4]} intensity={2.8} color="#ffffff" />
-      <pointLight position={[3, -1, 2]} intensity={2.5} color="#ffffff" />
-      <pointLight position={[-3, -1, 2]} intensity={2.5} color="#ffffff" />
-      
-      {/* State-specific accent lighting */}
-      {state === 'LISTENING' && (
-        <pointLight 
-          position={[0, 1.5, 2]} 
-          intensity={2.0} 
-          color="#4ecdc4" 
-          distance={8}
-        />
-      )}
-      
-      {state === 'THINKING' && (
-        <pointLight 
-          position={[0, 2, 2]} 
-          intensity={2.5} 
-          color="#9b59b6" 
-          distance={8}
-        />
-      )}
-      
-      {state === 'SPEAKING' && (
-        <pointLight 
-          position={[1, 0.5, 2]} 
-          intensity={3.0} 
-          color="#ff4444" 
-          distance={8}
-        />
-      )}
-    </group>
-  );
+        if (state === "SPEAKING") {
+            const firstAction = actions[actionKeys[0]];
+            if (firstAction) {
+                firstAction.reset();
+                firstAction.setLoop(THREE.LoopRepeat);
+                firstAction.timeScale = 1.2;
+                firstAction.play();
+            }
+
+            currentAnimationIndex.current = 0;
+            animationChangeInterval.current = setInterval(() => {
+                if (stateRef.current !== "SPEAKING") return;
+
+                currentAnimationIndex.current =
+                    (currentAnimationIndex.current + 1) % actionKeys.length;
+                const nextKey = actionKeys[currentAnimationIndex.current];
+                const nextAction = actions[nextKey];
+
+                if (nextAction) {
+                    actionKeys.forEach((key) => {
+                        if (key !== nextKey && actions[key]) {
+                            actions[key].fadeOut(0.3);
+                        }
+                    });
+
+                    nextAction.reset();
+                    nextAction.fadeIn(0.3);
+                    nextAction.setLoop(THREE.LoopRepeat);
+                    nextAction.timeScale = 1.2;
+                    nextAction.play();
+                }
+            }, 2500);
+        } else if (state === "THINKING") {
+            const firstAction = actions[actionKeys[0]];
+            if (firstAction) {
+                firstAction.reset();
+                firstAction.setLoop(THREE.LoopRepeat);
+                firstAction.timeScale = 0.4;
+                firstAction.play();
+            }
+        } else if (state === "LISTENING") {
+            const firstAction = actions[actionKeys[0]];
+            if (firstAction) {
+                firstAction.reset();
+                firstAction.setLoop(THREE.LoopRepeat);
+                firstAction.timeScale = 0.6;
+                firstAction.play();
+            }
+        }
+
+        return () => {
+            if (animationChangeInterval.current) {
+                clearInterval(animationChangeInterval.current);
+            }
+        };
+    }, [state, actions]);
+
+    useFrame((state) => {
+        if (!group.current) return;
+
+        const time = state.clock.elapsedTime;
+        const currentState = stateRef.current;
+
+        if (position) {
+            group.current.position.x = THREE.MathUtils.lerp(
+                group.current.position.x,
+                position.x,
+                0.08,
+            );
+            group.current.position.y = THREE.MathUtils.lerp(
+                group.current.position.y,
+                position.y,
+                0.08,
+            );
+        }
+
+        if (currentState === "IDLE") {
+            const breathe = Math.sin(time * 1.2) * 0.01;
+            group.current.position.z = -0.2 + breathe;
+
+            const subtleRotation = Math.sin(time * 0.2) * 0.02;
+            group.current.rotation.y = subtleRotation;
+        } else if (currentState === "LISTENING") {
+            const breathe = Math.sin(time * 1.5) * 0.008;
+            group.current.position.z = -0.1 + breathe;
+
+            const headTilt = Math.sin(time * 0.3) * 0.06;
+            group.current.rotation.z = headTilt;
+            group.current.rotation.y = 0.1;
+        } else if (currentState === "THINKING") {
+            const slowFloat = Math.sin(time * 0.4) * 0.01;
+            group.current.position.z = -0.15 + slowFloat;
+
+            const slowRotation = Math.sin(time * 0.25) * 0.04;
+            group.current.rotation.y = slowRotation;
+        } else if (currentState === "SPEAKING") {
+            const bounce = Math.sin(time * 4) * 0.01;
+            group.current.position.z = -0.1 + bounce;
+
+            const activeRotation = Math.sin(time * 0.3) * 0.03;
+            group.current.rotation.y = activeRotation;
+        }
+    });
+
+    useEffect(() => {
+        if (scene) {
+            scene.traverse((child) => {
+                if (child.isMesh) {
+                    child.material.transparent = true;
+                    child.material.opacity = 0.85;
+                }
+            });
+        }
+    }, [scene]);
+
+    return (
+        <group ref={group} position={[0, -1, 0]} scale={scale}>
+            <primitive object={scene} />
+
+            <pointLight position={[3, 3, 3]} intensity={1.0} color="#ffffff" />
+            <pointLight position={[-3, 2, 2]} intensity={0.6} color="#ffffff" />
+
+            {state === "LISTENING" && (
+                <pointLight
+                    position={[0, 1, 2]}
+                    intensity={0.8}
+                    color="#4ecdc4"
+                    distance={4}
+                />
+            )}
+
+            {state === "THINKING" && (
+                <pointLight
+                    position={[0, 2, 2]}
+                    intensity={1.0}
+                    color="#9b59b6"
+                    distance={4}
+                />
+            )}
+
+            {state === "SPEAKING" && (
+                <pointLight
+                    position={[0, 0, 2]}
+                    intensity={1.5}
+                    color="#ff4444"
+                    distance={4}
+                />
+            )}
+        </group>
+    );
 }
 
 function FallbackAvatar({ state, position }) {
-  const meshRef = useRef();
-  
-  useFrame((state) => {
-    if (meshRef.current && position) {
-      meshRef.current.position.x = THREE.MathUtils.lerp(
-        meshRef.current.position.x,
-        position.x * 1.2 + 0.3,
-        0.12
-      );
-      meshRef.current.position.y = THREE.MathUtils.lerp(
-        meshRef.current.position.y,
-        position.y * 0.8,
-        0.12
-      );
-    }
-  });
+    const meshRef = useRef();
 
-  const stateColors = {
-    IDLE: "#4ecdc4",
-    LISTENING: "#4ecdc4",
-    THINKING: "#9b59b6",
-    SPEAKING: "#ff4444"
-  };
+    useFrame((state) => {
+        if (meshRef.current && position) {
+            meshRef.current.position.x = THREE.MathUtils.lerp(
+                meshRef.current.position.x,
+                position.x,
+                0.02,
+            );
+            meshRef.current.position.y = THREE.MathUtils.lerp(
+                meshRef.current.position.y,
+                position.y,
+                0.02,
+            );
+        }
+    });
 
-  return (
-    <group>
-      <mesh ref={meshRef} position={[0, 0, 0]}>
-        <sphereGeometry args={[0.4, 32, 32]} />
-        <meshStandardMaterial 
-          color={stateColors[state] || "#4ecdc4"}
-          transparent
-          opacity={0.95}
-          emissive={stateColors[state] || "#4ecdc4"}
-          emissiveIntensity={0.5}
-        />
-      </mesh>
-      
-      <mesh position={[-0.12, 0.1, 0.35]}>
-        <sphereGeometry args={[0.06, 16, 16]} />
-        <meshStandardMaterial color="black" />
-      </mesh>
-      
-      <mesh position={[0.12, 0.1, 0.35]}>
-        <sphereGeometry args={[0.06, 16, 16]} />
-        <meshStandardMaterial color="black" />
-      </mesh>
-      
-      <mesh position={[0, -0.08, 0.35]}>
-        <boxGeometry args={[0.2, 0.06, 0.05]} />
-        <meshStandardMaterial color="black" />
-      </mesh>
-    </group>
-  );
+    const stateColors = {
+        IDLE: "#666666",
+        LISTENING: "#4ecdc4",
+        THINKING: "#9b59b6",
+        SPEAKING: "#ef4444",
+    };
+
+    return (
+        <group>
+            <mesh ref={meshRef} position={[0, 0, 0]}>
+                <sphereGeometry args={[0.4, 32, 32]} />
+                <meshStandardMaterial
+                    color={stateColors[state] || "#666666"}
+                    transparent
+                    opacity={0.85}
+                    emissive={stateColors[state] || "#666666"}
+                    emissiveIntensity={0.4}
+                />
+            </mesh>
+
+            <mesh position={[-0.12, 0.1, 0.35]}>
+                <sphereGeometry args={[0.06, 16, 16]} />
+                <meshStandardMaterial color="black" />
+            </mesh>
+
+            <mesh position={[0.12, 0.1, 0.35]}>
+                <sphereGeometry args={[0.06, 16, 16]} />
+                <meshStandardMaterial color="black" />
+            </mesh>
+
+            <mesh position={[0, -0.08, 0.35]}>
+                <boxGeometry args={[0.2, 0.06, 0.05]} />
+                <meshStandardMaterial color="black" />
+            </mesh>
+        </group>
+    );
 }
 
 function LoadingAvatar() {
-  return (
-    <mesh>
-      <sphereGeometry args={[0.3, 16, 16]} />
-      <meshStandardMaterial color="#4CAF50" wireframe />
-    </mesh>
-  );
+    return (
+        <mesh>
+            <sphereGeometry args={[0.3, 16, 16]} />
+            <meshStandardMaterial color="#a1a1aa" wireframe />
+        </mesh>
+    );
 }
 
 function AvatarWithErrorBoundary({ state, position }) {
@@ -279,23 +282,18 @@ class ErrorBoundary extends React.Component {
 function Scene({ avatarState, faceData }) {
   const [avatarPosition, setAvatarPosition] = useState({ x: 0, y: 0, z: 0 });
 
-  useEffect(() => {
-    if (faceData) {
-      // Normalize face position to -1 to 1 range
-      const normX = -((faceData.center_x - 640) / 640);  // Add negative sign to mirror
-      const normY = -(faceData.center_y - 360) / 360;
-      
-      // Pass normalized position for avatar to follow
-      setAvatarPosition({ 
-        x: normX,
-        y: normY,
-        z: 0 
-      });
-    } else {
-      // Return to center when no face detected
-      setAvatarPosition({ x: 0, y: 0, z: 0 });
-    }
-  }, [faceData]);
+    useEffect(() => {
+        if (faceData) {
+            const normX = (faceData.center_x - 640) / 640;
+            const normY = -(faceData.center_y - 360) / 360;
+
+            setAvatarPosition({
+                x: normX * 1.5,
+                y: normY * 1.2,
+                z: 0,
+            });
+        }
+    }, [faceData]);
 
     return (
       <>
@@ -325,17 +323,15 @@ function App() {
   const [show3D, setShow3D] = useState(true);
   const [avatarState, setAvatarState] = useState('IDLE');
 
-  // Determine avatar state based on conditions
-  useEffect(() => {
-    if (speaking) {
-      setAvatarState('SPEAKING');
-    } else if (faceData) {
-      // If face detected but not speaking = LISTENING
-      setAvatarState('LISTENING');
-    } else {
-      setAvatarState('IDLE');
-    }
-  }, [speaking, faceData]);
+    useEffect(() => {
+        if (speaking) {
+            setAvatarState("SPEAKING");
+        } else if (faceData) {
+            setAvatarState("LISTENING");
+        } else {
+            setAvatarState("IDLE");
+        }
+    }, [speaking, faceData]);
 
   useEffect(() => {
     const interval = setInterval(async () => {
@@ -383,220 +379,118 @@ function App() {
 
   const volumePercent = Math.min((currentVolume / threshold) * 100, 100);
 
-  const stateColors = {
-    IDLE: '#666',
-    LISTENING: '#4ecdc4',
-    THINKING: '#9b59b6',
-    SPEAKING: '#ff4444'
-  };
+    const getStateBadgeVariant = (state) => {
+        switch (state) {
+            case "LISTENING":
+                return "default";
+            case "SPEAKING":
+                return "destructive";
+            case "THINKING":
+                return "secondary";
+            default:
+                return "idle";
+        }
+    };
 
-  const stateLabels = {
-    IDLE: 'IDLE',
-    LISTENING: 'LISTENING',
-    THINKING: 'THINKING',
-    SPEAKING: 'SPEAKING'
-  };
+    return (
+        <div className="min-h-screen bg-black flex flex-col items-center justify-center p-8">
+            <div className="w-full max-w-7xl space-y-4">
+                {/* Header */}
+                <div className="flex items-center justify-between">
+                    <h1 className="text-2xl font-semibold tracking-tight text-white">
+                        AI Companion
+                    </h1>
+                    <div className="flex items-center gap-3">
+                        <Badge variant={audioAvailable ? "success" : "outline"}>
+                            {audioAvailable ? "Audio Active" : "Audio Inactive"}
+                        </Badge>
+                        <Badge variant={faceData ? "success" : "outline"}>
+                            {faceData ? "Face Detected" : "No Face"}
+                        </Badge>
+                        <Badge variant={getStateBadgeVariant(avatarState)}>
+                            {avatarState}
+                        </Badge>
+                    </div>
+                </div>
 
-  return (
-    <div style={{ 
-      width: '100vw', 
-      height: '100vh', 
-      display: 'flex', 
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: '#000000',
-      fontFamily: '"Segoe UI", Arial, sans-serif',
-      overflow: 'hidden'
-    }}>
-      <h1 style={{
-        color: '#ffffff',
-        marginBottom: '20px',
-        fontSize: '2.5rem',
-        fontWeight: '600',
-        letterSpacing: '1px',
-        textTransform: 'uppercase'
-      }}>
-        AI Companion
-      </h1>
+                {/* Main Video Container */}
+                <div className="relative w-full aspect-video bg-zinc-950 rounded-lg overflow-hidden border border-zinc-800">
+                    {/* Camera Feed */}
+                    <img
+                        src="http://localhost:5000/video_feed"
+                        alt="Camera Feed"
+                        className="absolute inset-0 w-full h-full object-cover"
+                        style={{
+                            imageRendering: "crisp-edges",
+                            WebkitImageRendering: "crisp-edges",
+                        }}
+                    />
 
-      <div style={{ 
-        position: 'relative', 
-        width: '1280px', 
-        height: '720px',
-        backgroundColor: '#000',
-        overflow: 'hidden',
-        border: '1px solid #333'
-      }}>
-        {/* Camera Feed - NO stretch */}
-        <img
-          src="http://localhost:5000/video_feed"
-          alt="Camera Feed"
-          style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            display: 'block',
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            zIndex: 1,
-            transform: 'scale(1.0)'
-          }}
-        />
-        
-        {show3D && (
-          <div style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            zIndex: 2,
-            pointerEvents: 'none'
-          }}>
-            <Canvas 
-                gl={{ 
-                  alpha: true, 
-                  antialias: true,
-                  preserveDrawingBuffer: false 
-                }}
-                style={{ background: 'transparent' }}
-              >
-              <Scene avatarState={avatarState} faceData={faceData} />
-            </Canvas>
-          </div>
-        )}
-        
-        {/* Minimal Status Bar */}
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          background: 'rgba(0,0,0,0.9)',
-          color: '#ffffff',
-          padding: '12px 20px',
-          zIndex: 3,
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          borderBottom: '1px solid #333',
-          fontFamily: 'monospace',
-          fontSize: '12px'
-        }}>
-          <div style={{ display: 'flex', gap: '25px' }}>
-            <span>
-              AUDIO: <span style={{ color: audioAvailable ? '#4CAF50' : '#666' }}>
-                {audioAvailable ? 'ON' : 'OFF'}
-              </span>
-            </span>
-            <span>
-              FACE: <span style={{ color: faceData ? '#4CAF50' : '#666' }}>
-                {faceData ? 'DETECTED' : 'NONE'}
-              </span>
-            </span>
-            <span>
-              STATE: <span style={{ color: stateColors[avatarState] }}>
-                {stateLabels[avatarState]}
-              </span>
-            </span>
-          </div>
-          
-          <button
-            onClick={() => setShow3D(!show3D)}
-            style={{
-              padding: '5px 14px',
-              background: show3D ? '#4CAF50' : '#444',
-              color: 'white',
-              border: 'none',
-              cursor: 'pointer',
-              fontWeight: '600',
-              fontSize: '11px',
-              textTransform: 'uppercase'
-            }}
-          >
-            3D {show3D ? 'ON' : 'OFF'}
-          </button>
+                    {/* 3D Avatar Overlay */}
+                    {show3D && (
+                        <div className="absolute inset-0 pointer-events-none z-10">
+                            <Canvas shadows>
+                                <Scene
+                                    avatarState={avatarState}
+                                    faceData={faceData}
+                                />
+                            </Canvas>
+                        </div>
+                    )}
+
+                    {/* Controls Overlay - Top Right */}
+                    <div className="absolute top-4 right-4 z-20">
+                        <Button
+                            onClick={() => setShow3D(!show3D)}
+                            variant={show3D ? "default" : "outline"}
+                            size="sm"
+                            className="gap-2"
+                        >
+                            {show3D ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
+                            3D Avatar
+                        </Button>
+                    </div>
+
+                    {/* Volume Indicator - Bottom Left */}
+                    <div className="absolute bottom-4 left-4 z-20 space-y-2">
+                        <div className="flex items-center gap-2 text-xs text-zinc-400 font-mono">
+                            <Activity className="h-3 w-3" />
+                            <span>Volume: {currentVolume.toFixed(0)} / {threshold}</span>
+                        </div>
+                        <div className="w-48 h-1 bg-zinc-800 rounded-full overflow-hidden">
+                            <div
+                                className={`h-full transition-all duration-100 ${
+                                    speaking ? "bg-red-500" : "bg-green-500"
+                                }`}
+                                style={{ width: `${volumePercent}%` }}
+                            />
+                        </div>
+                    </div>
+
+                    {/* Manual Control - Bottom Center */}
+                    {!audioAvailable && (
+                        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20">
+                            <Button
+                                onClick={handleManualToggle}
+                                variant={speaking ? "destructive" : "default"}
+                                size="lg"
+                            >
+                                {speaking ? "Stop" : "Start"}
+                            </Button>
+                        </div>
+                    )}
+
+                    {/* State Indicator - Bottom */}
+                    <div className={`absolute bottom-0 left-0 right-0 h-1 transition-colors z-20 ${
+                        avatarState === "SPEAKING" ? "bg-red-500" :
+                        avatarState === "LISTENING" ? "bg-cyan-500" :
+                        avatarState === "THINKING" ? "bg-purple-500" :
+                        "bg-zinc-600"
+                    }`} />
+                </div>
+            </div>
         </div>
-
-        {/* Volume Indicator */}
-        <div style={{
-          position: 'absolute',
-          top: '50px',
-          left: '20px',
-          width: '200px',
-          zIndex: 3
-        }}>
-          <div style={{ 
-            fontSize: '10px', 
-            color: '#aaa', 
-            marginBottom: '4px',
-            fontFamily: 'monospace'
-          }}>
-            VOL: {currentVolume.toFixed(0)} / {threshold}
-          </div>
-          <div style={{ 
-            width: '100%', 
-            height: '3px', 
-            background: '#222',
-            overflow: 'hidden'
-          }}>
-            <div style={{
-              width: `${volumePercent}%`,
-              height: '100%',
-              background: speaking ? '#ff4444' : '#4CAF50',
-              transition: 'width 0.1s'
-            }}></div>
-          </div>
-        </div>
-
-        {!audioAvailable && (
-          <button
-            onClick={handleManualToggle}
-            style={{
-              position: 'absolute',
-              bottom: '70px',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              padding: '10px 25px',
-              background: speaking ? '#ff4444' : '#4CAF50',
-              color: 'white',
-              border: 'none',
-              cursor: 'pointer',
-              fontWeight: '600',
-              zIndex: 3,
-              fontSize: '13px',
-              textTransform: 'uppercase'
-            }}
-          >
-            {speaking ? 'STOP' : 'START'}
-          </button>
-        )}
-
-        {/* Status Message */}
-        <div style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          background: `rgba(${avatarState === 'SPEAKING' ? '255,68,68' : avatarState === 'LISTENING' ? '78,205,196' : '102,102,102'}, 0.95)`,
-          color: '#ffffff',
-          padding: '10px',
-          zIndex: 3,
-          textAlign: 'center',
-          fontWeight: '600',
-          fontSize: '12px',
-          borderTop: '1px solid',
-          borderColor: stateColors[avatarState],
-          textTransform: 'uppercase',
-          letterSpacing: '1px'
-        }}>
-          {stateLabels[avatarState]}
-        </div>
-      </div>
-    </div>
-  );
+    );
 }
 
 export default App;

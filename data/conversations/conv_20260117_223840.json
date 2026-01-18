@@ -1,0 +1,22 @@
+[
+    {
+        "timestamp": "2026-01-17T22:38:46.416145",
+        "user": "So what's your name?"
+    },
+    {
+        "timestamp": "2026-01-17T22:38:50.261925",
+        "companion": "I'm just your friendly assistant, here to chat and help out. Got any questions or something fun you're working on?",
+        "thinking_time": 3.3579111099243164,
+        "total_time": 3.358832836151123
+    },
+    {
+        "timestamp": "2026-01-17T22:38:59.679154",
+        "user": "I'm just your friendly assistant here to chat and help out. Got any questions or something fun you're working on?"
+    },
+    {
+        "timestamp": "2026-01-17T22:39:03.555318",
+        "companion": "Haha, you got me! Just a bit of what I say sometimes. So, what's up with your project or anything else you've got going on?",
+        "thinking_time": 3.5586040019989014,
+        "total_time": 3.559767961502075
+    }
+]

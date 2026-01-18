@@ -313,20 +313,29 @@ class AudioStreamManager:
 
     def _finalize_recording(self):
         """Finalize the current recording and queue for transcription."""
+        # CRITICAL: Check and set listening flag FIRST to prevent re-entry
+        if not self.is_listening:
+            logger.debug("Recording already finalized, skipping")
+            return
+
+        # Immediately set to False to gate any concurrent calls
+        self.is_listening = False
+
+        # Now check if there's actually audio to transcribe
         if not self.audio_buffer:
+            logger.debug("No audio buffer to finalize")
             return
 
         # Combine all frames
         audio_bytes = b"".join(self.audio_buffer)
 
-        logger.debug(f"Finalizing recording: {len(audio_bytes)} bytes")
+        logger.info(f"Finalizing recording: {len(audio_bytes)} bytes")
 
         # Queue for transcription
         self.transcription_queue.put(audio_bytes)
 
         # Reset state
         self.audio_buffer = []
-        self.is_listening = False
         self.speech_start_time = None
         self.vad.reset()
 

@@ -1,6 +1,6 @@
 # Style Analysis System
 
-This document explains how the Goonvengers system uses HelpingAI-9B to analyze user communication patterns and adapt Gemini's responses.
+This document explains how the shadow system uses HelpingAI-9B to analyze user communication patterns and adapt Gemini's responses.
 
 ## Overview
 

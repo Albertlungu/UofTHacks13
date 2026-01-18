@@ -1,0 +1,22 @@
+[
+    {
+        "timestamp": "2026-01-17T21:16:46.843579",
+        "user": "I just want to get the attention. Just do what the fund is doing. I don't know, I just don't like him. No, I see him. I'm not your friend. I'm not your friend. I'm not your friend. I'm not your friend. I'm not your friend."
+    },
+    {
+        "timestamp": "2026-01-17T21:16:47.738269",
+        "companion": "Whoa, okay. What's going on? Is there something specific you're trying to figure out?",
+        "thinking_time": 0.7204182147979736,
+        "total_time": 0.7206211090087891
+    },
+    {
+        "timestamp": "2026-01-17T21:16:56.493266",
+        "user": "And also..."
+    },
+    {
+        "timestamp": "2026-01-17T21:16:57.023050",
+        "companion": "Yeah? What's up?",
+        "thinking_time": 0.44484996795654297,
+        "total_time": 0.44505810737609863
+    }
+]

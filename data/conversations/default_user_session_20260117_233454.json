@@ -1,0 +1,13 @@
+{
+  "user_id": "default_user",
+  "exchange_count": 1,
+  "last_analysis_at": 0,
+  "exchanges": [
+    {
+      "timestamp": "2026-01-17T23:35:07.870195",
+      "user_text": "Yeah, I think this works right now. So as long as it transcribes my audio, it's just gonna be back to the top.",
+      "ai_response": "Cool, so is the transcription part working well now?",
+      "exchange_number": 1
+    }
+  ]
+}

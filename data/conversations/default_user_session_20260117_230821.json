@@ -1,0 +1,31 @@
+{
+  "user_id": "default_user",
+  "exchange_count": 4,
+  "last_analysis_at": 0,
+  "exchanges": [
+    {
+      "timestamp": "2026-01-17T23:08:34.994633",
+      "user_text": "What's up?",
+      "ai_response": "Not much, just hanging out. How's your project going with the 3D model and the cameras?",
+      "exchange_number": 1
+    },
+    {
+      "timestamp": "2026-01-17T23:08:54.869763",
+      "user_text": "Not bad, you sound a lot like my friends, it's really interesting how you sound so much like him.",
+      "ai_response": "That's pretty cool! I'm glad I can fit in like that. Anything specific you're working on right now with the project?",
+      "exchange_number": 2
+    },
+    {
+      "timestamp": "2026-01-17T23:09:12.059309",
+      "user_text": "Why do we always have to talk about the project, but why can't we ever talk about something else?",
+      "ai_response": "We totally can talk about other things! What's on your mind? Any hobbies or recent shows you've been into?",
+      "exchange_number": 3
+    },
+    {
+      "timestamp": "2026-01-17T23:09:29.752861",
+      "user_text": "I'm gonna reverse that. Any hobbies or recent shows you've been into, how about that?",
+      "ai_response": "I've been diving into some cool documentaries lately. As for hobbies, messing around with photography has been pretty fun! How about you? Any good shows or hobbies keeping you entertained?",
+      "exchange_number": 4
+    }
+  ]
+}

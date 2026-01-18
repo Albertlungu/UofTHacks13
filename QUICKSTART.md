@@ -109,6 +109,6 @@ Now that audio is working, integrate with:
 
 ## Support
 
-- Check logs: `logs/goonvengers_*.log`
+- Check logs: `logs/shadow_*.log`
 - Run tests: `pytest tests/ -v`
 - See full docs: `AUDIO_SETUP.md`

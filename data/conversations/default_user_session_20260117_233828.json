@@ -1,0 +1,13 @@
+{
+  "user_id": "default_user",
+  "exchange_count": 1,
+  "last_analysis_at": 0,
+  "exchanges": [
+    {
+      "timestamp": "2026-01-17T23:38:52.932855",
+      "user_text": "I think it actually works in parallel. Oh, yeah, I think it does. Yeah, it seems like it So wait if I keep talking now, it's just you can detect my voice. I'm pretty sure",
+      "ai_response": "Cool! So, what exactly are you trying to record?",
+      "exchange_number": 1
+    }
+  ]
+}

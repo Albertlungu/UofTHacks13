@@ -15,7 +15,19 @@ class HandTracker:
 
     def __init__(self):
         """Initialize MediaPipe Hands with optimal settings."""
-        self.mp_hands = mp.solutions.hands
+        try:
+            self.mp_hands = mp.solutions.hands
+        except AttributeError as exc:
+            try:
+                from mediapipe.python import solutions as mp_solutions
+
+                self.mp_hands = mp_solutions.hands
+            except Exception as inner_exc:
+                raise RuntimeError(
+                    "MediaPipe is not available or incompatible. "
+                    "Install mediapipe on Python 3.10 or 3.11 (Apple Silicon supported), "
+                    "then retry running run_hand_tracker.py."
+                ) from inner_exc
         self.hands = self.mp_hands.Hands(
             static_image_mode=False,
             max_num_hands=2,

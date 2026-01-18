@@ -1,0 +1,22 @@
+[
+    {
+        "timestamp": "2026-01-17T22:19:58.876647",
+        "user": "I shouldn't be speaking to cash up here. I'm not sure if it's going to work. Please respond"
+    },
+    {
+        "timestamp": "2026-01-17T22:20:01.702006",
+        "companion": "[Error generating response: Connection error.]",
+        "thinking_time": 1.4326281547546387,
+        "total_time": 1.4332871437072754
+    },
+    {
+        "timestamp": "2026-01-17T22:20:07.595868",
+        "user": "Error generating response. Connection error."
+    },
+    {
+        "timestamp": "2026-01-17T22:20:08.966142",
+        "companion": "[Error generating response: Connection error.]",
+        "thinking_time": 1.1935772895812988,
+        "total_time": 1.1943979263305664
+    }
+]

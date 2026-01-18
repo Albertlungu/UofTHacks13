@@ -21,7 +21,7 @@ class ElevenLabsTTS:
     def __init__(
         self,
         api_key: Optional[str] = None,
-        voice_name: str = "JBFqnCBsd6RMkjVDRZzb",
+        voice_name: str = "zbrb7ZwK3S3L42jXWbOI",  # Custom voice
         output_device_index: Optional[int] = None,
     ):
         """
@@ -29,7 +29,7 @@ class ElevenLabsTTS:
 
         Args:
             api_key: ElevenLabs API key (or from env ELEVENLABS_API_KEY)
-            voice_name: Voice name to use (default: George)
+            voice_name: Voice ID to use (default: your custom voice)
             output_device_index: Audio output device (e.g., AirPods)
         """
         self.api_key = api_key or os.getenv("ELEVENLABS_API_KEY")
@@ -57,7 +57,7 @@ class ElevenLabsTTS:
         # Callback to notify when speaking starts/stops
         self.on_speaking_changed: Optional[callable] = None
 
-        logger.info(f"ElevenLabsTTS initialized with George {voice_name}")
+        logger.info(f"ElevenLabsTTS initialized with custom voice {voice_name}")
 
     def start(self):
         """Start the TTS playback thread."""

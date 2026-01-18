@@ -154,7 +154,7 @@ def setup_logging(level: str = "INFO"):
 
     # Add file handler (always DEBUG for file)
     logger.add(
-        "logs/goonvengers_{time}.log",
+        "logs/shadow_{time}.log",
         rotation="1 day",
         retention="30 days",
         level="DEBUG",

@@ -1,5 +1,5 @@
 """
-AI package for Goonvengers.
+AI package for shadow.
 
 This package handles:
 - Gemini-based conversation companion with style adaptation

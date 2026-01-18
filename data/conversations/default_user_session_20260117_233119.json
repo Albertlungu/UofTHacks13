@@ -1,0 +1,13 @@
+{
+  "user_id": "default_user",
+  "exchange_count": 1,
+  "last_analysis_at": 0,
+  "exchanges": [
+    {
+      "timestamp": "2026-01-17T23:31:56.217236",
+      "user_text": "We should do our flight check-in. We should check-in. Yeah. Check-in. See, that says in a minute. That's what flight he says. Thank you, check-in. Mmm.",
+      "ai_response": "Haha, sounds like you're eager to get going! Where are you headed?",
+      "exchange_number": 1
+    }
+  ]
+}

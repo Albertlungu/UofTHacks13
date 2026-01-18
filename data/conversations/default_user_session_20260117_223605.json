@@ -1,0 +1,19 @@
+{
+  "user_id": "default_user",
+  "exchange_count": 2,
+  "last_analysis_at": 0,
+  "exchanges": [
+    {
+      "timestamp": "2026-01-17T22:36:28.356928",
+      "user_text": "Hello. Hello. Hello. Hello. I can't believe we were sent to this.",
+      "ai_response": "Hey! What's got you in disbelief? ",
+      "exchange_number": 1
+    },
+    {
+      "timestamp": "2026-01-17T22:36:31.191013",
+      "user_text": "Hello.",
+      "ai_response": "Hey there! How\u2019s it going? ",
+      "exchange_number": 2
+    }
+  ]
+}

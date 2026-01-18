@@ -53,11 +53,11 @@ class CameraThread(threading.Thread):
         for backend in [cv2.CAP_DSHOW, cv2.CAP_MSMF, cv2.CAP_ANY]:
             camera = cv2.VideoCapture(1, backend)
             if camera.isOpened():
-                print(f"✓ Camera opened with backend: {backend}")
+                print(f"âœ“ Camera opened with backend: {backend}")
                 break
         
         if not camera.isOpened():
-            print("✗ Failed to open camera")
+            print("âœ— Failed to open camera")
             return
         
         # NATURAL settings - no processing
@@ -77,7 +77,7 @@ class CameraThread(threading.Thread):
         actual_height = int(camera.get(cv2.CAP_PROP_FRAME_HEIGHT))
         actual_fps = int(camera.get(cv2.CAP_PROP_FPS))
         
-        print(f"✓ Camera: {actual_width}x{actual_height} @ {actual_fps}fps")
+        print(f"âœ“ Camera: {actual_width}x{actual_height} @ {actual_fps}fps")
         
         # Warm up camera
         for _ in range(10):
@@ -109,13 +109,13 @@ class CameraThread(threading.Thread):
                     fps_counter = 0
                     
             else:
-                print("✗ Frame read failed")
+                print("âœ— Frame read failed")
                 time.sleep(0.01)
             
             # No sleep - run as fast as possible
         
         camera.release()
-        print("● Camera released")
+        print("â— Camera released")
 
 def start_camera_thread():
     global camera_thread, camera_running
@@ -164,7 +164,7 @@ class SpeechDetector:
             )
             
             self.audio_available = True
-            print(f"✓ Speech detection active")
+            print(f"âœ“ Speech detection active")
             
             while self.is_running:
                 try:
@@ -184,9 +184,9 @@ class SpeechDetector:
             p.terminate()
             
         except ImportError:
-            print("✗ PyAudio not available - using manual mode")
+            print("âœ— PyAudio not available - using manual mode")
         except Exception as e:
-            print(f"✗ Audio initialization failed: {e}")
+            print(f"âœ— Audio initialization failed: {e}")
 
 speech_detector = SpeechDetector()
 face_analyzer = FacialAnalyzer()
@@ -361,7 +361,7 @@ def servo_center():
 
 if __name__ == '__main__':
     print("\n" + "="*50)
-    print("● GOONVENGERS AI Server - High Performance Mode")
+    print("â— GOONVENGERS AI Server - High Performance Mode")
     print("="*50 + "\n")
     
     assets_path = get_assets_path()
@@ -369,9 +369,9 @@ if __name__ == '__main__':
     avatar_glb = os.path.join(models_path, 'droid.glb')
     
     if os.path.exists(avatar_glb):
-        print(f"✓ Found droid.glb")
+        print(f"âœ“ Found droid.glb")
     else:
-        print(f"⚠ droid.glb not found")
+        print(f"âš  droid.glb not found")
     
     print()
     
@@ -421,4 +421,4 @@ if __name__ == '__main__':
             stepper_tracker.disconnect()  # Changed
         speech_detector.stop()
         stop_camera_thread()
-        print("✓ Complete")
+        print("âœ“ Complete")
